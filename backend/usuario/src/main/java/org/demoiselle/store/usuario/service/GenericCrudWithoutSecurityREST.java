@@ -19,7 +19,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.demoiselle.jee.ws.interceptor.ValidatePayload;
+import org.demoiselle.jee.ws.jaxrs.interceptor.ValidatePayload;
 import org.demoiselle.store.usuario.business.GenericCrudBusiness;
 
 import io.swagger.annotations.ApiOperation;

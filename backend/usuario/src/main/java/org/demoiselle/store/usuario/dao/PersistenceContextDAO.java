@@ -9,7 +9,7 @@ package org.demoiselle.store.usuario.dao;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.demoiselle.jee.persistence.crud.GenericCrudDAO;
+import org.demoiselle.jee.persistence.jpa.crud.GenericCrudDAO;
 
 public abstract class PersistenceContextDAO<T>  extends GenericCrudDAO<T> {
 

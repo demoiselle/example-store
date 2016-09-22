@@ -7,8 +7,8 @@ import javax.ws.rs.Produces;
 
 import org.demoiselle.jee.core.messages.DemoiselleMessages;
 
-@Path("metadata")
-public class MetadataREST {
+@Path("info")
+public class InfoREST {
 
 	@Inject
 	private DemoiselleMessages messages;

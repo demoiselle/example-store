@@ -19,7 +19,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.demoiselle.jee.ws.interceptor.ValidatePayload;
+import org.demoiselle.jee.ws.jaxrs.interceptor.ValidatePayload;
 import org.demoiselle.store.usuario.business.GenericCrudBusiness;
 import org.demoiselle.store.usuario.business.UsuarioBC;
 import org.demoiselle.store.usuario.entity.Usuario;
