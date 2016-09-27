@@ -5,7 +5,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import org.demoiselle.jee.core.messages.DemoiselleMessages;
+import org.demoiselle.jee.core.message.DemoiselleMessages;
 import org.demoiselle.store.usuario.configuration.AppConfiguration;
 
 @Path("info")

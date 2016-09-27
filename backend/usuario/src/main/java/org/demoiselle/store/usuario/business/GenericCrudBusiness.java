@@ -15,7 +15,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
 
-import org.demoiselle.jee.core.messages.DemoiselleMessages;
+import org.demoiselle.jee.core.message.DemoiselleMessages;
 import org.demoiselle.jee.persistence.jpa.crud.GenericDataPage;
 import org.demoiselle.store.usuario.dao.PersistenceContextDAO;
 
