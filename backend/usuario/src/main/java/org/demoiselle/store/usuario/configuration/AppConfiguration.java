@@ -1,24 +1,17 @@
 package org.demoiselle.store.usuario.configuration;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import org.demoiselle.jee.configuration.ConfigType;
+import org.demoiselle.jee.configuration.annotation.Configuration;
+import org.demoiselle.jee.core.annotation.Name;
 
-import org.apache.deltaspike.core.api.config.ConfigProperty;
-import org.apache.deltaspike.core.api.projectstage.ProjectStage;
-
-@ApplicationScoped
+@Configuration(prefix = "demoiselle", type = ConfigType.PROPERTIES, resource = "demoiselle")
 public class AppConfiguration {
 
-	@Inject
-	private ProjectStage projectStage;
-
-	@Inject
-	@ConfigProperty(name = "url", defaultValue = "NADA!")
+	@Name(value = "appSearchUrl")
 	private String appSearchUrl;
 
-	public String appSearchUrl() {
-		System.out.println(this.projectStage);		
-		return this.appSearchUrl;
+	public String getAppSearchUrl() {
+		return appSearchUrl;
 	}
 
 }

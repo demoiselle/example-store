@@ -18,12 +18,17 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.demoiselle.jee</groupId>
-			<artifactId>demoiselle-ws-jaxrs</artifactId>
+			<artifactId>demoiselle-rest</artifactId>
 			<version>3.0.0-BETA1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.demoiselle.jee</groupId>
 			<artifactId>demoiselle-persistence-jpa</artifactId>
+			<version>3.0.0-BETA1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.demoiselle.jee</groupId>
+			<artifactId>demoiselle-configuration</artifactId>
 			<version>3.0.0-BETA1-SNAPSHOT</version>
 		</dependency>
 

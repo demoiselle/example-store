@@ -5,14 +5,14 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import org.demoiselle.jee.core.message.DemoiselleMessages;
+import org.demoiselle.jee.core.message.DemoiselleMessage;
 import org.demoiselle.store.usuario.configuration.AppConfiguration;
 
 @Path("info")
 public class InfoREST {
 
 	@Inject
-	private DemoiselleMessages messages;
+	private DemoiselleMessage messages;
 
 	@Inject
 	private AppConfiguration configuration;
@@ -28,7 +28,7 @@ public class InfoREST {
 	@Path("search/url")
 	@Produces("text/plain")
 	public String getSearchUrl() throws Exception {
-		return configuration.appSearchUrl();
+		return configuration.getAppSearchUrl();
 	}
 
 }

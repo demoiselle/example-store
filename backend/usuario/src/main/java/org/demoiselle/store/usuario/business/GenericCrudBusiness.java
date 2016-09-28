@@ -15,7 +15,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
 
-import org.demoiselle.jee.core.message.DemoiselleMessages;
+import org.demoiselle.jee.core.message.DemoiselleMessage;
 import org.demoiselle.jee.persistence.jpa.crud.GenericDataPage;
 import org.demoiselle.store.usuario.dao.PersistenceContextDAO;
 
@@ -31,7 +31,7 @@ public abstract class GenericCrudBusiness<T> {
 	protected abstract PersistenceContextDAO<T> getPersistenceDAO();
 
 	@Inject
-	private DemoiselleMessages messages;
+	private DemoiselleMessage messages;
 	
 	@Transactional
 	public void create(T entity) {
