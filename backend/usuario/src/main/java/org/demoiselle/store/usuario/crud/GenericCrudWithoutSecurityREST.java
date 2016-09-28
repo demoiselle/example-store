@@ -4,7 +4,7 @@
  * License: GNU Lesser General Public License (LGPL), version 3 or later.
  * See the lgpl.txt file in the root directory or <https://www.gnu.org/licenses/lgpl.html>.
  */
-package org.demoiselle.store.usuario.service;
+package org.demoiselle.store.usuario.crud;
 
 import java.util.List;
 
@@ -20,7 +20,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.demoiselle.jee.ws.jaxrs.interceptor.ValidatePayload;
-import org.demoiselle.store.usuario.business.GenericCrudBusiness;
 
 import io.swagger.annotations.ApiOperation;
 

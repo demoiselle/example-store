@@ -21,8 +21,9 @@ import javax.transaction.SystemException;
 import javax.transaction.Transactional;
 import javax.transaction.UserTransaction;
 
-import org.demoiselle.store.usuario.dao.PersistenceContextDAO;
+import org.demoiselle.store.usuario.crud.GenericCrudBusiness;
 import org.demoiselle.store.usuario.dao.UsuarioDAO;
+import org.demoiselle.store.usuario.dao.context.PersistenceContextDAO;
 import org.demoiselle.store.usuario.entity.Usuario;
 
 /**

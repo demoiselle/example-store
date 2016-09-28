@@ -4,7 +4,7 @@
  * License: GNU Lesser General Public License (LGPL), version 3 or later.
  * See the lgpl.txt file in the root directory or <https://www.gnu.org/licenses/lgpl.html>.
  */
-package org.demoiselle.store.usuario.business;
+package org.demoiselle.store.usuario.crud;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -17,7 +17,7 @@ import javax.ws.rs.NotFoundException;
 
 import org.demoiselle.jee.core.message.DemoiselleMessage;
 import org.demoiselle.jee.persistence.jpa.crud.GenericDataPage;
-import org.demoiselle.store.usuario.dao.PersistenceContextDAO;
+import org.demoiselle.store.usuario.dao.context.PersistenceContextDAO;
 
 /**
  * O métodos marcados com @Transaction são obrigatoriamente transacionais.

@@ -20,8 +20,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.demoiselle.jee.ws.jaxrs.interceptor.ValidatePayload;
-import org.demoiselle.store.usuario.business.GenericCrudBusiness;
 import org.demoiselle.store.usuario.business.UsuarioBC;
+import org.demoiselle.store.usuario.crud.GenericCrudBusiness;
+import org.demoiselle.store.usuario.crud.GenericCrudWithoutSecurityREST;
 import org.demoiselle.store.usuario.entity.Usuario;
 
 import io.swagger.annotations.ApiOperation;

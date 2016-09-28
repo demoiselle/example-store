@@ -6,6 +6,7 @@
  */
 package org.demoiselle.store.usuario.dao;
 
+import org.demoiselle.store.usuario.dao.context.PersistenceContextDAO;
 import org.demoiselle.store.usuario.entity.Usuario;
 
 public class UsuarioDAO extends PersistenceContextDAO<Usuario> {
