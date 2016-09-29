@@ -15,29 +15,33 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>io.demoiselle</groupId>
-            <artifactId>core</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.demoiselle</groupId>
-            <artifactId>jpa</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.demoiselle</groupId>
-            <artifactId>rest</artifactId>
-            <version>3.0.0</version>
-        </dependency>     
-      
-        
-        <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy</artifactId>
-            <version>2.1.0</version>
-        </dependency>
-  		
+    	<dependency>
+			<groupId>org.demoiselle.jee</groupId>
+			<artifactId>demoiselle-core</artifactId>
+			<version>3.0.0-BETA1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.demoiselle.jee</groupId>
+			<artifactId>demoiselle-persistence-jpa</artifactId>
+			<version>3.0.0-BETA1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.demoiselle.jee</groupId>
+			<artifactId>demoiselle-rest</artifactId>
+			<version>3.0.0-BETA1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.demoiselle.jee</groupId>
+			<artifactId>demoiselle-configuration</artifactId>
+			<version>3.0.0-BETA1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.demoiselle.jee</groupId>
+			<artifactId>demoiselle-script</artifactId>
+			<version>3.0.0-BETA1-SNAPSHOT</version>
+		</dependency>
+           
         <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -45,6 +49,12 @@
             <version>1.7.1</version>
         </dependency>
   		
+  		<!-- Swagger -->
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-jaxrs</artifactId>
+			<version>1.5.8</version>
+		</dependency>
         
     </dependencies>
 

@@ -3,7 +3,6 @@ package org.demoiselle.jee7.entity;
 import java.math.BigDecimal;
 import java.util.List;
 
-
 //cassiomaes
 public class CalculadoraDesconto {
 

@@ -7,7 +7,7 @@ package org.demoiselle.jee7.service;
 
 import java.util.ArrayList;
 
-import javax.ejb.Stateless;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -16,14 +16,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.google.gson.Gson;
-import io.demoiselle.rest.AbstractFacade;
 import javax.transaction.Transactional;
 
+import org.demoiselle.jee.script.SimpleGroovyEngine;
 import org.demoiselle.jee7.cover.Carrinho;
 import org.demoiselle.jee7.cover.ItemCarrinho;
-import org.demoiselle.jee7.entity.Itens;
 import org.demoiselle.jee7.entity.Regras;
-import org.demoiselle.jee7.entity.SimpleGroovyEngine;
 
 /**
  *
@@ -35,11 +33,9 @@ public class CarrinhoFacadeREST {
 
     @PersistenceContext(unitName = "vendaPU")
     private EntityManager em;
-
     private SimpleGroovyEngine engine;
 
     public CarrinhoFacadeREST() {
-
         engine = new SimpleGroovyEngine();
     }
 
@@ -107,6 +103,6 @@ public class CarrinhoFacadeREST {
 	    }
 	  ]
 	}
-            
+           
      */
 }
