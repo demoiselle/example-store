@@ -5,6 +5,7 @@
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <class>org.demoiselle.jee7.entity.Categoria</class>
         <class>org.demoiselle.jee7.entity.Produto</class>
+        <class>org.demoiselle.jee7.entity.User</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <!--            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>

@@ -6,40 +6,29 @@
 package org.demoiselle.jee7.entity;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author 70744416353
  */
-@Entity
-@Cacheable
-@Table(name = "categoria")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Categoria.findAll", query = "SELECT c FROM Categoria c"),
-    @NamedQuery(name = "Categoria.findById", query = "SELECT c FROM Categoria c WHERE c.id = :id"),
-    @NamedQuery(name = "Categoria.findByDescricao", query = "SELECT c FROM Categoria c WHERE c.descricao = :descricao")})
+//@Entity
+//@Cacheable
+//@Table(name = "categoria")
+//@XmlRootElement
+//@NamedQueries({
+//    @NamedQuery(name = "Categoria.findAll", query = "SELECT c FROM Categoria c"),
+//    @NamedQuery(name = "Categoria.findById", query = "SELECT c FROM Categoria c WHERE c.id = :id"),
+//    @NamedQuery(name = "Categoria.findByDescricao", query = "SELECT c FROM Categoria c WHERE c.descricao = :descricao")})
 public class Categoria implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(nullable = false)
+//    @Id
+//    @Basic(optional = false)
+//    @NotNull
+//    @Column(nullable = false)
     private Integer id;
-    @Size(max = 45)
-    @Column(length = 45)
+//    @Size(max = 45)
+//    @Column(length = 45)
     private String descricao;
 
     public Categoria() {

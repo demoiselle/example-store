@@ -14,43 +14,19 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <!--    <parent>
+        <groupId>org.demoiselle.jee</groupId>
+        <artifactId>demoiselle-parent</artifactId>
+        <version>3.0.0-BETA1-SNAPSHOT</version>
+    </parent>-->
+    
     <dependencies>
-        <dependency>
-            <groupId>org.demoiselle</groupId>
-            <artifactId>core</artifactId>
-            <version>3.0.0</version>
-        </dependency>
         
         <dependency>
-            <groupId>org.demoiselle</groupId>
-            <artifactId>persistence</artifactId>
-            <version>3.0.0</version>
+            <groupId>org.demoiselle.jee</groupId>
+            <artifactId>demoiselle-security-jwt</artifactId>
+            <version>3.0.0-BETA1-SNAPSHOT</version>
         </dependency>
-        
-        <dependency>
-            <groupId>org.demoiselle</groupId>
-            <artifactId>ws</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-        
-        <!--        <dependency>
-            <groupId>org.demoiselle</groupId>
-            <artifactId>swagger</artifactId>
-            <version>3.0.0</version>
-        </dependency>-->
-
-        
-<!--        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>datasources</artifactId>
-            <version>2016.8</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>mysql</artifactId>
-            <version>2016.8</version>
-        </dependency>-->
 
     </dependencies>
 
@@ -102,20 +78,42 @@
                 </executions>
             </plugin>
 
-            <!--            <plugin>
-                <groupId>org.wildfly.swarm</groupId>
-                <artifactId>wildfly-swarm-plugin</artifactId>
-                <version>2016.8</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>package</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>-->
-
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>org.wildfly.swarm</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.wildfly.swarm</groupId>
+                    <artifactId>datasources</artifactId>
+                    <version>2016.8</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.wildfly.swarm</groupId>
+                    <artifactId>mysql</artifactId>
+                    <version>2016.8</version>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.wildfly.swarm</groupId>
+                        <artifactId>wildfly-swarm-plugin</artifactId>
+                        <version>2016.8</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>package</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    
+    <!--mvn clean package -Porg.wildfly.swarm &&  java -jar -Xmx128m target/produto-1.0.0-swarm.jar-->
 
 </project>

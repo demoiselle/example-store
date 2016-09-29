@@ -7,48 +7,36 @@ package org.demoiselle.jee7.entity;
 
 import java.io.Serializable;
 import java.math.BigInteger;
-import javax.persistence.Basic;
-import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author 70744416353
  */
-@Entity
-@Cacheable
-@Table(name = "produto")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Produto.findAll", query = "SELECT p FROM Produto p"),
-    @NamedQuery(name = "Produto.findById", query = "SELECT p FROM Produto p WHERE p.id = :id"),
-    @NamedQuery(name = "Produto.findByCategoriaId", query = "SELECT p FROM Produto p WHERE p.categoriaId = :categoriaId"),
-    @NamedQuery(name = "Produto.findByDescricao", query = "SELECT p FROM Produto p WHERE p.descricao = :descricao"),
-    @NamedQuery(name = "Produto.findByValor", query = "SELECT p FROM Produto p WHERE p.valor = :valor")})
+//@Entity
+//@Cacheable
+//@Table(name = "produto")
+//@XmlRootElement
+//@NamedQueries({
+//    @NamedQuery(name = "Produto.findAll", query = "SELECT p FROM Produto p"),
+//    @NamedQuery(name = "Produto.findById", query = "SELECT p FROM Produto p WHERE p.id = :id"),
+//    @NamedQuery(name = "Produto.findByCategoriaId", query = "SELECT p FROM Produto p WHERE p.categoriaId = :categoriaId"),
+//    @NamedQuery(name = "Produto.findByDescricao", query = "SELECT p FROM Produto p WHERE p.descricao = :descricao"),
+//    @NamedQuery(name = "Produto.findByValor", query = "SELECT p FROM Produto p WHERE p.valor = :valor")})
 public class Produto implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(nullable = false)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Basic(optional = false)
+//    @Column(nullable = false)
     private Long id;
-    @Column(name = "categoria_id")
+//    @Column(name = "categoria_id")
     private BigInteger categoriaId;
-    @Size(max = 45)
-    @Column(length = 45)
+//    @Size(max = 45)
+//    @Column(length = 45)
     private String descricao;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(precision = 12)
+//    @Column(precision = 12)
     private Float valor;
 
     public Produto() {

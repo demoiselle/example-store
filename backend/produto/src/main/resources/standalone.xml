@@ -1,4 +1,3 @@
-
 <subsystem xmlns="urn:jboss:domain:datasources:4.0">
     <datasources>
         <datasource jta="true" jndi-name="java:jboss/datasources/MySQLDS" pool-name="MySQLDS" enabled="true" use-java-context="true">
