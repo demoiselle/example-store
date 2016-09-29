@@ -24,6 +24,10 @@ import org.demoiselle.jee.security.annotation.RequiredPermission;
 import org.demoiselle.jee.security.annotation.RequiredRole;
 import org.demoiselle.jee.security.exception.DemoiselleSecurityException;
 import org.demoiselle.jee.security.message.DemoiselleSecurityMessages;
+import org.demoiselle.jee.ws.jaxrs.annotation.Cache;
+import org.demoiselle.jee.ws.jaxrs.annotation.CorsAllowMethods;
+import org.demoiselle.jee.ws.jaxrs.annotation.CorsAllowOrigin;
+
 import org.demoiselle.jee7.security.Credentials;
 
 /**
@@ -46,6 +50,21 @@ public class TesteREST {
 
     @Inject
     private DemoiselleSecurityMessages bundle;
+
+    @GET
+    @Cache("max-age=600")
+    @Path("cache")
+    public Response testeCache() {
+        return Response.ok("Foi com cache de 1000s").build();
+    }
+
+    @GET
+    @Path("cors")
+    @CorsAllowMethods
+    @CorsAllowOrigin("http://localhost:8080/")
+    public Response testeCors() {
+        return Response.ok("Foi com cors").build();
+    }
 
     @GET
     @Path("sem")

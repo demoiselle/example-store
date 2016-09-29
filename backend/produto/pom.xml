@@ -12,13 +12,8 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <failOnMissingWebXml>false</failOnMissingWebXml>
     </properties>
-
-    <!--    <parent>
-        <groupId>org.demoiselle.jee</groupId>
-        <artifactId>demoiselle-parent</artifactId>
-        <version>3.0.0-BETA1-SNAPSHOT</version>
-    </parent>-->
     
     <dependencies>
         
@@ -27,10 +22,11 @@
             <artifactId>demoiselle-security-jwt</artifactId>
             <version>3.0.0-BETA1-SNAPSHOT</version>
         </dependency>
-
+        
     </dependencies>
 
     <build>
+        <finalName>produto</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -44,15 +40,15 @@
                     </compilerArguments>
                 </configuration>
             </plugin>
-            <plugin>
+            <!--            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.0.0</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
-            </plugin>
-            <plugin>
+            </plugin>-->
+            <!--            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>2.10</version>
@@ -76,31 +72,54 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-
+            </plugin>-->
         </plugins>
     </build>
     <profiles>
         <profile>
             <id>org.wildfly.swarm</id>
+            <properties>
+                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+                <version.wildfly.swarm>2016.9</version.wildfly.swarm>
+                <maven.compiler.source>1.8</maven.compiler.source>
+                <maven.compiler.target>1.8</maven.compiler.target>
+                <failOnMissingWebXml>false</failOnMissingWebXml>
+            </properties>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.wildfly.swarm</groupId>
+                        <artifactId>bom-all</artifactId>
+                        <version>${version.wildfly.swarm}</version>
+                        <scope>import</scope>
+                        <type>pom</type>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
             <dependencies>
+                <!-- WildFly Swarm Fractions -->
+                <dependency>
+                    <groupId>org.wildfly.swarm</groupId>
+                    <artifactId>jaxrs-cdi</artifactId>
+                </dependency>
                 <dependency>
                     <groupId>org.wildfly.swarm</groupId>
                     <artifactId>datasources</artifactId>
-                    <version>2016.8</version>
+                    <version>${version.wildfly.swarm}</version>
                 </dependency>
                 <dependency>
                     <groupId>org.wildfly.swarm</groupId>
                     <artifactId>mysql</artifactId>
-                    <version>2016.8</version>
+                    <version>${version.wildfly.swarm}</version>
                 </dependency>
             </dependencies>
             <build>
+                <finalName>produto</finalName>
                 <plugins>
                     <plugin>
                         <groupId>org.wildfly.swarm</groupId>
                         <artifactId>wildfly-swarm-plugin</artifactId>
-                        <version>2016.8</version>
+                        <version>${version.wildfly.swarm}</version>
                         <executions>
                             <execution>
                                 <goals>
