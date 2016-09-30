@@ -17,8 +17,8 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <stringProp name="ThreadGroup.num_threads">1000</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">10</stringProp>
         <longProp name="ThreadGroup.start_time">1475071466000</longProp>
         <longProp name="ThreadGroup.end_time">1475071466000</longProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
@@ -248,7 +248,7 @@ vars.put(&quot;TOKEN&quot;, response);</stringProp>
         <hashTree>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Asserções de Resposta" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="1015807585">DemoisellePrincipal</stringProp>
+              <stringProp name="108221642">gladson</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
             <boolProp name="Assertion.assume_success">true</boolProp>
@@ -287,7 +287,7 @@ vars.put(&quot;TOKEN&quot;, response);</stringProp>
         <hashTree>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Asserções de Resposta" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="1015807585">DemoisellePrincipal</stringProp>
+              <stringProp name="108221642">gladson</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
             <boolProp name="Assertion.assume_success">true</boolProp>
@@ -365,7 +365,7 @@ vars.put(&quot;TOKEN&quot;, response);</stringProp>
         <hashTree>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Asserções de Resposta" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="1015807585">DemoisellePrincipal</stringProp>
+              <stringProp name="108221642">gladson</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
             <boolProp name="Assertion.assume_success">true</boolProp>
@@ -404,7 +404,7 @@ vars.put(&quot;TOKEN&quot;, response);</stringProp>
         <hashTree>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Asserções de Resposta" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="481190145">UsuÃ¡rio gladson nÃ£o possui a permissÃ£o para executar a aÃ§Ã£o Incluir no recurso Produto</stringProp>
+              <stringProp name="-365087846">O UsuÃ¡rio nÃ£o possui a permissÃ£o para executar a aÃ§Ã£o Incluir no recurso Produto</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
             <boolProp name="Assertion.assume_success">true</boolProp>
@@ -421,8 +421,8 @@ vars.put(&quot;TOKEN&quot;, response);</stringProp>
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="Ver Árvore de Resultados" enabled="false">
-          <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="Ver Árvore de Resultados" enabled="true">
+          <boolProp name="ResultCollector.error_logging">true</boolProp>
           <objProp>
             <name>saveConfig</name>
             <value class="SampleSaveConfiguration">
