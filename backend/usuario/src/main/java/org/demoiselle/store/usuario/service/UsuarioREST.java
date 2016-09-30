@@ -19,16 +19,18 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.demoiselle.jee.ws.jaxrs.interceptor.ValidatePayload;
+import org.demoiselle.jee.rest.annotation.ValidatePayload;
 import org.demoiselle.store.usuario.business.UsuarioBC;
 import org.demoiselle.store.usuario.crud.GenericCrudBusiness;
 import org.demoiselle.store.usuario.crud.GenericCrudWithoutSecurityREST;
 import org.demoiselle.store.usuario.entity.Usuario;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @Stateless
 @Path("usuario")
+@Api("Usuário")
 @Consumes({ MediaType.APPLICATION_JSON })
 @Produces({ MediaType.APPLICATION_JSON })
 public class UsuarioREST extends GenericCrudWithoutSecurityREST<Usuario> {

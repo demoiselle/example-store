@@ -8,7 +8,10 @@ import javax.ws.rs.Produces;
 import org.demoiselle.jee.core.message.DemoiselleMessage;
 import org.demoiselle.store.usuario.configuration.AppConfiguration;
 
+import io.swagger.annotations.Api;
+
 @Path("info")
+@Api("Informações do Sistema")
 public class InfoREST {
 
 	@Inject
