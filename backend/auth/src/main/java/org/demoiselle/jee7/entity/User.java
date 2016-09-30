@@ -1,8 +1,14 @@
 package org.demoiselle.jee7.entity;
 
 import java.io.Serializable;
-import java.security.Principal;
 import java.util.Objects;
+import javax.persistence.Cacheable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -10,19 +16,19 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author 70744416353
  */
-//@Entity
-//@Cacheable
-//@XmlRootElement
-//@Table(name = "usuario")
+@Entity
+@Cacheable
+@XmlRootElement
+@Table(name = "usuario")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 5625711959333905292L;
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-//    @NotNull
+    @NotNull
     private String name;
 
     private String perfil;

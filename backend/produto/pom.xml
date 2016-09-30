@@ -23,10 +23,17 @@
             <version>3.0.0-BETA1-SNAPSHOT</version>
         </dependency>
         
+        <dependency>
+            <groupId>org.demoiselle.jee</groupId>
+            <artifactId>demoiselle-persistence-jpa</artifactId>
+            <version>3.0.0-BETA1-SNAPSHOT</version>
+        </dependency>
+
+        
     </dependencies>
 
     <build>
-        <finalName>produto</finalName>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -40,44 +47,11 @@
                     </compilerArguments>
                 </configuration>
             </plugin>
-            <!--            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>3.0.0</version>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                </configuration>
-            </plugin>-->
-            <!--            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.10</version>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${endorsed.dir}</outputDirectory>
-                            <silent>true</silent>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>javax</groupId>
-                                    <artifactId>javaee-endorsed-api</artifactId>
-                                    <version>7.0</version>
-                                    <type>jar</type>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>-->
         </plugins>
     </build>
     <profiles>
         <profile>
-            <id>org.wildfly.swarm</id>
+            <id>wildfly-swarm</id>
             <properties>
                 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
                 <version.wildfly.swarm>2016.9</version.wildfly.swarm>
@@ -114,7 +88,7 @@
                 </dependency>
             </dependencies>
             <build>
-                <finalName>produto</finalName>
+                <finalName>${project.artifactId}</finalName>
                 <plugins>
                     <plugin>
                         <groupId>org.wildfly.swarm</groupId>
@@ -131,8 +105,9 @@
                 </plugins>
             </build>
         </profile>
+        <!--mvn clean package -Pwildfly-swarm &&  java -jar -Xmx128m target/produto-swarm.jar-->
     </profiles>
     
-    <!--mvn clean package -Porg.wildfly.swarm &&  java -jar -Xmx128m target/produto-1.0.0-swarm.jar-->
+    
 
 </project>
