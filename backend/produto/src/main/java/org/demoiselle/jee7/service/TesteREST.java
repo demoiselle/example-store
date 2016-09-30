@@ -76,35 +76,35 @@ public class TesteREST {
     @Path("com")
     @LoggedIn
     public String testeCom() {
-        return loggedUser.toString();
+        return securityContext.getUser().toString();
     }
 
     @GET
     @Path("role/ok")
     @RequiredRole("ADMINISTRATOR")
     public String testeRoleOK() {
-        return loggedUser.toString();
+        return securityContext.getUser().toString();
     }
 
     @GET
     @Path("role/error")
     @RequiredRole("USUARIO")
     public String testeRoleErro() {
-        return loggedUser.toString();
+        return securityContext.getUser().toString();
     }
 
     @GET
     @Path("permission/ok")
     @RequiredPermission(resource = "Categoria", operation = "Consultar")
     public String testePermissionOK() {
-        return loggedUser.toString();
+        return securityContext.getUser().toString();
     }
 
     @GET
     @Path("permission/error")
     @RequiredPermission(resource = "Produto", operation = "Incluir")
     public String testePermissionErro() {
-        return loggedUser.toString();
+        return securityContext.getUser().toString();
     }
 
     @POST
