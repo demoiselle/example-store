@@ -6,13 +6,9 @@
 package org.demoiselle.jee7.service;
 
 import io.swagger.annotations.Api;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -20,16 +16,11 @@ import javax.ws.rs.core.Response;
 import org.demoiselle.jee.core.interfaces.security.DemoisellePrincipal;
 import org.demoiselle.jee.core.interfaces.security.SecurityContext;
 import org.demoiselle.jee.core.interfaces.security.Token;
+import org.demoiselle.jee.rest.annotation.Cache;
 import org.demoiselle.jee.security.annotation.LoggedIn;
 import org.demoiselle.jee.security.annotation.RequiredPermission;
 import org.demoiselle.jee.security.annotation.RequiredRole;
-import org.demoiselle.jee.security.exception.DemoiselleSecurityException;
 import org.demoiselle.jee.security.message.DemoiselleSecurityMessages;
-import org.demoiselle.jee.ws.jaxrs.annotation.Cache;
-import org.demoiselle.jee.ws.jaxrs.annotation.CorsAllowMethods;
-import org.demoiselle.jee.ws.jaxrs.annotation.CorsAllowOrigin;
-
-import org.demoiselle.jee7.security.Credentials;
 
 /**
  *
@@ -62,8 +53,8 @@ public class TesteREST {
 
     @GET
     @Path("cors")
-    @CorsAllowMethods
-    @CorsAllowOrigin("http://localhost:8080/")
+    //@CorsAllowMethods
+    //@CorsAllowOrigin("http://localhost:8080/")
     public Response testeCors() {
         return Response.ok("{\"msg\":\"cors ok\"}").build();
     }
