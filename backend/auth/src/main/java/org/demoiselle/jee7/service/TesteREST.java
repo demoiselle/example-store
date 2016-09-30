@@ -5,6 +5,7 @@
  */
 package org.demoiselle.jee7.service;
 
+import io.swagger.annotations.Api;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +35,7 @@ import org.demoiselle.jee7.security.Credentials;
  *
  * @author 70744416353
  */
+@Api("Teste")
 @Path("teste")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
@@ -55,7 +57,7 @@ public class TesteREST {
     @Cache("max-age=600")
     @Path("cache")
     public Response testeCache() {
-        return Response.ok("Foi com cache de 1000s").build();
+        return Response.ok("{\"msg\":\"cache ok\"}").build();
     }
 
     @GET
@@ -63,69 +65,48 @@ public class TesteREST {
     @CorsAllowMethods
     @CorsAllowOrigin("http://localhost:8080/")
     public Response testeCors() {
-        return Response.ok("Foi com cors").build();
+        return Response.ok("{\"msg\":\"cors ok\"}").build();
     }
 
     @GET
     @Path("sem")
-    public String testeSem() {
-        return "Foi sem";
+    public Response testeSem() {
+        return Response.ok().entity("{\"msg\":\"Foi sem\"}").build();
     }
 
     @GET
     @Path("com")
     @LoggedIn
-    public String testeCom() {
-        return securityContext.getUser().toString();
+    public Response testeCom() {
+        return Response.ok().entity(securityContext.getUser()).build();
     }
 
     @GET
     @Path("role/ok")
     @RequiredRole("ADMINISTRATOR")
-    public String testeRoleOK() {
-        return securityContext.getUser().toString();
+    public Response testeRoleOK() {
+        return Response.ok().entity(securityContext.getUser()).build();
     }
 
     @GET
     @Path("role/error")
     @RequiredRole("USUARIO")
-    public String testeRoleErro() {
-        return securityContext.getUser().toString();
+    public Response testeRoleErro() {
+        return Response.ok().entity(securityContext.getUser()).build();
     }
 
     @GET
     @Path("permission/ok")
     @RequiredPermission(resource = "Categoria", operation = "Consultar")
-    public String testePermissionOK() {
-        return securityContext.getUser().toString();
+    public Response testePermissionOK() {
+        return Response.ok().entity(securityContext.getUser()).build();
     }
 
     @GET
     @Path("permission/error")
     @RequiredPermission(resource = "Produto", operation = "Incluir")
-    public String testePermissionErro() {
-        return securityContext.getUser().toString();
-    }
-
-    @POST
-    @Path("login")
-    public String testeLogin(Credentials credentials) {
-        if (credentials.getUsername().equalsIgnoreCase("Gladson") && credentials.getPassword().equalsIgnoreCase("123456")) {
-            loggedUser.setName(credentials.getUsername());
-            loggedUser.setId("" + System.currentTimeMillis());
-            ArrayList<String> roles = new ArrayList<>();
-            roles.add("ADMINISTRATOR");
-            roles.add("MANAGER");
-            Map<String, String> permissions = new HashMap<>();
-            permissions.put("Produto", "Alterar");
-            permissions.put("Categoria", "Consultar");
-            loggedUser.setRoles(roles);
-            loggedUser.setPermissions(permissions);
-            securityContext.setUser(loggedUser);
-        } else {
-            throw new DemoiselleSecurityException(bundle.invalidCredentials(), Response.Status.NOT_ACCEPTABLE.getStatusCode());
-        }
-        return token.getKey();
+    public Response testePermissionErro() {
+        return Response.ok().entity(securityContext.getUser()).build();
     }
 
 }
