@@ -15,16 +15,21 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-    <parent>
-        <groupId>org.demoiselle.jee</groupId>
-        <artifactId>demoiselle-parent-rest</artifactId>
-        <version>3.0.0-BETA1-SNAPSHOT</version>
-    </parent>
+	<parent>
+		<groupId>org.demoiselle.jee</groupId>
+		<artifactId>demoiselle-parent</artifactId>
+		<version>3.0.0-BETA2-SNAPSHOT</version>
+		<relativePath>../demoiselle-parent</relativePath>
+	</parent>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.demoiselle.jee</groupId>
-			<artifactId>demoiselle-rest</artifactId>
+			<artifactId>demoiselle-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.demoiselle.jee</groupId>
+			<artifactId>demoiselle-security-jwt</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.demoiselle.jee</groupId>
@@ -33,10 +38,6 @@
 		<dependency>
 			<groupId>org.demoiselle.jee</groupId>
 			<artifactId>demoiselle-configuration</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.demoiselle.jee</groupId>
-			<artifactId>demoiselle-security-jwt</artifactId>
 		</dependency>
 
 		<!-- Swagger -->

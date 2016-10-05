@@ -9,6 +9,7 @@
 				<password>sa</password>
 			</security>
 		</datasource>
+		<!-- 
 		<datasource jndi-name="java:jboss/datasources/perfis"
 			pool-name="Perfis" enabled="true" use-java-context="true">
 			<connection-url>jdbc:h2:mem:perfis;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE</connection-url>
@@ -18,6 +19,7 @@
 				<password>sa</password>
 			</security>
 		</datasource>
+		 -->
 		<drivers>
 			<driver name="h2" module="com.h2database.h2">
 				<xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
