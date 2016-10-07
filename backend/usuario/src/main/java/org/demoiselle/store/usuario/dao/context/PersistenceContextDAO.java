@@ -17,7 +17,7 @@ public abstract class PersistenceContextDAO<T>  extends GenericCrudDAO<T> {
 		super(entityClass);
 	}
 
-	@PersistenceContext(unitName = "produtoPU")
+	@PersistenceContext(unitName = "ExamplePU")
 	protected EntityManager emEntity;
 
 	@Override
