@@ -9,6 +9,8 @@ import io.swagger.annotations.Api;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
+import javax.ejb.Asynchronous;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -21,9 +23,8 @@ import org.demoiselle.jee.core.interfaces.security.DemoisellePrincipal;
 import org.demoiselle.jee.core.interfaces.security.SecurityContext;
 import org.demoiselle.jee.core.interfaces.security.Token;
 import org.demoiselle.jee.core.interfaces.security.TokensManager;
-import org.demoiselle.jee.security.annotation.RequiredPermission;
 import org.demoiselle.jee.security.exception.DemoiselleSecurityException;
-import org.demoiselle.jee.security.jwt.impl.TokensManagerImpl;
+import org.demoiselle.jee.security.jwt.impl.Config;
 import org.demoiselle.jee.security.message.DemoiselleSecurityMessages;
 import org.demoiselle.jee7.security.Credentials;
 
@@ -41,6 +42,9 @@ public class AuthREST {
     private TokensManager tm;
 
     @Inject
+    private Config config;
+
+    @Inject
     private SecurityContext securityContext;
 
     @Inject
@@ -52,16 +56,20 @@ public class AuthREST {
     @Inject
     private DemoiselleSecurityMessages bundle;
 
+    @Inject
+    private Logger logger;
+
     @POST
+    @Asynchronous
     @Path("login")
     public Response testeLogin(Credentials credentials) {
         if (credentials.getPassword().equalsIgnoreCase("123456")) {
             loggedUser.setName(credentials.getUsername());
             loggedUser.setId("" + System.currentTimeMillis());
-            ArrayList<String> roles = new ArrayList<>();
+            ArrayList<String> roles = new ArrayList<String>();
             roles.add("ADMINISTRATOR");
             roles.add("MANAGER");
-            Map<String, String> permissions = new HashMap<>();
+            Map<String, String> permissions = new HashMap<String, String>();
             permissions.put("Produto", "Alterar");
             permissions.put("Categoria", "Consultar");
             loggedUser.setRoles(roles);
@@ -70,12 +78,13 @@ public class AuthREST {
         } else {
             throw new DemoiselleSecurityException(bundle.invalidCredentials(), Response.Status.NOT_ACCEPTABLE.getStatusCode());
         }
-        return Response.ok().entity(token).build();
+        return Response.ok().entity("{\"token\":\"" + token.getKey() + "\"}").build();
     }
 
     @GET
+    @Asynchronous
     @Path("publicKey")
     public Response getPublicKey() {
-        return Response.ok().entity(tm.getPublicKey()).build();
+        return Response.ok().entity("{\"publicKey\"=\"" + config.getPublicKey() + "\"}").build();
     }
 }

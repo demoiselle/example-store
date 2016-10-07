@@ -70,16 +70,16 @@
                                         $scope.myErrorHandler = function (data, status) {
                                             alert('failed to load swagger: ' + status + '   ' + data);
                                         };
-                                        $scope.publicKey = function () {
+                                        $scope.getKey = function () {
                                             return $http
                                                     .get('api/auth/publicKey')
                                                     .then(function (res) {
-                                                        return res.data.encoded;
+                                                        return res.data;
                                                     }
                                                     );
                                         };
 
-                                        $scope.publickey = $scope.publicKey();
+                                        $scope.publickey = $scope.getKey();
 
                                     });
         </script>

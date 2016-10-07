@@ -6,6 +6,7 @@
 package org.demoiselle.jee7.service;
 
 import io.swagger.annotations.Api;
+import javax.ejb.Asynchronous;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -27,7 +28,7 @@ import org.demoiselle.jee.security.message.DemoiselleSecurityMessages;
  * @author 70744416353
  */
 @Api("Teste")
-@Path("teste")
+@Path("test")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
 public class TesteREST {
@@ -45,6 +46,7 @@ public class TesteREST {
     private DemoiselleSecurityMessages bundle;
 
     @GET
+    @Asynchronous
     @Cache("max-age=600")
     @Path("cache")
     public Response testeCache() {
@@ -52,6 +54,7 @@ public class TesteREST {
     }
 
     @GET
+    @Asynchronous
     @Path("cors")
     //@CorsAllowMethods
     //@CorsAllowOrigin("http://localhost:8080/")
@@ -60,44 +63,50 @@ public class TesteREST {
     }
 
     @GET
+    @Asynchronous
     @Path("sem")
     public Response testeSem() {
         return Response.ok().entity("{\"msg\":\"Foi sem\"}").build();
     }
 
     @GET
+    @Asynchronous
     @Path("com")
     @LoggedIn
     public Response testeCom() {
-        return Response.ok().entity(securityContext.getUser()).build();
+        return Response.ok().entity(securityContext.getUser().toString()).build();
     }
 
     @GET
+    @Asynchronous
     @Path("role/ok")
     @RequiredRole("ADMINISTRATOR")
     public Response testeRoleOK() {
-        return Response.ok().entity(securityContext.getUser()).build();
+        return Response.ok().entity(securityContext.getUser().toString()).build();
     }
 
     @GET
+    @Asynchronous
     @Path("role/error")
     @RequiredRole("USUARIO")
     public Response testeRoleErro() {
-        return Response.ok().entity(securityContext.getUser()).build();
+        return Response.ok().entity(securityContext.getUser().toString()).build();
     }
 
     @GET
+    @Asynchronous
     @Path("permission/ok")
     @RequiredPermission(resource = "Categoria", operation = "Consultar")
     public Response testePermissionOK() {
-        return Response.ok().entity(securityContext.getUser()).build();
+        return Response.ok().entity(securityContext.getUser().toString()).build();
     }
 
     @GET
+    @Asynchronous
     @Path("permission/error")
     @RequiredPermission(resource = "Produto", operation = "Incluir")
     public Response testePermissionErro() {
-        return Response.ok().entity(securityContext.getUser()).build();
+        return Response.ok().entity(securityContext.getUser().toString()).build();
     }
 
 }

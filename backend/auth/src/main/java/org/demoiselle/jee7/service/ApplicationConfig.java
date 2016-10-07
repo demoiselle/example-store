@@ -18,8 +18,8 @@ public class ApplicationConfig extends Application {
 
     public ApplicationConfig() {
         BeanConfig beanConfig = new BeanConfig();
-        beanConfig.setVersion("1.8.0");
-        beanConfig.setBasePath("/app/api");
+        beanConfig.setVersion("1.0.0");
+        beanConfig.setBasePath("/auth/api");
         beanConfig.setResourcePackage("org.demoiselle.jee7.service");
         beanConfig.setScan(true);
     }
