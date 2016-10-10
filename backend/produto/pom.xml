@@ -15,24 +15,25 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
     </properties>
     
+    <parent>
+        <groupId>org.demoiselle.jee</groupId>
+        <artifactId>demoiselle-parent-rest</artifactId>
+        <version>3.0.0-BETA2-SNAPSHOT</version>
+        <relativePath>../demoiselle-parent-rest</relativePath>
+    </parent>
+    
     <dependencies>
         
-        <dependency>
-            <groupId>org.demoiselle.jee</groupId>
-            <artifactId>demoiselle-security-jwt</artifactId>
-            <version>3.0.0-BETA2-SNAPSHOT</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.demoiselle.jee</groupId>
-            <artifactId>demoiselle-persistence-jpa</artifactId>
-            <version>3.0.0-BETA2-SNAPSHOT</version>
-        </dependency>
-
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-jaxrs</artifactId>
             <version>1.5.10</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>mysql</artifactId>
+            <version>2016.9</version>
         </dependency>
     </dependencies>
 
