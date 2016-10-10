@@ -15,9 +15,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.demoiselle.jee.rest.annotation.ValidatePayload;
 
@@ -87,12 +85,4 @@ public abstract class GenericCrudWithoutSecurityREST<T> {
 		return String.valueOf(getBusiness().count());
 	}
 
-	@GET
-	@Path("list/{from}/{size}/{sort}/{order}")
-	@ApiOperation(value = "Busca usuários utilizando o GenericCRUD (Sem segurança)")
-	public Response list(@QueryParam("search") String search, @QueryParam("fields") String fields,
-			@PathParam("sort") String sort, @PathParam("order") String order, @PathParam("from") int from,
-			@PathParam("size") int size) {
-		return Response.ok().entity(getBusiness().pageResult(sort, order, from, size, search, fields, null)).build();
-	}
 }
