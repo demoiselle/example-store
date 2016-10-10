@@ -20,8 +20,8 @@ import org.demoiselle.jee.security.annotation.LoggedIn;
  *
  * @author 70744416353
  */
-@Api("Produto")
-@Path("produto")
+@Api("Teste")
+@Path("test")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
 public class ProdutoREST {

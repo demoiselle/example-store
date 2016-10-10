@@ -30,78 +30,78 @@ import io.swagger.annotations.Api;
 @Consumes(MediaType.APPLICATION_JSON)
 public class SecurityREST {
 
-	@Inject
-	private SecurityContext securityContext;
+    @Inject
+    private SecurityContext securityContext;
 
-	@Inject
-	private DemoisellePrincipal loggedUser;
+    @Inject
+    private DemoisellePrincipal loggedUser;
 
-	@Inject
-	private Token token;
+    @Inject
+    private Token token;
 
-	@Inject
-	private DemoiselleSecurityMessages bundle;
+    @Inject
+    private DemoiselleSecurityMessages bundle;
 
-	@GET
-	@Path("sem")
-	public String testeSem() {
-		return "Foi sem";
-	}
+    @GET
+    @Path("sem")
+    public String testeSem() {
+        return "Foi sem";
+    }
 
-	@GET
-	@Path("com")
-	@LoggedIn
-	public String testeCom() {
-		return loggedUser.toString();
-	}
+    @GET
+    @Path("com")
+    @LoggedIn
+    public String testeCom() {
+        return loggedUser.toString();
+    }
 
-	@GET
-	@Path("role/ok")
-	@RequiredRole("ADMINISTRATOR")
-	public String testeRoleOK() {
-		return loggedUser.toString();
-	}
+    @GET
+    @Path("role/ok")
+    @RequiredRole("ADMINISTRATOR")
+    public String testeRoleOK() {
+        return loggedUser.toString();
+    }
 
-	@GET
-	@Path("role/error")
-	@RequiredRole("USUARIO")
-	public String testeRoleErro() {
-		return loggedUser.toString();
-	}
+    @GET
+    @Path("role/error")
+    @RequiredRole("USUARIO")
+    public String testeRoleErro() {
+        return loggedUser.toString();
+    }
 
-	@GET
-	@Path("permission/ok")
-	@RequiredPermission(resource = "Categoria", operation = "Consultar")
-	public String testePermissionOK() {
-		return loggedUser.toString();
-	}
+    @GET
+    @Path("permission/ok")
+    @RequiredPermission(resource = "Categoria", operation = "Consultar")
+    public String testePermissionOK() {
+        return loggedUser.toString();
+    }
 
-	@GET
-	@Path("permission/error")
-	@RequiredPermission(resource = "Produto", operation = "Incluir")
-	public String testePermissionErro() {
-		return loggedUser.toString();
-	}
+    @GET
+    @Path("permission/error")
+    @RequiredPermission(resource = "Produto", operation = "Incluir")
+    public String testePermissionErro() {
+        return loggedUser.toString();
+    }
 
-	@POST
-	@Path("login")
-	public String testeLogin(Credentials credentials) {
-		if (credentials.getUsername().equalsIgnoreCase("Gladson")
-				&& credentials.getPassword().equalsIgnoreCase("123456")) {
-			loggedUser.setName(credentials.getUsername());
-			loggedUser.setId("" + System.currentTimeMillis());
-			ArrayList<String> roles = new ArrayList<>();
-			roles.add("ADMINISTRATOR");
-			roles.add("MANAGER");
-			Map<String, String> permissions = new HashMap<>();
-			permissions.put("Produto", "Alterar");
-			permissions.put("Categoria", "Consultar");
-			loggedUser.setRoles(roles);
-			loggedUser.setPermissions(permissions);
-			securityContext.setUser(loggedUser);
-		} else {
-			throw new DemoiselleSecurityException(bundle.invalidCredentials(), 401);
-		}
-		return token.getKey();
-	}
+    @POST
+    @Path("login")
+    public String testeLogin(Credentials credentials) {
+        if (credentials.getUsername().equalsIgnoreCase("Gladson")
+                && credentials.getPassword().equalsIgnoreCase("123456")) {
+            loggedUser.setName(credentials.getUsername());
+            loggedUser.setIdentity("" + System.currentTimeMillis());
+            ArrayList<String> roles = new ArrayList<>();
+            roles.add("ADMINISTRATOR");
+            roles.add("MANAGER");
+            Map<String, String> permissions = new HashMap<>();
+            permissions.put("Produto", "Alterar");
+            permissions.put("Categoria", "Consultar");
+            loggedUser.setRoles(roles);
+            loggedUser.setPermissions(permissions);
+            securityContext.setUser(loggedUser);
+        } else {
+            throw new DemoiselleSecurityException(bundle.invalidCredentials(), 401);
+        }
+        return token.getKey();
+    }
 }
