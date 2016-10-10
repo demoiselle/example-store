@@ -23,9 +23,12 @@ import org.demoiselle.jee.core.interfaces.security.DemoisellePrincipal;
 import org.demoiselle.jee.core.interfaces.security.SecurityContext;
 import org.demoiselle.jee.core.interfaces.security.Token;
 import org.demoiselle.jee.core.interfaces.security.TokensManager;
+import org.demoiselle.jee.security.annotation.LoggedIn;
 import org.demoiselle.jee.security.exception.DemoiselleSecurityException;
 import org.demoiselle.jee.security.jwt.impl.Config;
 import org.demoiselle.jee.security.message.DemoiselleSecurityMessages;
+import org.demoiselle.jee7.dao.UsuarioDAO;
+import org.demoiselle.jee7.entity.Usuario;
 import org.demoiselle.jee7.security.Credentials;
 
 /**
@@ -37,6 +40,9 @@ import org.demoiselle.jee7.security.Credentials;
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
 public class AuthREST {
+
+    @Inject
+    private UsuarioDAO dao;
 
     @Inject
     private TokensManager tm;
@@ -60,25 +66,31 @@ public class AuthREST {
     private Logger logger;
 
     @POST
-    @Asynchronous
     @Path("login")
     public Response testeLogin(Credentials credentials) {
-        if (credentials.getPassword().equalsIgnoreCase("123456")) {
-            loggedUser.setName(credentials.getUsername());
-            loggedUser.setId("" + System.currentTimeMillis());
+        Usuario usu = dao.verifyEmail(credentials.getUsername(), credentials.getPassword());
+        if (usu != null) {
+            loggedUser.setName(usu.getNome());
+            loggedUser.setIdentity("" + usu.getId());
             ArrayList<String> roles = new ArrayList<String>();
-            roles.add("ADMINISTRATOR");
-            roles.add("MANAGER");
+            roles.add(usu.getPerfil());
             Map<String, String> permissions = new HashMap<String, String>();
-            permissions.put("Produto", "Alterar");
-            permissions.put("Categoria", "Consultar");
             loggedUser.setRoles(roles);
             loggedUser.setPermissions(permissions);
             securityContext.setUser(loggedUser);
         } else {
             throw new DemoiselleSecurityException(bundle.invalidCredentials(), Response.Status.NOT_ACCEPTABLE.getStatusCode());
         }
-        return Response.ok().entity("{\"token\":\"" + token.getKey() + "\"}").build();
+        return Response.ok().entity("{\"token\"=\"" + token.getKey() + "\"}").build();
+    }
+
+    @GET
+    @LoggedIn
+    @Path("retoken")
+    public Response retoken() {
+        loggedUser = securityContext.getUser();
+        securityContext.setUser(loggedUser);
+        return Response.ok().entity("{\"token\"=\"" + token.getKey() + "\"}").build();
     }
 
     @GET

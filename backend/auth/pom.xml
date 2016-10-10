@@ -22,56 +22,13 @@
             <artifactId>swagger-jaxrs</artifactId>
             <version>1.5.10</version>
         </dependency>
-<!--        
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-
+                
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
-            <artifactId>jaxrs-cdi</artifactId>
+            <artifactId>mysql</artifactId>
             <version>2016.9</version>
-                        <version>2016.9</version>
-            <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>arquillian</artifactId>
-            <version>2016.9</version>
-            <scope>test</scope>
-        </dependency>
-         Brought in via Arquillian BOM, see dependencyManagement section above 
-        <dependency>
-            <groupId>org.jboss.arquillian.junit</groupId>
-            <artifactId>arquillian-junit-container</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>swarmtool</artifactId>
-            <version>2016.9</version>
-            <classifier>standalone</classifier>
-        </dependency>
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>jaxrs</artifactId>
-            <version>2016.9</version>
-            <scope>test</scope>
-        </dependency>-->
+        
     </dependencies>
-    <!--    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.jboss.arquillian</groupId>
-                <artifactId>arquillian-bom</artifactId>
-                <version>1.1.10.Final</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>-->
  
 </project>
