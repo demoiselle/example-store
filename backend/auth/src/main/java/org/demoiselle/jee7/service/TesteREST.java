@@ -16,6 +16,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import javax.ws.rs.core.Response;
 import org.demoiselle.jee.core.interfaces.security.DemoisellePrincipal;
@@ -71,33 +73,32 @@ public class TesteREST {
         }
         return Response.ok().entity("{\"token\":\"" + token.getKey() + "\"}").build();
     }
-
+    
     @GET
-    @Asynchronous
+    @LoggedIn
     @Cache("max-age=600")
     @Path("cache")
-    public Response testeCache() {
-        return Response.ok("{\"msg\":\"cache ok\"}").build();
+    public void testeCache(@Suspended final AsyncResponse asyncResponse) {
+        asyncResponse.resume(doCache());
+    }
+
+    private Response doCache() {
+       return Response.ok("{\"msg\":\"cache ok\"}").build();
     }
 
     @GET
-    @Asynchronous
     @Path("cors")
-    //@CorsAllowMethods
-    //@CorsAllowOrigin("http://localhost:8080/")
     public Response testeCors() {
         return Response.ok("{\"msg\":\"cors ok\"}").build();
     }
 
     @GET
-    @Asynchronous
     @Path("sem")
     public Response testeSem() {
         return Response.ok().entity("{\"msg\":\"Foi sem\"}").build();
     }
 
     @GET
-    @Asynchronous
     @Path("com")
     @LoggedIn
     public Response testeCom() {
@@ -105,7 +106,6 @@ public class TesteREST {
     }
 
     @GET
-    @Asynchronous
     @Path("role/ok")
     @RequiredRole("ADMINISTRATOR")
     public Response testeRoleOK() {
@@ -113,7 +113,6 @@ public class TesteREST {
     }
 
     @GET
-    @Asynchronous
     @Path("role/error")
     @RequiredRole("USUARIO")
     public Response testeRoleErro() {
@@ -121,7 +120,6 @@ public class TesteREST {
     }
 
     @GET
-    @Asynchronous
     @Path("permission/ok")
     @RequiredPermission(resource = "Categoria", operation = "Consultar")
     public Response testePermissionOK() {
@@ -129,7 +127,6 @@ public class TesteREST {
     }
 
     @GET
-    @Asynchronous
     @Path("permission/error")
     @RequiredPermission(resource = "Produto", operation = "Incluir")
     public Response testePermissionErro() {

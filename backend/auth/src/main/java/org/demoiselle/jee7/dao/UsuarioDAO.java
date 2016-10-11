@@ -11,6 +11,8 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.ws.rs.core.Response;
+import org.demoiselle.jee.security.exception.DemoiselleSecurityException;
 import org.demoiselle.jee7.dao.context.PersistenceContextDAO;
 import org.demoiselle.jee7.entity.Usuario;
 
@@ -33,9 +35,21 @@ public class UsuarioDAO extends PersistenceContextDAO<Usuario> {
                 .where(builder.equal(from.get("email"), email))
         );
 
+        if (typedQuery.getResultList().isEmpty()) {
+            throw new DemoiselleSecurityException("Usuário não existe", Response.Status.UNAUTHORIZED.getStatusCode());
+        }
+
         Usuario usu = typedQuery.getResultList().get(0);
 
-        return ((usu != null) && (usu.getSenha().equalsIgnoreCase(password))) ? usu : null;
+        if (usu == null) {
+            throw new DemoiselleSecurityException("Usuário não existe", Response.Status.UNAUTHORIZED.getStatusCode());
+        }
+
+        if (!usu.getSenha().equalsIgnoreCase(password)) {
+            throw new DemoiselleSecurityException("Senha incorreta", Response.Status.UNAUTHORIZED.getStatusCode());
+        }
+
+        return usu;
 
         //Usuario usu = find("email", email, "email", "ASC", 1, 1).get(0);
         //return null;//((usu != null) && (usu.getSenha().equalsIgnoreCase(password))) ? usu : null;

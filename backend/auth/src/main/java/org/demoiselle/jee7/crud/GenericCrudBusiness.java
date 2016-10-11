@@ -76,22 +76,22 @@ public abstract class GenericCrudBusiness<T> {
 		return getPersistenceDAO().findRange(range);
 	}
 
-	public GenericDataPage pageResult(String sort, String order, Integer from, Integer size, String search,
-			String fields, HashMap<String, String> filter) {
-		return getPersistenceDAO().pageResult(sort, order, from, size, search, fields, filter);
-	}
-
-	public GenericDataPage list(String field, String order) {
-		return getPersistenceDAO().list(field, order);
-	}
+//	public GenericDataPage pageResult(String sort, String order, Integer from, Integer size, String search,
+//			String fields, HashMap<String, String> filter) {
+//		return getPersistenceDAO().pageResult(sort, order, from, size, search, fields, filter);
+//	}
+//
+//	public GenericDataPage list(String field, String order) {
+//		return getPersistenceDAO().list(field, order);
+//	}
 
 	public GenericDataPage list() {
 		return getPersistenceDAO().list();
 	}
 
-	public List<T> list(String field, String order, int init, int qtde) {
-		return getPersistenceDAO().list(field, order, init, qtde);
-	}
+//	public List<T> list(String field, String order, int init, int qtde) {
+//		return getPersistenceDAO().list(field, order, init, qtde);
+//	}
 
 	public List<T> find(String whereField, String whereValue, String fieldOrder, String order, int init, int qtde) {
 		return getPersistenceDAO().find(whereField, whereValue, fieldOrder, order, init, qtde);
@@ -101,8 +101,8 @@ public abstract class GenericCrudBusiness<T> {
 		return getPersistenceDAO().count();
 	}
 
-	public Long count(String whereField, String whereValue) {
-		return getPersistenceDAO().count(whereField, whereValue);
-	}
+//	public Long count(String whereField, String whereValue) {
+//		return getPersistenceDAO().count(whereField, whereValue);
+//	}
 
 }

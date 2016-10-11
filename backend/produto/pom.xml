@@ -30,11 +30,6 @@
             <version>1.5.10</version>
         </dependency>
         
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>mysql</artifactId>
-            <version>2016.9</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -53,5 +48,20 @@
                 </configuration>
             </plugin>
         </plugins>
-    </build>  
+    </build> 
+    
+    <profiles>
+        <profile>
+            <id>wildfly-swarm</id>
+            <dependencies>
+                <!-- WildFly Default Swarm Fractions -->
+                <dependency>
+                    <groupId>org.wildfly.swarm</groupId>
+                    <artifactId>mysql</artifactId>
+                    <version>2016.9</version>
+                </dependency>
+            </dependencies>
+        </profile>
+        <!--mvn clean package -Pwildfly-swarm && java -jar -Xmx128m target/produto-swarm.jar -->
+    </profiles> 
 </project>

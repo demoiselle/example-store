@@ -17,6 +17,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import javax.ws.rs.core.Response;
 import org.demoiselle.jee.core.interfaces.security.DemoisellePrincipal;
@@ -66,8 +68,13 @@ public class AuthREST {
     private Logger logger;
 
     @POST
+    @Asynchronous
     @Path("login")
-    public Response testeLogin(Credentials credentials) {
+    public void testeLogin(@Suspended final AsyncResponse asyncResponse, Credentials credentials) {
+        asyncResponse.resume(doLogin(credentials));
+    }
+
+    private Response doLogin(Credentials credentials) {
         Usuario usu = dao.verifyEmail(credentials.getUsername(), credentials.getPassword());
         if (usu != null) {
             loggedUser.setName(usu.getNome());
@@ -79,24 +86,27 @@ public class AuthREST {
             loggedUser.setPermissions(permissions);
             securityContext.setUser(loggedUser);
         } else {
-            throw new DemoiselleSecurityException(bundle.invalidCredentials(), Response.Status.NOT_ACCEPTABLE.getStatusCode());
+            throw new DemoiselleSecurityException(bundle.invalidCredentials(), Response.Status.UNAUTHORIZED.getStatusCode());
         }
-        return Response.ok().entity("{\"token\"=\"" + token.getKey() + "\"}").build();
+        return Response.ok().entity("{\"token\":\"" + token.getKey() + "\"}").build();
     }
 
     @GET
     @LoggedIn
     @Path("retoken")
-    public Response retoken() {
+    public void retoken(@Suspended final AsyncResponse asyncResponse) {
+        asyncResponse.resume(doRetoken());
+    }
+
+    private Response doRetoken() {
         loggedUser = securityContext.getUser();
         securityContext.setUser(loggedUser);
-        return Response.ok().entity("{\"token\"=\"" + token.getKey() + "\"}").build();
+        return Response.ok().entity("{\"token\":\"" + token.getKey() + "\"}").build();
     }
 
     @GET
-    @Asynchronous
     @Path("publicKey")
     public Response getPublicKey() {
-        return Response.ok().entity("{\"publicKey\"=\"" + config.getPublicKey() + "\"}").build();
+        return Response.ok().entity("{\"publicKey\":\"" + config.getPublicKey() + "\"}").build();
     }
 }
