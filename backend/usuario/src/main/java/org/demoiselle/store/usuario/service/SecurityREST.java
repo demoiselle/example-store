@@ -11,6 +11,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.demoiselle.jee.core.api.security.DemoisellePrincipal;
 import org.demoiselle.jee.core.api.security.SecurityContext;
@@ -21,12 +22,13 @@ import org.demoiselle.jee.security.annotation.RequiredRole;
 import org.demoiselle.jee.security.exception.DemoiselleSecurityException;
 import org.demoiselle.jee.security.message.DemoiselleSecurityMessages;
 import org.demoiselle.store.usuario.security.Credentials;
+import org.jose4j.json.internal.json_simple.JSONObject;
 
 import io.swagger.annotations.Api;
 
 @Path("security")
 @Api("Segurança")
-@Produces(MediaType.TEXT_PLAIN)
+@Produces({ MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON })
 @Consumes(MediaType.APPLICATION_JSON)
 public class SecurityREST {
 
@@ -42,45 +44,58 @@ public class SecurityREST {
 	@Inject
 	private DemoiselleSecurityMessages bundle;
 
+	@SuppressWarnings("unchecked")
+	public JSONObject loggedUserObject() {
+		JSONObject json = new JSONObject();
+		json.put("identity", loggedUser.getIdentity());
+		json.put("name", loggedUser.getName());
+		json.put("roles", loggedUser.getRoles());
+		json.put("permissions", loggedUser.getPermissions());
+		return json;
+	}
+	
 	@GET
 	@Path("sem")
-	public String testeSem() {
-		return "Foi sem";
+	@SuppressWarnings("unchecked")
+	public Response testeSem() {
+		JSONObject json = new JSONObject();
+		json.put("message", "Foi sem");		
+		return Response.ok(json).build();
 	}
 
 	@GET
 	@Path("com")
 	@LoggedIn
-	public String testeCom() {
-		return loggedUser.toString();
+	public Response testeCom() {
+		return Response.ok(loggedUserObject()).build();
 	}
 
 	@GET
 	@Path("role/ok")
 	@RequiredRole("ADMINISTRATOR")
-	public String testeRoleOK() {
-		return loggedUser.toString();
+	public Response testeRoleOK() {
+		return Response.ok(loggedUserObject()).build();
 	}
 
 	@GET
 	@Path("role/error")
 	@RequiredRole("USUARIO")
-	public String testeRoleErro() {
-		return loggedUser.toString();
+	public Response testeRoleErro() {
+		return Response.ok(loggedUserObject()).build();
 	}
 
 	@GET
 	@Path("permission/ok")
 	@RequiredPermission(resource = "Categoria", operation = "Consultar")
-	public String testePermissionOK() {
-		return loggedUser.toString();
+	public Response testePermissionOK() {
+		return Response.ok(loggedUserObject()).build();
 	}
 
 	@GET
 	@Path("permission/error")
 	@RequiredPermission(resource = "Produto", operation = "Incluir")
-	public String testePermissionErro() {
-		return loggedUser.toString();
+	public Response testePermissionErro() {
+		return Response.ok(loggedUserObject()).build();
 	}
 
 	@POST

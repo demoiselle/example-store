@@ -8,11 +8,6 @@ package org.demoiselle.store.usuario.service;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -46,8 +41,7 @@ public class UsuarioREST extends GenericCrudWithoutSecurityREST<Usuario> {
 	@ValidatePayload
 	@Path("transacional1")
 	@ApiOperation(value = "Testa a transação (JTA/JPA)", notes = "Esta operação dará erro mas é utilizada a UserTransaction, quer permite que das 3 inserções somente a primeira seja efetivada. Sendo que a terceira dará erro de UNIQUE KEY VIOLATION do Email do usuário.")
-	public void create1(Usuario entity) throws SecurityException, IllegalStateException, RollbackException,
-			HeuristicMixedException, HeuristicRollbackException, SystemException, NotSupportedException {
+	public void create1(Usuario entity) throws Exception {
 		business.createTesteTransacional1(entity);
 	}
 

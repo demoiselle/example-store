@@ -11,8 +11,7 @@
 	<name>usuario</name>
 
 	<properties>
-		<endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>		
 	</properties>
 
 	<parent>
@@ -49,16 +48,6 @@
 	</dependencies>
 
 	<build>
-		<!-- Substitui as variáveis do Maven nos properties -->
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-				<includes>
-					<include>**/*</include>
-				</includes>
-			</resource>
-		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

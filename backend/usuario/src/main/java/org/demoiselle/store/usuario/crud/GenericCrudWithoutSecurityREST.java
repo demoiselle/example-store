@@ -36,7 +36,7 @@ public abstract class GenericCrudWithoutSecurityREST<T> {
 
 	@POST
 	@ValidatePayload
-	@ApiOperation(value = "Cria usuário utilizando o GenericCRUD (Sem segurança)")
+	@ApiOperation(value = "Cria objeto utilizando o GenericCRUD (Sem segurança)")
 	public void create(T entity) {
 		getBusiness().create(entity);
 	}
@@ -44,7 +44,7 @@ public abstract class GenericCrudWithoutSecurityREST<T> {
 	@PUT
 	@Path("{id}")
 	@ValidatePayload
-	@ApiOperation(value = "Edita usuário utilizando o GenericCRUD (Sem segurança)")
+	@ApiOperation(value = "Edita objeto utilizando o GenericCRUD (Sem segurança)")
 	public void edit(@PathParam("id") Integer id, T entity) {
 		getBusiness().edit(id, entity);
 	}
@@ -52,27 +52,27 @@ public abstract class GenericCrudWithoutSecurityREST<T> {
 	@DELETE
 	@Path("{id}")
 	@ValidatePayload
-	@ApiOperation(value = "Remove usuário utilizando o GenericCRUD (Sem segurança)")
+	@ApiOperation(value = "Remove objeto utilizando o GenericCRUD (Sem segurança)")
 	public void remove(@PathParam("id") Integer id) {
 		getBusiness().remove(id);
 	}
 
 	@GET
 	@Path("{id}")
-	@ApiOperation(value = "Busca pelo ID usuário utilizando o GenericCRUD (Sem segurança)")
+	@ApiOperation(value = "Busca pelo ID objeto utilizando o GenericCRUD (Sem segurança)")
 	public T find(@PathParam("id") Integer id) {
 		return getBusiness().find(id);
 	}
 
 	@GET
-	@ApiOperation(value = "Busca todos os usuários utilizando o GenericCRUD (Sem segurança)")
+	@ApiOperation(value = "Busca todos os objetos utilizando o GenericCRUD (Sem segurança)")
 	public List<T> findAll() {
 		return getBusiness().findAll();
 	}
 
 	@GET
 	@Path("{from}/{to}")
-	@ApiOperation(value = "Busca por intervalo de ID os usuários utilizando o GenericCRUD (Sem segurança)")
+	@ApiOperation(value = "Busca por intervalo de ID os objetos utilizando o GenericCRUD (Sem segurança)")
 	public List<T> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
 		return getBusiness().findRange(new int[] { from, to });
 	}
@@ -80,7 +80,7 @@ public abstract class GenericCrudWithoutSecurityREST<T> {
 	@GET
 	@Path("count")
 	@Produces(MediaType.TEXT_PLAIN)
-	@ApiOperation(value = "Exibe o total de usuários utilizando o GenericCRUD (Sem segurança)")
+	@ApiOperation(value = "Exibe o total de objetos utilizando o GenericCRUD (Sem segurança)")
 	public String count() {
 		return String.valueOf(getBusiness().count());
 	}
