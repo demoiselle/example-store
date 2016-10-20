@@ -11,18 +11,18 @@ import javax.persistence.PersistenceContext;
 
 import org.demoiselle.jee.persistence.jpa.crud.GenericCrudDAO;
 
-public abstract class PersistenceContextDAO<T>  extends GenericCrudDAO<T> {
+public abstract class PersistenceContextMasterDAO<T> extends GenericCrudDAO<T> {
 
-	public PersistenceContextDAO(Class<T> entityClass) {
+	public PersistenceContextMasterDAO(Class<T> entityClass) {
 		super(entityClass);
 	}
 
-	@PersistenceContext(unitName = "TenantsPU")
+	@PersistenceContext(unitName = "MasterPU")
 	protected EntityManager emEntity;
 
 	@Override
 	protected EntityManager getEntityManager() {
 		return emEntity;
 	}
-	
+
 }

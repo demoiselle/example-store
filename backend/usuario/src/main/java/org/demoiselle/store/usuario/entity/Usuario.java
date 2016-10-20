@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import io.swagger.annotations.ApiModelProperty;
 
 @Entity
-@Table(catalog = "store", schema = "")
+@Table
 @XmlRootElement
 @NamedQueries({ @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
 		@NamedQuery(name = "Usuario.findById", query = "SELECT u FROM Usuario u WHERE u.id = :id"),
