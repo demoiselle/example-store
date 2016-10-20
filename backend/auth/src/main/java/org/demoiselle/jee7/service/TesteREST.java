@@ -6,14 +6,13 @@
 package org.demoiselle.jee7.service;
 
 import io.swagger.annotations.Api;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import javax.ejb.Asynchronous;
+import io.swagger.jaxrs.PATCH;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.container.AsyncResponse;
@@ -23,13 +22,14 @@ import javax.ws.rs.core.Response;
 import org.demoiselle.jee.core.api.security.DemoisellePrincipal;
 import org.demoiselle.jee.core.api.security.SecurityContext;
 import org.demoiselle.jee.core.api.security.Token;
-import org.demoiselle.jee.rest.annotation.Cache;
+import org.demoiselle.jee.security.annotation.Cors;
 import org.demoiselle.jee.security.annotation.LoggedIn;
 import org.demoiselle.jee.security.annotation.RequiredPermission;
 import org.demoiselle.jee.security.annotation.RequiredRole;
 import org.demoiselle.jee.security.exception.DemoiselleSecurityException;
 import org.demoiselle.jee.security.message.DemoiselleSecurityMessages;
 import org.demoiselle.jee7.security.Credentials;
+import org.demoiselle.jee.rest.annotation.CacheControl;
 
 /**
  *
@@ -59,37 +59,27 @@ public class TesteREST {
         if (credentials.getPassword().equalsIgnoreCase("123456")) {
             loggedUser.setName(credentials.getUsername());
             loggedUser.setIdentity("" + System.currentTimeMillis());
-            ArrayList<String> roles = new ArrayList<String>();
-            roles.add("ADMINISTRATOR");
-            roles.add("MANAGER");
-            Map<String, String> permissions = new HashMap<String, String>();
-            permissions.put("Produto", "Insert");
-            permissions.put("Categoria", "Consultar");
-            loggedUser.setRoles(roles);
-            loggedUser.setPermissions(permissions);
+            loggedUser.addRole("ADMINISTRATOR");
+            loggedUser.addRole("MANAGER");
+            loggedUser.addPermission("Produto", "Insert");
+            loggedUser.addPermission("Categoria", "Consultar");
             securityContext.setUser(loggedUser);
         } else {
             throw new DemoiselleSecurityException(bundle.invalidCredentials(), Response.Status.NOT_ACCEPTABLE.getStatusCode());
         }
         return Response.ok().entity("{\"token\":\"" + token.getKey() + "\"}").build();
     }
-    
+
     @GET
     @LoggedIn
-    @Cache("max-age=600")
     @Path("cache")
+    @CacheControl("max-age=600")
     public void testeCache(@Suspended final AsyncResponse asyncResponse) {
         asyncResponse.resume(doCache());
     }
 
     private Response doCache() {
-       return Response.ok("{\"msg\":\"cache ok\"}").build();
-    }
-
-    @GET
-    @Path("cors")
-    public Response testeCors() {
-        return Response.ok("{\"msg\":\"cors ok\"}").build();
+        return Response.ok("{\"msg\":\"cache ok\"}").build();
     }
 
     @GET
@@ -131,6 +121,37 @@ public class TesteREST {
     @RequiredPermission(resource = "Produto", operation = "Incluir")
     public Response testePermissionErro() {
         return Response.ok().entity(securityContext.getUser().toString()).build();
+    }
+
+    @GET
+    @Cors
+    @CacheControl("max-age=600")
+    public Response testeGet() {
+        return Response.ok("{\"msg\":\"get ok\"}").build();
+    }
+
+    @Cors
+    @POST
+    public Response testePost() {
+        return Response.ok("{\"msg\":\"post ok\"}").build();
+    }
+
+    @PUT
+    @Cors
+    public Response testePut() {
+        return Response.ok("{\"msg\":\"put ok\"}").build();
+    }
+
+    @Cors
+    @PATCH
+    public Response testePatch() {
+        return Response.ok("{\"msg\":\"patch ok\"}").build();
+    }
+
+    @Cors
+    @DELETE
+    public Response testeDelete() {
+        return Response.ok("{\"msg\":\"delete ok\"}").build();
     }
 
 }

@@ -15,12 +15,6 @@
             <div ng-show="!isLoading">
                 <div>
                     <div >
-                        <label>CHAVE PÚBLICA</label>
-                        <input class="form-control"  type="text" ng-model="publickey">
-                    </div>
-                </div>
-                <div>
-                    <div >
                         <label>Token</label>
                         <input class="form-control" type="text" ng-model="$root.token">
                     </div>
@@ -74,7 +68,7 @@
                                             return $http
                                                     .get('api/auth/publicKey')
                                                     .then(function (res) {
-                                                        return res.data;
+                                                        return res.data.publicKey;
                                                     }
                                                     );
                                         };

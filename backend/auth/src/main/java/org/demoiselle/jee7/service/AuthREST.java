@@ -6,9 +6,6 @@
 package org.demoiselle.jee7.service;
 
 import io.swagger.annotations.Api;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
 import javax.ejb.Asynchronous;
 import javax.inject.Inject;
@@ -25,9 +22,10 @@ import org.demoiselle.jee.core.api.security.DemoisellePrincipal;
 import org.demoiselle.jee.core.api.security.SecurityContext;
 import org.demoiselle.jee.core.api.security.Token;
 import org.demoiselle.jee.core.api.security.TokensManager;
+import org.demoiselle.jee.security.annotation.Cors;
 import org.demoiselle.jee.security.annotation.LoggedIn;
 import org.demoiselle.jee.security.exception.DemoiselleSecurityException;
-import org.demoiselle.jee.security.jwt.impl.Config;
+import org.demoiselle.jee.security.jwt.impl.DemoiselleSecurityJWTConfig;
 import org.demoiselle.jee.security.message.DemoiselleSecurityMessages;
 import org.demoiselle.jee7.dao.UsuarioDAO;
 import org.demoiselle.jee7.entity.Usuario;
@@ -50,7 +48,7 @@ public class AuthREST {
     private TokensManager tm;
 
     @Inject
-    private Config config;
+    private DemoiselleSecurityJWTConfig config;
 
     @Inject
     private SecurityContext securityContext;
@@ -68,8 +66,8 @@ public class AuthREST {
     private Logger logger;
 
     @POST
+    @Cors
     @Asynchronous
-    @Path("login")
     public void testeLogin(@Suspended final AsyncResponse asyncResponse, Credentials credentials) {
         asyncResponse.resume(doLogin(credentials));
     }
@@ -79,11 +77,10 @@ public class AuthREST {
         if (usu != null) {
             loggedUser.setName(usu.getNome());
             loggedUser.setIdentity("" + usu.getId());
-            ArrayList<String> roles = new ArrayList<String>();
-            roles.add(usu.getPerfil());
-            Map<String, String> permissions = new HashMap<String, String>();
-            loggedUser.setRoles(roles);
-            loggedUser.setPermissions(permissions);
+            loggedUser.addRole(usu.getPerfil());
+            loggedUser.addPermission("SWAGGER", "LIST");
+            loggedUser.addParam("Fone", usu.getFone());
+            loggedUser.addParam("Email", usu.getEmail());
             securityContext.setUser(loggedUser);
         } else {
             throw new DemoiselleSecurityException(bundle.invalidCredentials(), Response.Status.UNAUTHORIZED.getStatusCode());
@@ -92,8 +89,8 @@ public class AuthREST {
     }
 
     @GET
+    @Cors
     @LoggedIn
-    @Path("retoken")
     public void retoken(@Suspended final AsyncResponse asyncResponse) {
         asyncResponse.resume(doRetoken());
     }
