@@ -35,131 +35,135 @@ import org.demoiselle.store.usuario.configuration.AppConfiguration;
 import org.demoiselle.store.usuario.entity.Tenant;
 
 import io.swagger.annotations.Api;
+import org.demoiselle.jee.security.annotation.Cors;
 
 @Path("multiTenancy")
 @Api("Multi-Tenancy")
-@Consumes({ MediaType.APPLICATION_JSON })
-@Produces({ MediaType.APPLICATION_JSON })
+@Consumes({MediaType.APPLICATION_JSON})
+@Produces({MediaType.APPLICATION_JSON})
 @RequestScoped
 public class MultiTenancyREST {
 
-	@Inject
-	private TenancyBC business;
+    @Inject
+    private TenancyBC business;
 
-	private DataSource dataSource;
+    private DataSource dataSource;
 
-	private Logger logger;
+    private Logger logger;
 
-	@Inject
-	private AppConfiguration configuration;
+    @Inject
+    private AppConfiguration configuration;
 
-	@GET
-	@Path("list")
-	public List<Tenant> listAllTenants() throws Exception {
-		return business.listAllTenants();
-	}
+    @GET
+    @Cors
 
-	@DELETE
-	@Path("deleteTenant/{id}")
-	public Response deleteTenant(@PathParam("id") Integer id) throws Exception {
-		try {
+    public List<Tenant> listAllTenants() throws Exception {
+        return business.listAllTenants();
+    }
 
-			// Add Tenancy in table/master schema
-			Tenant t = business.find(id);
-			business.remove(t.getId());
+    @DELETE
+    @Path("deleteTenant/{id}")
+    public Response deleteTenant(@PathParam("id") Integer id) throws Exception {
+        try {
 
-			// Create Schema
-			final Context init = new InitialContext();
-			dataSource = (DataSource) init.lookup(configuration.getMultitenacyTenantsDatabaseDatasource());
+            // Add Tenancy in table/master schema
+            Tenant t = business.find(id);
+            business.remove(t.getId());
 
-			Connection conn = dataSource.getConnection();
+            // Create Schema
+            final Context init = new InitialContext();
+            dataSource = (DataSource) init.lookup(configuration.getMultitenacyTenantsDatabaseDatasource());
 
-			// Cria o BANCO/SCHEMA
-			conn.createStatement().execute(configuration.getMultitenacyDropDatabaseSQL() + " " + t.getName());
+            Connection conn = dataSource.getConnection();
 
-			// Como a conexão esta fora de contexto é importante fechar ela aqui
-			if (!conn.isClosed())
-				conn.close();
+            // Cria o BANCO/SCHEMA
+            conn.createStatement().execute(configuration.getMultitenacyDropDatabaseSQL() + " " + t.getName());
 
-			return Response.ok().build();
+            // Como a conexão esta fora de contexto é importante fechar ela aqui
+            if (!conn.isClosed()) {
+                conn.close();
+            }
 
-		} catch (final Exception e) {
-			logger.log(Level.INFO, "Error trying to alter schema", e);
-			return Response.serverError().build();
-		}
-	}
+            return Response.ok().build();
 
-	@POST
-	@Path("createTenant/{name}")
-	public Response createTenant(@PathParam("name") String name) throws Exception {
-		try {
-			// Add Tenancy in table/master schema
-			Tenant t = new Tenant();
-			t.setName(name);
-			business.create(t);
+        } catch (final Exception e) {
+            logger.log(Level.INFO, "Error trying to alter schema", e);
+            return Response.serverError().build();
+        }
+    }
 
-			// Create Schema
-			final Context init = new InitialContext();
-			dataSource = (DataSource) init.lookup(configuration.getMultitenacyTenantsDatabaseDatasource());
+    @POST
+    @Path("createTenant/{name}")
+    public Response createTenant(@PathParam("name") String name) throws Exception {
+        try {
+            // Add Tenancy in table/master schema
+            Tenant t = new Tenant();
+            t.setName(name);
+            business.create(t);
 
-			Connection conn = dataSource.getConnection();
+            // Create Schema
+            final Context init = new InitialContext();
+            dataSource = (DataSource) init.lookup(configuration.getMultitenacyTenantsDatabaseDatasource());
 
-			// Cria o BANCO/SCHEMA
-			conn.createStatement().execute(configuration.getMultitenacyCreateDatabaseSQL() + " " + t.getName());
+            Connection conn = dataSource.getConnection();
 
-			// Usa o BANCO/SCHEMA (MySQL)
-			conn.createStatement().execute(configuration.getMultitenacySetDatabaseSQL() + " " + t.getName());
+            // Cria o BANCO/SCHEMA
+            conn.createStatement().execute(configuration.getMultitenacyCreateDatabaseSQL() + " " + t.getName());
 
-			// Roda o DDL - DROP
-			dropDatabase(conn);
+            // Usa o BANCO/SCHEMA (MySQL)
+            conn.createStatement().execute(configuration.getMultitenacySetDatabaseSQL() + " " + t.getName());
 
-			// Roda o DDL - CREATE
-			createDatabase(conn);
+            // Roda o DDL - DROP
+            dropDatabase(conn);
 
-			// Como a conexão esta fora de contexto é importante fechar ela aqui
-			if (!conn.isClosed())
-				conn.close();
+            // Roda o DDL - CREATE
+            createDatabase(conn);
 
-			return Response.ok().build();
+            // Como a conexão esta fora de contexto é importante fechar ela aqui
+            if (!conn.isClosed()) {
+                conn.close();
+            }
 
-		} catch (final Exception e) {
-			logger.log(Level.INFO, "Error trying to alter schema", e);
-			return Response.serverError().build();
-		}
+            return Response.ok().build();
 
-	}
+        } catch (final Exception e) {
+            logger.log(Level.INFO, "Error trying to alter schema", e);
+            return Response.serverError().build();
+        }
 
-	private void dropDatabase(Connection conn) throws SQLException {
-		String filename = configuration.getMultitenacyDropDatabaseDDL();
-		List<String> ddl = getDDLString(filename);
-		for (String ddlLine : ddl) {
-			conn.createStatement().execute(ddlLine);
-		}
-	}
+    }
 
-	private void createDatabase(Connection conn) throws SQLException {
-		String filename = configuration.getMultitenacyCreateDatabaseDDL();
-		List<String> ddl = getDDLString(filename);
-		for (String ddlLine : ddl) {
-			conn.createStatement().execute(ddlLine);
-		}
-	}
+    private void dropDatabase(Connection conn) throws SQLException {
+        String filename = configuration.getMultitenacyDropDatabaseDDL();
+        List<String> ddl = getDDLString(filename);
+        for (String ddlLine : ddl) {
+            conn.createStatement().execute(ddlLine);
+        }
+    }
 
-	private List<String> getDDLString(String filename) {
-		List<String> records = new ArrayList<String>();
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader(filename));
-			String line;
-			while ((line = reader.readLine()) != null) {
-				records.add(line);
-			}
-			reader.close();
-			return records;
-		} catch (Exception e) {
-			System.err.format("Exception occurred trying to read '%s'.", filename);
-			// e.printStackTrace();
-			return null;
-		}
-	}
+    private void createDatabase(Connection conn) throws SQLException {
+        String filename = configuration.getMultitenacyCreateDatabaseDDL();
+        List<String> ddl = getDDLString(filename);
+        for (String ddlLine : ddl) {
+            conn.createStatement().execute(ddlLine);
+        }
+    }
+
+    private List<String> getDDLString(String filename) {
+        List<String> records = new ArrayList<String>();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(filename));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                records.add(line);
+            }
+            reader.close();
+            return records;
+        } catch (Exception e) {
+            System.err.format("Exception occurred trying to read '%s'.", filename);
+            // e.printStackTrace();
+            return null;
+        }
+    }
 
 }
