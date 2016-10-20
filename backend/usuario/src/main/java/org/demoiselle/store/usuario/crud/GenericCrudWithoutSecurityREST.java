@@ -63,6 +63,13 @@ public abstract class GenericCrudWithoutSecurityREST<T> {
 	public T find(@PathParam("id") Integer id) {
 		return getBusiness().find(id);
 	}
+	
+	@GET
+	@Path("{field}/{value}/{start}/{size}")
+	@ApiOperation(value = "Busca pelo campo/valor do objeto utilizando o GenericCRUD (Sem segurança)")
+	public List<T> findByField(@PathParam("field") String field, @PathParam("value") String value, @PathParam("start") int start, @PathParam("size") int size) {
+		return getBusiness().find(field, value, "id", "ASC", start, size);
+	}
 
 	@GET
 	@ApiOperation(value = "Busca todos os objetos utilizando o GenericCRUD (Sem segurança)")

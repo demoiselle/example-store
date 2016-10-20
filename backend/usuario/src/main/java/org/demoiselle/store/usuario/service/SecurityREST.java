@@ -2,6 +2,7 @@ package org.demoiselle.store.usuario.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -53,13 +54,13 @@ public class SecurityREST {
 		json.put("permissions", loggedUser.getPermissions());
 		return json;
 	}
-	
+
 	@GET
 	@Path("sem")
 	@SuppressWarnings("unchecked")
 	public Response testeSem() {
 		JSONObject json = new JSONObject();
-		json.put("message", "Foi sem");		
+		json.put("message", "Foi sem");
 		return Response.ok(json).build();
 	}
 
@@ -108,9 +109,15 @@ public class SecurityREST {
 			ArrayList<String> roles = new ArrayList<>();
 			roles.add("ADMINISTRATOR");
 			roles.add("MANAGER");
-			Map<String, String> permissions = new HashMap<>();
-			permissions.put("Produto", "Alterar");
-			permissions.put("Categoria", "Consultar");
+			
+			Map<String, List<String>> permissions = new HashMap<>();
+			ArrayList<String> p1 = new ArrayList<String>();
+			p1.add("Alterar");
+			ArrayList<String> p2 = new ArrayList<String>();
+			p2.add("Consultar");
+			
+			permissions.put("Produto", p1);
+			permissions.put("Categoria", p2);
 			loggedUser.setRoles(roles);
 			loggedUser.setPermissions(permissions);
 			securityContext.setUser(loggedUser);
