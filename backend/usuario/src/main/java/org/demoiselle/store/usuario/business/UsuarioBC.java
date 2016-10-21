@@ -65,15 +65,16 @@ public class UsuarioBC extends GenericCrudBusiness<Usuario> {
 
 		// Aplica o script no usuário do contexto de multitenancy
 		// multiTenancyContext
-		if (!multiTenancyContext.getTenant().getScriptCreateUser().isEmpty()) {
-			
+		if (multiTenancyContext.getTenant().getScriptCreateUser() != null
+				&& !multiTenancyContext.getTenant().getScriptCreateUser().isEmpty()) {
+
 			SimpleBindings vars = new SimpleBindings();
 			vars.put("usuario", entity);
 			vars.put("tenant", multiTenancyContext.getTenant());
-			
+
 			scriptManager.loadEngine("groovy");
 			scriptManager.loadScript("createUser", multiTenancyContext.getTenant().getScriptCreateUser());
-			
+
 			scriptManager.eval("createUser", vars);
 		}
 
