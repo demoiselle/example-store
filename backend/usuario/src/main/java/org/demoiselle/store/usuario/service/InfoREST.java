@@ -4,8 +4,10 @@ import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 
 import org.demoiselle.jee.core.message.DemoiselleMessage;
+import org.demoiselle.jee.security.annotation.Cors;
 import org.demoiselle.store.usuario.configuration.AppConfiguration;
 
 import io.swagger.annotations.Api;
@@ -19,6 +21,13 @@ public class InfoREST {
 
 	@Inject
 	private AppConfiguration configuration;
+
+	@GET
+	@Path("ping")
+	@Cors
+	public Response ping() throws Exception {
+		return Response.ok().entity("Pong").build();
+	}
 
 	@GET
 	@Path("version")

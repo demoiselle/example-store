@@ -5,8 +5,8 @@
  */
 package org.demoiselle.store.usuario.service.multitenancy;
 
-import io.swagger.annotations.Api;
-import io.swagger.jaxrs.PATCH;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -17,19 +17,18 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import javax.ws.rs.core.Response;
-import org.demoiselle.jee.core.api.security.DemoisellePrincipal;
+
 import org.demoiselle.jee.core.api.security.SecurityContext;
-import org.demoiselle.jee.core.api.security.Token;
+import org.demoiselle.jee.rest.annotation.CacheControl;
 import org.demoiselle.jee.security.annotation.Cors;
 import org.demoiselle.jee.security.annotation.LoggedIn;
 import org.demoiselle.jee.security.annotation.RequiredPermission;
 import org.demoiselle.jee.security.annotation.RequiredRole;
-import org.demoiselle.jee.security.exception.DemoiselleSecurityException;
-import org.demoiselle.jee.security.message.DemoiselleSecurityMessages;
-import org.demoiselle.jee.rest.annotation.CacheControl;
 import org.demoiselle.store.usuario.business.TenancyBC;
+
+import io.swagger.annotations.Api;
+import io.swagger.jaxrs.PATCH;
 
 /**
  *
@@ -41,103 +40,103 @@ import org.demoiselle.store.usuario.business.TenancyBC;
 @Consumes(APPLICATION_JSON)
 public class TesteREST {
 
-    @Inject
-    private SecurityContext securityContext;
+	@Inject
+	private SecurityContext securityContext;
 
-    @Inject
-    private TenancyBC business;
+	@Inject
+	private TenancyBC business;
 
-    @Inject
-    private DemoisellePrincipal loggedUser;
+	// @Inject
+	// private DemoisellePrincipal loggedUser;
+	//
+	// @Inject
+	// private Token token;
+	//
+	// @Inject
+	// private DemoiselleSecurityMessages bundle;
 
-    @Inject
-    private Token token;
+	@GET
+	@LoggedIn
+	@Path("cache")
+	@CacheControl("max-age=600")
+	public void testeCache(@Suspended final AsyncResponse asyncResponse) {
+		asyncResponse.resume(doCache());
+	}
 
-    @Inject
-    private DemoiselleSecurityMessages bundle;
+	private Response doCache() {
+		return Response.ok("{\"msg\":\"cache ok\"}").build();
+	}
 
-    @GET
-    @LoggedIn
-    @Path("cache")
-    @CacheControl("max-age=600")
-    public void testeCache(@Suspended final AsyncResponse asyncResponse) {
-        asyncResponse.resume(doCache());
-    }
+	@GET
+	@Path("sem")
+	public Response testeSem() {
+		return Response.ok().entity("{\"msg\":\"Foi sem\"}").build();
+	}
 
-    private Response doCache() {
-        return Response.ok("{\"msg\":\"cache ok\"}").build();
-    }
+	@GET
+	@Path("com")
+	@LoggedIn
+	public Response testeCom() {
+		return Response.ok().entity(securityContext.getUser().toString()).build();
+	}
 
-    @GET
-    @Path("sem")
-    public Response testeSem() {
-        return Response.ok().entity("{\"msg\":\"Foi sem\"}").build();
-    }
+	@GET
+	@Path("role/ok")
+	@RequiredRole("ADMINISTRATOR")
+	public Response testeRoleOK() {
+		return Response.ok().entity(securityContext.getUser().toString()).build();
+	}
 
-    @GET
-    @Path("com")
-    @LoggedIn
-    public Response testeCom() {
-        return Response.ok().entity(securityContext.getUser().toString()).build();
-    }
+	@GET
+	@Path("role/error")
+	@RequiredRole("USUARIO")
+	public Response testeRoleErro() {
+		return Response.ok().entity(securityContext.getUser().toString()).build();
+	}
 
-    @GET
-    @Path("role/ok")
-    @RequiredRole("ADMINISTRATOR")
-    public Response testeRoleOK() {
-        return Response.ok().entity(securityContext.getUser().toString()).build();
-    }
+	@GET
+	@Path("permission/ok")
+	@RequiredPermission(resource = "Categoria", operation = "Consultar")
+	public Response testePermissionOK() {
+		return Response.ok().entity(securityContext.getUser().toString()).build();
+	}
 
-    @GET
-    @Path("role/error")
-    @RequiredRole("USUARIO")
-    public Response testeRoleErro() {
-        return Response.ok().entity(securityContext.getUser().toString()).build();
-    }
+	@GET
+	@Path("permission/error")
+	@RequiredPermission(resource = "Produto", operation = "Incluir")
+	public Response testePermissionErro() {
+		return Response.ok().entity(securityContext.getUser().toString()).build();
+	}
 
-    @GET
-    @Path("permission/ok")
-    @RequiredPermission(resource = "Categoria", operation = "Consultar")
-    public Response testePermissionOK() {
-        return Response.ok().entity(securityContext.getUser().toString()).build();
-    }
+	@GET
+	@Cors
+	@CacheControl("max-age=600")
+	public Response testeGet() {
+		return Response.ok().entity(business.listAllTenants()).build();
+	}
 
-    @GET
-    @Path("permission/error")
-    @RequiredPermission(resource = "Produto", operation = "Incluir")
-    public Response testePermissionErro() {
-        return Response.ok().entity(securityContext.getUser().toString()).build();
-    }
+	@Cors
+	@POST
+	public Response testePost() {
+		return Response.ok("{\"msg\":\"post ok\"}").build();
+	}
 
-    @GET
-    @Cors
-    @CacheControl("max-age=600")
-    public Response testeGet() {
-        return Response.ok().entity(business.listAllTenants()).build();
-    }
+	@PUT
+	@Cors
+	public Response testePut() {
+		return Response.ok("{\"msg\":\"put ok\"}").build();
+	}
 
-    @Cors
-    @POST
-    public Response testePost() {
-        return Response.ok("{\"msg\":\"post ok\"}").build();
-    }
+	@Cors
+	@PATCH
+	public Response testePatch() {
+		return Response.ok("{\"msg\":\"patch ok\"}").build();
+	}
 
-    @PUT
-    @Cors
-    public Response testePut() {
-        return Response.ok("{\"msg\":\"put ok\"}").build();
-    }
-
-    @Cors
-    @PATCH
-    public Response testePatch() {
-        return Response.ok("{\"msg\":\"patch ok\"}").build();
-    }
-
-    @Cors
-    @DELETE
-    public Response testeDelete() {
-        return Response.ok("{\"msg\":\"delete ok\"}").build();
-    }
+	@Cors
+	@DELETE
+	public Response testeDelete() {
+		return Response.ok("{\"msg\":\"delete ok\"}").build();
+	}
 
 }

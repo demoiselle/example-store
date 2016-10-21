@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -36,86 +35,60 @@ import org.demoiselle.store.usuario.configuration.AppConfiguration;
 import org.demoiselle.store.usuario.entity.Tenant;
 
 import io.swagger.annotations.Api;
-import org.demoiselle.jee.security.annotation.Cors;
 
 @Path("multiTenancy")
 @Api("Multi-Tenancy")
-@Consumes({MediaType.APPLICATION_JSON})
-@Produces({MediaType.APPLICATION_JSON})
+@Consumes({ MediaType.APPLICATION_JSON })
+@Produces({ MediaType.APPLICATION_JSON })
 public class MultiTenancyREST {
 
-    @Inject
-    private TenancyBC business;
+	@Inject
+	private TenancyBC business;
 
-    private DataSource dataSource;
+	private DataSource dataSource;
 
-    private Logger logger;
+	private Logger logger;
 
-    @Inject
-    private AppConfiguration configuration;
-
-<<<<<<< HEAD
-	@GET
-	@Path("ping")
-	@Cors
-	public Response ping() throws Exception {
-		return Response.ok().entity("Pong").build();
-	}
+	@Inject
+	private AppConfiguration configuration;
 
 	@GET
-	@Path("list")
 	@Cors
-	public List<Tenant> listAllTenants() throws Exception {
-		return business.listAllTenants();
+	public Response listAllTenants() throws Exception {
+		return Response.ok().entity(business.listAllTenants()).build();
 	}
-=======
-    @GET
-    @Cors
-    public Response listAllTenants() throws Exception {
-        return Response.ok().entity(business.listAllTenants()).build();
-    }
->>>>>>> branch 'master' of https://github.com/demoiselle/example-store.git
 
-<<<<<<< HEAD
 	@DELETE
 	@Path("deleteTenant/{id}")
-	@Cors
 	public Response deleteTenant(@PathParam("id") Integer id) throws Exception {
 		try {
-=======
-    @DELETE
-    @Path("deleteTenant/{id}")
-    public Response deleteTenant(@PathParam("id") Integer id) throws Exception {
-        try {
->>>>>>> branch 'master' of https://github.com/demoiselle/example-store.git
 
-            // Add Tenancy in table/master schema
-            Tenant t = business.find(id);
-            business.remove(t.getId());
+			// Add Tenancy in table/master schema
+			Tenant t = business.find(id);
+			business.remove(t.getId());
 
-            // Create Schema
-            final Context init = new InitialContext();
-            dataSource = (DataSource) init.lookup(configuration.getMultitenacyTenantsDatabaseDatasource());
+			// Create Schema
+			final Context init = new InitialContext();
+			dataSource = (DataSource) init.lookup(configuration.getMultitenacyTenantsDatabaseDatasource());
 
-            Connection conn = dataSource.getConnection();
+			Connection conn = dataSource.getConnection();
 
-            // Cria o BANCO/SCHEMA
-            conn.createStatement().execute(configuration.getMultitenacyDropDatabaseSQL() + " " + t.getName());
+			// Cria o BANCO/SCHEMA
+			conn.createStatement().execute(configuration.getMultitenacyDropDatabaseSQL() + " " + t.getName());
 
-            // Como a conexão esta fora de contexto é importante fechar ela aqui
-            if (!conn.isClosed()) {
-                conn.close();
-            }
+			// Como a conexão esta fora de contexto é importante fechar ela aqui
+			if (!conn.isClosed()) {
+				conn.close();
+			}
 
-            return Response.ok().build();
+			return Response.ok().build();
 
-        } catch (final Exception e) {
-            logger.log(Level.INFO, "Error trying to alter schema", e);
-            return Response.serverError().build();
-        }
-    }
+		} catch (final Exception e) {
+			logger.log(Level.INFO, "Error trying to alter schema", e);
+			return Response.serverError().build();
+		}
+	}
 
-<<<<<<< HEAD
 	@GET
 	@Path("multitenancyContext")
 	@Cors
@@ -132,80 +105,70 @@ public class MultiTenancyREST {
 			Tenant t = new Tenant();
 			t.setName(name);
 			business.create(t);
-=======
-    @POST
-    @Path("createTenant/{name}")
-    public Response createTenant(@PathParam("name") String name) throws Exception {
-        try {
-            // Add Tenancy in table/master schema
-            Tenant t = new Tenant();
-            t.setName(name);
-            business.create(t);
->>>>>>> branch 'master' of https://github.com/demoiselle/example-store.git
 
-            // Create Schema
-            final Context init = new InitialContext();
-            dataSource = (DataSource) init.lookup(configuration.getMultitenacyTenantsDatabaseDatasource());
+			// Create Schema
+			final Context init = new InitialContext();
+			dataSource = (DataSource) init.lookup(configuration.getMultitenacyTenantsDatabaseDatasource());
 
-            Connection conn = dataSource.getConnection();
+			Connection conn = dataSource.getConnection();
 
-            // Cria o BANCO/SCHEMA
-            conn.createStatement().execute(configuration.getMultitenacyCreateDatabaseSQL() + " " + t.getName());
+			// Cria o BANCO/SCHEMA
+			conn.createStatement().execute(configuration.getMultitenacyCreateDatabaseSQL() + " " + t.getName());
 
-            // Usa o BANCO/SCHEMA (MySQL)
-            conn.createStatement().execute(configuration.getMultitenacySetDatabaseSQL() + " " + t.getName());
+			// Usa o BANCO/SCHEMA (MySQL)
+			conn.createStatement().execute(configuration.getMultitenacySetDatabaseSQL() + " " + t.getName());
 
-            // Roda o DDL - DROP
-            dropDatabase(conn);
+			// Roda o DDL - DROP
+			dropDatabase(conn);
 
-            // Roda o DDL - CREATE
-            createDatabase(conn);
+			// Roda o DDL - CREATE
+			createDatabase(conn);
 
-            // Como a conexão esta fora de contexto é importante fechar ela aqui
-            if (!conn.isClosed()) {
-                conn.close();
-            }
+			// Como a conexão esta fora de contexto é importante fechar ela aqui
+			if (!conn.isClosed()) {
+				conn.close();
+			}
 
-            return Response.ok().build();
+			return Response.ok().build();
 
-        } catch (final Exception e) {
-            logger.log(Level.INFO, "Error trying to alter schema", e);
-            return Response.serverError().build();
-        }
+		} catch (final Exception e) {
+			logger.log(Level.INFO, "Error trying to alter schema", e);
+			return Response.serverError().build();
+		}
 
-    }
+	}
 
-    private void dropDatabase(Connection conn) throws SQLException {
-        String filename = configuration.getMultitenacyDropDatabaseDDL();
-        List<String> ddl = getDDLString(filename);
-        for (String ddlLine : ddl) {
-            conn.createStatement().execute(ddlLine);
-        }
-    }
+	private void dropDatabase(Connection conn) throws SQLException {
+		String filename = configuration.getMultitenacyDropDatabaseDDL();
+		List<String> ddl = getDDLString(filename);
+		for (String ddlLine : ddl) {
+			conn.createStatement().execute(ddlLine);
+		}
+	}
 
-    private void createDatabase(Connection conn) throws SQLException {
-        String filename = configuration.getMultitenacyCreateDatabaseDDL();
-        List<String> ddl = getDDLString(filename);
-        for (String ddlLine : ddl) {
-            conn.createStatement().execute(ddlLine);
-        }
-    }
+	private void createDatabase(Connection conn) throws SQLException {
+		String filename = configuration.getMultitenacyCreateDatabaseDDL();
+		List<String> ddl = getDDLString(filename);
+		for (String ddlLine : ddl) {
+			conn.createStatement().execute(ddlLine);
+		}
+	}
 
-    private List<String> getDDLString(String filename) {
-        List<String> records = new ArrayList<String>();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(filename));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                records.add(line);
-            }
-            reader.close();
-            return records;
-        } catch (Exception e) {
-            System.err.format("Exception occurred trying to read '%s'.", filename);
-            // e.printStackTrace();
-            return null;
-        }
-    }
+	private List<String> getDDLString(String filename) {
+		List<String> records = new ArrayList<String>();
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(filename));
+			String line;
+			while ((line = reader.readLine()) != null) {
+				records.add(line);
+			}
+			reader.close();
+			return records;
+		} catch (Exception e) {
+			System.err.format("Exception occurred trying to read '%s'.", filename);
+			// e.printStackTrace();
+			return null;
+		}
+	}
 
 }
