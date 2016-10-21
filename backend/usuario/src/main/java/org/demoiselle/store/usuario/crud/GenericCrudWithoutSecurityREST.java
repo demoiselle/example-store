@@ -8,6 +8,8 @@ package org.demoiselle.store.usuario.crud;
 
 import java.util.List;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -18,6 +20,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.demoiselle.jee.rest.annotation.ValidatePayload;
+import org.demoiselle.jee.security.annotation.Cors;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -37,6 +40,7 @@ public abstract class GenericCrudWithoutSecurityREST<T> {
 	@POST
 	@ValidatePayload
 	@ApiOperation(value = "Cria objeto utilizando o GenericCRUD (Sem segurança)")
+	@Cors
 	public void create(T entity) {
 		getBusiness().create(entity);
 	}
@@ -45,6 +49,7 @@ public abstract class GenericCrudWithoutSecurityREST<T> {
 	@Path("{id}")
 	@ValidatePayload
 	@ApiOperation(value = "Edita objeto utilizando o GenericCRUD (Sem segurança)")
+	@Cors
 	public void edit(@PathParam("id") Integer id, T entity) {
 		getBusiness().edit(id, entity);
 	}
@@ -53,6 +58,7 @@ public abstract class GenericCrudWithoutSecurityREST<T> {
 	@Path("{id}")
 	@ValidatePayload
 	@ApiOperation(value = "Remove objeto utilizando o GenericCRUD (Sem segurança)")
+	@Cors
 	public void remove(@PathParam("id") Integer id) {
 		getBusiness().remove(id);
 	}
@@ -60,19 +66,26 @@ public abstract class GenericCrudWithoutSecurityREST<T> {
 	@GET
 	@Path("{id}")
 	@ApiOperation(value = "Busca pelo ID objeto utilizando o GenericCRUD (Sem segurança)")
+	@Cors
 	public T find(@PathParam("id") Integer id) {
 		return getBusiness().find(id);
 	}
-	
+
 	@GET
 	@Path("{field}/{value}/{start}/{size}")
 	@ApiOperation(value = "Busca pelo campo/valor do objeto utilizando o GenericCRUD (Sem segurança)")
-	public List<T> findByField(@PathParam("field") String field, @PathParam("value") String value, @PathParam("start") int start, @PathParam("size") int size) {
+	@Cors
+	public List<T> findByField(@PathParam("field") String field, @PathParam("value") String value,
+			@PathParam("start") int start, @PathParam("size") int size) {
 		return getBusiness().find(field, value, "id", "ASC", start, size);
 	}
 
+	@PersistenceUnit(unitName = "TenantsPU")
+	protected EntityManagerFactory entityManager;
+
 	@GET
 	@ApiOperation(value = "Busca todos os objetos utilizando o GenericCRUD (Sem segurança)")
+	@Cors
 	public List<T> findAll() {
 		return getBusiness().findAll();
 	}
@@ -80,6 +93,7 @@ public abstract class GenericCrudWithoutSecurityREST<T> {
 	@GET
 	@Path("{from}/{to}")
 	@ApiOperation(value = "Busca por intervalo de ID os objetos utilizando o GenericCRUD (Sem segurança)")
+	@Cors
 	public List<T> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
 		return getBusiness().findRange(new int[] { from, to });
 	}
@@ -88,6 +102,7 @@ public abstract class GenericCrudWithoutSecurityREST<T> {
 	@Path("count")
 	@Produces(MediaType.TEXT_PLAIN)
 	@ApiOperation(value = "Exibe o total de objetos utilizando o GenericCRUD (Sem segurança)")
+	@Cors
 	public String count() {
 		return String.valueOf(getBusiness().count());
 	}

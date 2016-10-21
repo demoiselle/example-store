@@ -20,7 +20,6 @@ import javax.ws.rs.NotFoundException;
 import org.demoiselle.jee.core.message.DemoiselleMessage;
 import org.demoiselle.jee.persistence.jpa.crud.GenericDataPage;
 import org.demoiselle.store.usuario.dao.TenancyDAO;
-import org.demoiselle.store.usuario.dao.context.PersistenceContextMasterDAO;
 import org.demoiselle.store.usuario.entity.Tenant;
 
 @Stateless
@@ -35,7 +34,7 @@ public class TenancyBC {
 	@PersistenceContext(unitName = "MasterPU")
 	protected EntityManager entityManagerMaster;
 
-	protected PersistenceContextMasterDAO<Tenant> getPersistenceDAO() {
+	protected TenancyDAO getPersistenceDAO() {
 		return dao;
 	}
 
@@ -89,6 +88,10 @@ public class TenancyBC {
 
 	public GenericDataPage list() {
 		return getPersistenceDAO().list();
+	}
+
+	public String getMultitenancyContext() {
+		return getPersistenceDAO().getMultitenancyContext();
 	}
 
 }

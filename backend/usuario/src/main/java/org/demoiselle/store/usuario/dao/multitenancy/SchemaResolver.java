@@ -1,17 +1,15 @@
 package org.demoiselle.store.usuario.dao.multitenancy;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.spi.CDI;
 
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 
-@RequestScoped
 public class SchemaResolver implements CurrentTenantIdentifierResolver {
-
-	private String tenantIdentifier;
 
 	@Override
 	public String resolveCurrentTenantIdentifier() {
-		return tenantIdentifier;
+		MultiTenancyContext o = CDI.current().select(MultiTenancyContext.class).get();
+		return o.getTenant();
 	}
 
 	@Override
@@ -19,7 +17,4 @@ public class SchemaResolver implements CurrentTenantIdentifierResolver {
 		return false;
 	}
 
-	public void setTenantIdentifier(String tenantIdentifier) {
-		this.tenantIdentifier = tenantIdentifier;
-	}
 }

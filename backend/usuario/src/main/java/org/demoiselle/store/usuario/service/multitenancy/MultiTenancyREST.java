@@ -30,6 +30,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.demoiselle.jee.security.annotation.Cors;
 import org.demoiselle.store.usuario.business.TenancyBC;
 import org.demoiselle.store.usuario.configuration.AppConfiguration;
 import org.demoiselle.store.usuario.entity.Tenant;
@@ -54,13 +55,22 @@ public class MultiTenancyREST {
 	private AppConfiguration configuration;
 
 	@GET
+	@Path("ping")
+	@Cors
+	public Response ping() throws Exception {
+		return Response.ok().entity("Pong").build();
+	}
+
+	@GET
 	@Path("list")
+	@Cors
 	public List<Tenant> listAllTenants() throws Exception {
 		return business.listAllTenants();
 	}
 
 	@DELETE
 	@Path("deleteTenant/{id}")
+	@Cors
 	public Response deleteTenant(@PathParam("id") Integer id) throws Exception {
 		try {
 
@@ -89,8 +99,16 @@ public class MultiTenancyREST {
 		}
 	}
 
+	@GET
+	@Path("multitenancyContext")
+	@Cors
+	public Response multitenancyContext() throws Exception {
+		return Response.ok().entity(business.getMultitenancyContext()).build();
+	}
+
 	@POST
 	@Path("createTenant/{name}")
+	@Cors
 	public Response createTenant(@PathParam("name") String name) throws Exception {
 		try {
 			// Add Tenancy in table/master schema
