@@ -37,8 +37,12 @@ public class Tenant implements Serializable {
 	private String name;
 
 	@Size(max = 5000, min = 10)
-	@Column(length = 100, updatable = true, nullable = true)	
+	@Column(length = 5000, updatable = true, nullable = true)
 	private String scriptCreateUser;
+
+	@Size(max = 50, min = 2)
+	@Column(length = 50, updatable = true, nullable = false)
+	private String databaseAppVersion;
 
 	public Tenant() {
 	}
@@ -69,6 +73,14 @@ public class Tenant implements Serializable {
 
 	public void setScriptCreateUser(String scriptCreateUser) {
 		this.scriptCreateUser = scriptCreateUser;
+	}
+
+	public String getDatabaseAppVersion() {
+		return databaseAppVersion;
+	}
+
+	public void setDatabaseAppVersion(String databaseAppVersion) {
+		this.databaseAppVersion = databaseAppVersion;
 	}
 
 	@Override

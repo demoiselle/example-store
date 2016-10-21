@@ -45,7 +45,8 @@ public class TenancyBC {
 	}
 
 	@Transactional
-	public void create(Tenant entity) {
+	public void create(Tenant entity) {		
+		entity.setDatabaseAppVersion(messages.version());		
 		getPersistenceDAO().create(entity);
 	}
 
