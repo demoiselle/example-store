@@ -30,6 +30,7 @@ import org.demoiselle.jee.security.exception.DemoiselleSecurityException;
 import org.demoiselle.jee.security.message.DemoiselleSecurityMessages;
 import org.demoiselle.jee7.security.Credentials;
 import org.demoiselle.jee.rest.annotation.CacheControl;
+import org.demoiselle.jee.security.annotation.NoCors;
 
 /**
  *
@@ -124,20 +125,21 @@ public class TesteREST {
     }
 
     @GET
-    @Cors
+    @NoCors
     @CacheControl("max-age=600")
     public Response testeGet() {
         return Response.ok("{\"msg\":\"get ok\"}").build();
     }
 
-    @Cors
+    @NoCors
     @POST
+    @CacheControl("max-age=600")
     public Response testePost() {
         return Response.ok("{\"msg\":\"post ok\"}").build();
     }
 
     @PUT
-    @Cors
+    @NoCors
     public Response testePut() {
         return Response.ok("{\"msg\":\"put ok\"}").build();
     }
