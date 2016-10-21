@@ -9,7 +9,7 @@ public class SchemaResolver implements CurrentTenantIdentifierResolver {
 	@Override
 	public String resolveCurrentTenantIdentifier() {
 		MultiTenancyContext o = CDI.current().select(MultiTenancyContext.class).get();
-		return o.getTenant();
+		return o.getTenant().getName();
 	}
 
 	@Override

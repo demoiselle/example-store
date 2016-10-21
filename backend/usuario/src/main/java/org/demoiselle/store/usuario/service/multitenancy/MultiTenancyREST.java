@@ -29,6 +29,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.demoiselle.jee.rest.annotation.ValidatePayload;
 import org.demoiselle.jee.security.annotation.Cors;
 import org.demoiselle.store.usuario.business.TenancyBC;
 import org.demoiselle.store.usuario.configuration.AppConfiguration;
@@ -94,18 +95,17 @@ public class MultiTenancyREST {
 	@Path("multitenancyContext")
 	@Cors
 	public Response multitenancyContext() throws Exception {
-		return Response.ok().entity(business.getMultitenancyContext()).build();
+		return Response.ok().entity(business.getMultitenancyName()).build();
 	}
 
 	@POST
-	@Path("createTenant/{name}")
+	@Path("createTenant")
 	@Cors
-	public Response createTenant(@PathParam("name") String name) throws Exception {
+	@ValidatePayload
+	public Response createTenant(Tenant tenant) throws Exception {
 		try {
 			// Add Tenancy in table/master schema
-			Tenant t = new Tenant();
-			t.setName(name);
-			business.create(t);
+			business.create(tenant);
 
 			// Create Schema
 			final Context init = new InitialContext();
@@ -114,10 +114,10 @@ public class MultiTenancyREST {
 			Connection conn = dataSource.getConnection();
 
 			// Cria o BANCO/SCHEMA
-			conn.createStatement().execute(configuration.getMultitenacyCreateDatabaseSQL() + " " + t.getName());
+			conn.createStatement().execute(configuration.getMultitenacyCreateDatabaseSQL() + " " + tenant.getName());
 
 			// Usa o BANCO/SCHEMA (MySQL)
-			conn.createStatement().execute(configuration.getMultitenacySetDatabaseSQL() + " " + t.getName());
+			conn.createStatement().execute(configuration.getMultitenacySetDatabaseSQL() + " " + tenant.getName());
 
 			// Roda o DDL - DROP
 			dropDatabase(conn);

@@ -58,25 +58,23 @@ public class TenantSelectorFilter implements ContainerRequestFilter {
 	@SuppressWarnings("unchecked")
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 
-		Tenant tenantUrl = new Tenant(requestContext.getUriInfo().getPathSegments().get(0).toString());
+		String tenantNameUrl = requestContext.getUriInfo().getPathSegments().get(0).toString();
+		Tenant tenant = null;
 
 		// Pega os tenants do banco de dados
 		// List<Tenant> tenantsDatabase = dao.find("name", tenantUrl.getName(),
 		// "id", "ASC", 0, 1);
 		Query query = entityManagerMaster.createQuery("select u from Tenant u where u.name = :value", Tenant.class);
-		query.setParameter("value", tenantUrl.getName());
+		query.setParameter("value", tenantNameUrl);
 		query.setHint("org.hibernate.cacheable", "true");
 		// Cache de 60s (60000ms)
 		query.setHint("javax.persistence.query.timeout", 60000);
 
 		List<Tenant> list = query.getResultList();
 
-		String tenantName = "master";
-
 		if (list.size() == 1) {
 
-			Tenant tenant = list.get(0); // (Tenant) query.getSingleResult();
-			tenantName = tenant.getName();
+			tenant = list.get(0); // (Tenant) query.getSingleResult();
 
 			// Altera a URL para ir para o local correto
 			String newURi = "";
@@ -95,10 +93,11 @@ public class TenantSelectorFilter implements ContainerRequestFilter {
 
 		} else {
 			// log.info("Vai para o local normal: " +
-			// requestContext.getUriInfo().getPath());
+			// requestContext.getUriInfo().getPath());			
+			tenant = new Tenant("master");
 		}
 
-		multitenancyContext.setTenant(tenantName);
+		multitenancyContext.setTenant(tenant);
 
 	}
 

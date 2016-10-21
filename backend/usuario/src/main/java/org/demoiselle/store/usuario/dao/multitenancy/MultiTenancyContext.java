@@ -2,20 +2,22 @@ package org.demoiselle.store.usuario.dao.multitenancy;
 
 import javax.enterprise.context.RequestScoped;
 
+import org.demoiselle.store.usuario.entity.Tenant;
+
 @RequestScoped
 public class MultiTenancyContext {
 
-	private String tenant;
+	private Tenant tenant;
 
 	public MultiTenancyContext() {
 
 	}
 
-	public String getTenant() {
+	public Tenant getTenant() {
 		return tenant;
 	}
 
-	public void setTenant(String tenant) {
+	public void setTenant(Tenant tenant) {
 		this.tenant = tenant;
 	}
 

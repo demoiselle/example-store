@@ -24,7 +24,7 @@ import org.demoiselle.store.usuario.entity.Usuario;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-// @Stateless
+// @Stateless // TODO: Retestar as transações sem o Stateless!
 @Path("usuario")
 @Api("Usuário")
 @Consumes({ MediaType.APPLICATION_JSON })

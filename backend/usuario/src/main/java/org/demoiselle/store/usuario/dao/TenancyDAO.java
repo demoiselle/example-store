@@ -24,8 +24,8 @@ public class TenancyDAO extends PersistenceContextMasterDAO<Tenant> {
 		super(Tenant.class);
 	}
 
-	public String getMultitenancyContext() {
-		return multitenancyContext.getTenant();
+	public MultiTenancyContext getMultitenancyContext() {
+		return multitenancyContext;
 	}
 
 }

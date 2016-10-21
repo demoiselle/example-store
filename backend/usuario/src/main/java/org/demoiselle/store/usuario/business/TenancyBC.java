@@ -90,8 +90,8 @@ public class TenancyBC {
 		return getPersistenceDAO().list();
 	}
 
-	public String getMultitenancyContext() {
-		return getPersistenceDAO().getMultitenancyContext();
+	public String getMultitenancyName() {
+		return getPersistenceDAO().getMultitenancyContext().getTenant().getName();
 	}
 
 }
