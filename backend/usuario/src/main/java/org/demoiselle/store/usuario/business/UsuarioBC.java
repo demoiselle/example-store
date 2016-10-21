@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
+import javax.script.SimpleBindings;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
 import javax.transaction.NotSupportedException;
@@ -21,9 +22,11 @@ import javax.transaction.SystemException;
 import javax.transaction.Transactional;
 import javax.transaction.UserTransaction;
 
+import org.demoiselle.jee.script.DynamicManager;
 import org.demoiselle.store.usuario.crud.GenericCrudBusiness;
 import org.demoiselle.store.usuario.dao.UsuarioDAO;
 import org.demoiselle.store.usuario.dao.context.PersistenceContextDAO;
+import org.demoiselle.store.usuario.dao.multitenancy.MultiTenancyContext;
 import org.demoiselle.store.usuario.entity.Usuario;
 
 /**
@@ -46,9 +49,35 @@ public class UsuarioBC extends GenericCrudBusiness<Usuario> {
 	@Resource
 	private UserTransaction userTransaction;
 
+	@Inject
+	private MultiTenancyContext multiTenancyContext;
+
+	private DynamicManager scriptManager = new DynamicManager();
+
 	@Override
 	protected PersistenceContextDAO<Usuario> getPersistenceDAO() {
 		return dao;
+	}
+
+	@Transactional
+	@Override
+	public void create(Usuario entity) {
+
+		// Aplica o script no usuário do contexto de multitenancy
+		// multiTenancyContext
+		if (!multiTenancyContext.getTenant().getScriptCreateUser().isEmpty()) {
+			
+			SimpleBindings vars = new SimpleBindings();
+			vars.put("usuario", entity);
+			vars.put("tenant", multiTenancyContext.getTenant());
+			
+			scriptManager.loadEngine("groovy");
+			scriptManager.loadScript("createUser", multiTenancyContext.getTenant().getScriptCreateUser());
+			
+			scriptManager.eval("createUser", vars);
+		}
+
+		getPersistenceDAO().create(entity);
 	}
 
 	public void createTesteTransacional1(Usuario usuario)
@@ -60,7 +89,7 @@ public class UsuarioBC extends GenericCrudBusiness<Usuario> {
 		userTransaction.commit();
 
 		userTransaction.begin();
-		
+
 		UUID uuid = UUID.randomUUID();
 		String emailUniqueTest = uuid.toString() + "@teste.com.br";
 		String nomeUniqueTest = "Nome " + uuid.toString();

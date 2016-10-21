@@ -36,9 +36,13 @@ public class Tenant implements Serializable {
 	@NotNull
 	private String name;
 
+	@Size(max = 5000, min = 10)
+	@Column(length = 100, updatable = true, nullable = true)	
+	private String scriptCreateUser;
+
 	public Tenant() {
 	}
-	
+
 	public Tenant(String name) {
 		this.name = name;
 	}
@@ -57,6 +61,14 @@ public class Tenant implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getScriptCreateUser() {
+		return scriptCreateUser;
+	}
+
+	public void setScriptCreateUser(String scriptCreateUser) {
+		this.scriptCreateUser = scriptCreateUser;
 	}
 
 	@Override

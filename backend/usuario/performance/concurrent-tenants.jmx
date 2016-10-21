@@ -12,13 +12,13 @@
     </TestPlan>
     <hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Grupo de Usuários" enabled="true">
-        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <stringProp name="ThreadGroup.on_sample_error">stoptestnow</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Controlador de Iteração" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">2</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <stringProp name="ThreadGroup.num_threads">100</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">10</stringProp>
         <longProp name="ThreadGroup.start_time">1476976775000</longProp>
         <longProp name="ThreadGroup.end_time">1476976775000</longProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
@@ -26,12 +26,12 @@
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
-        <RunTime guiclass="RunTimeGui" testclass="RunTime" testname="Controlador de Tempo de Execução" enabled="true">
-          <stringProp name="RunTime.seconds">30</stringProp>
+        <RunTime guiclass="RunTimeGui" testclass="RunTime" testname="Controlador de Tempo de Execução - USER" enabled="true">
+          <stringProp name="RunTime.seconds">60</stringProp>
         </RunTime>
         <hashTree>
           <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="Variável Aleatória" enabled="true">
-            <stringProp name="maximumValue">5</stringProp>
+            <stringProp name="maximumValue">10</stringProp>
             <stringProp name="minimumValue">1</stringProp>
             <stringProp name="outputFormat">0000</stringProp>
             <boolProp name="perThread">false</boolProp>
@@ -64,6 +64,15 @@
                 <stringProp name="-1736186788">${TENANT}</stringProp>
               </collectionProp>
               <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Asserções de Resposta" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
               <boolProp name="Assertion.assume_success">false</boolProp>
               <intProp name="Assertion.test_type">16</intProp>
             </ResponseAssertion>

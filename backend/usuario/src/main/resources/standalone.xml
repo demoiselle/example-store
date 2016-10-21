@@ -12,7 +12,7 @@
                 <background-validation>false</background-validation>
             </validation>
             <statement>
-                <share-prepared-statements>false</share-prepared-statements>
+                <share-prepared-statements />
             </statement>
         </datasource>
         <datasource jta="true" jndi-name="java:jboss/datasources/MasterDS" pool-name="MasterDS" enabled="true" use-java-context="true">
@@ -27,7 +27,7 @@
                 <background-validation>false</background-validation>
             </validation>
             <statement>
-                <share-prepared-statements>false</share-prepared-statements>
+                <share-prepared-statements />
             </statement>
         </datasource>
         <drivers>

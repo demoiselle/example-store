@@ -21,18 +21,15 @@ import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
-import javax.ws.rs.container.ContainerResponseContext;
-import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.container.PreMatching;
 import javax.ws.rs.ext.Provider;
 
-import org.demoiselle.store.usuario.dao.multitenancy.SchemaResolver;
+import org.demoiselle.store.usuario.dao.multitenancy.MultiTenancyContext;
 import org.demoiselle.store.usuario.entity.Tenant;
-import org.hibernate.engine.spi.SessionFactoryImplementor;
 
 @Provider
 @PreMatching
-public class TenantSelectorFilter implements ContainerRequestFilter, ContainerResponseFilter {
+public class TenantSelectorFilter implements ContainerRequestFilter {
 
 	@Inject
 	private Logger log;
@@ -49,10 +46,8 @@ public class TenantSelectorFilter implements ContainerRequestFilter, ContainerRe
 	// @Inject
 	// private TenancyDAO dao;
 
-	@Override
-	public void filter(ContainerRequestContext requestContext, ContainerResponseContext response) {
-
-	}
+	@Inject
+	private MultiTenancyContext multitenancyContext;
 
 	@PostConstruct
 	public void init() {
@@ -60,27 +55,26 @@ public class TenantSelectorFilter implements ContainerRequestFilter, ContainerRe
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 
-		Tenant tenantUrl = new Tenant(requestContext.getUriInfo().getPathSegments().get(0).toString());
+		String tenantNameUrl = requestContext.getUriInfo().getPathSegments().get(0).toString();
+		Tenant tenant = null;
 
 		// Pega os tenants do banco de dados
 		// List<Tenant> tenantsDatabase = dao.find("name", tenantUrl.getName(),
 		// "id", "ASC", 0, 1);
 		Query query = entityManagerMaster.createQuery("select u from Tenant u where u.name = :value", Tenant.class);
-		query.setParameter("value", tenantUrl.getName());
-		// query.setHint("org.hibernate.cacheable", "true");
+		query.setParameter("value", tenantNameUrl);
+		query.setHint("org.hibernate.cacheable", "true");
 		// Cache de 60s (60000ms)
-		// query.setHint("javax.persistence.query.timeout", 60000);
+		query.setHint("javax.persistence.query.timeout", 60000);
 
 		List<Tenant> list = query.getResultList();
 
-		String tenantName = "master";
-
 		if (list.size() == 1) {
 
-			Tenant tenant = list.get(0); // (Tenant) query.getSingleResult();
-			tenantName = tenant.getName();
+			tenant = list.get(0); // (Tenant) query.getSingleResult();
 
 			// Altera a URL para ir para o local correto
 			String newURi = "";
@@ -99,16 +93,11 @@ public class TenantSelectorFilter implements ContainerRequestFilter, ContainerRe
 
 		} else {
 			// log.info("Vai para o local normal: " +
-			// requestContext.getUriInfo().getPath());
+			// requestContext.getUriInfo().getPath());			
+			tenant = new Tenant("master");
 		}
 
-		// Seleciona o TENANCY
-		// (since 5.2) Use SessionFactory (or SessionFactoryImplementor) as
-		// it now extends EntityManagerFactory directly
-		final SessionFactoryImplementor sessionFactory = ((SessionFactoryImplementor) entityManager
-				.unwrap(SessionFactoryImplementor.class));
-		final SchemaResolver schemaResolver = (SchemaResolver) sessionFactory.getCurrentTenantIdentifierResolver();
-		schemaResolver.setTenantIdentifier(tenantName);
+		multitenancyContext.setTenant(tenant);
 
 	}
 
