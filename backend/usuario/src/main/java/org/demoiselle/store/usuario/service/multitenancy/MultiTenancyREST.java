@@ -41,7 +41,6 @@ import org.demoiselle.jee.security.annotation.Cors;
 @Api("Multi-Tenancy")
 @Consumes({MediaType.APPLICATION_JSON})
 @Produces({MediaType.APPLICATION_JSON})
-@RequestScoped
 public class MultiTenancyREST {
 
     @Inject
@@ -56,9 +55,8 @@ public class MultiTenancyREST {
 
     @GET
     @Cors
-
-    public List<Tenant> listAllTenants() throws Exception {
-        return business.listAllTenants();
+    public Response listAllTenants() throws Exception {
+        return Response.ok().entity(business.listAllTenants()).build();
     }
 
     @DELETE
