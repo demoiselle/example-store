@@ -60,6 +60,7 @@ public class MultiTenancyREST {
 
 	@DELETE
 	@Path("deleteTenant/{id}")
+	@Cors
 	public Response deleteTenant(@PathParam("id") Integer id) throws Exception {
 		try {
 

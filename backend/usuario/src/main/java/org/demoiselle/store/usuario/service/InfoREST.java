@@ -4,11 +4,13 @@ import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.demoiselle.jee.core.message.DemoiselleMessage;
 import org.demoiselle.jee.security.annotation.Cors;
 import org.demoiselle.store.usuario.configuration.AppConfiguration;
+import org.jose4j.json.internal.json_simple.JSONObject;
 
 import io.swagger.annotations.Api;
 
@@ -22,11 +24,16 @@ public class InfoREST {
 	@Inject
 	private AppConfiguration configuration;
 
+	@SuppressWarnings("unchecked")
 	@GET
 	@Path("ping")
 	@Cors
+	@Produces({ MediaType.APPLICATION_JSON })
 	public Response ping() throws Exception {
-		return Response.ok().entity("Pong").build();
+		JSONObject json = new JSONObject();
+		json.put("result", "pong");
+		
+		return Response.ok().entity(json).build();
 	}
 
 	@GET
