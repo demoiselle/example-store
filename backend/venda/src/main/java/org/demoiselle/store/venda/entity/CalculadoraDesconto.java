@@ -1,13 +1,17 @@
-package org.demoiselle.jee7.entity;
+package org.demoiselle.store.venda.entity;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-//cassiomaes
+/**
+ * Calcula o percentual de desconto Total baseado na lista de descontos de entrada.
+ * 
+ * @param   lista de descontos a ser aplicada.
+ * @return  desconto total aplicado. 
+ */
 public class CalculadoraDesconto {
 
-	public static BigDecimal consolidarDescontos( List<Desconto> listaDescontos) {
-		
+	public static BigDecimal consolidarDescontos( List<Desconto> listaDescontos) {		
 		BigDecimal percentual = BigDecimal.valueOf(0.0);
 		BigDecimal maior = BigDecimal.valueOf(0.0);
 		

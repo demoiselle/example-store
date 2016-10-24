@@ -1,17 +1,14 @@
-package org.demoiselle.jee7.cover;
+package org.demoiselle.store.venda.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import org.demoiselle.jee7.entity.CalculadoraDesconto;
-import org.demoiselle.jee7.entity.Desconto;
 
+/**
+ *  Classe que respresenta o objeto selecionado pelo usuário para compra. 
+ */
 public class ItemCarrinho implements Serializable {
-
-	/**
-	 * cassiomaes
-	 */
 	private static final long serialVersionUID = -7730398389647465451L;
 	protected Long codigoProduto;
 	protected String nomeProduto;

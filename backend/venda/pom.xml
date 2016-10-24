@@ -6,8 +6,9 @@
     <artifactId>venda</artifactId>
     <version>1.0.0</version>
     <packaging>war</packaging>
-
-    <name>venda</name>
+    
+    <name>Venda</name>
+	<description>Aplicação de exemplo.</description>    
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
@@ -18,44 +19,58 @@
     	<dependency>
 			<groupId>org.demoiselle.jee</groupId>
 			<artifactId>demoiselle-core</artifactId>
-			<version>3.0.0-BETA1-SNAPSHOT</version>
+			<version>3.0.0-BETA2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.demoiselle.jee</groupId>
 			<artifactId>demoiselle-persistence-jpa</artifactId>
-			<version>3.0.0-BETA1-SNAPSHOT</version>
+			<version>3.0.0-BETA2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.demoiselle.jee</groupId>
 			<artifactId>demoiselle-rest</artifactId>
-			<version>3.0.0-BETA1-SNAPSHOT</version>
+			<version>3.0.0-BETA2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.demoiselle.jee</groupId>
 			<artifactId>demoiselle-configuration</artifactId>
-			<version>3.0.0-BETA1-SNAPSHOT</version>
+			<version>3.0.0-BETA2-SNAPSHOT</version>
 		</dependency>
-		
 		<dependency>
 			<groupId>org.demoiselle.jee</groupId>
 			<artifactId>demoiselle-script</artifactId>
-			<version>3.0.0-BETA1-SNAPSHOT</version>
+			<version>3.0.0-BETA2-SNAPSHOT</version>
 		</dependency>
-           
-        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		
+		<!-- Dependencias -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>1.7.1</version>
         </dependency>
-  		
+        <dependency>
+    		<groupId>junit</groupId>
+    		<artifactId>junit</artifactId>
+    		<version>4.12</version>
+		</dependency>
+        <dependency>
+    		<groupId>org.powermock</groupId>
+    		<artifactId>powermock-module-junit4</artifactId>
+    		<version>1.6.5</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.powermock/powermock-api-mockito -->
+		<dependency>
+		    <groupId>org.powermock</groupId>
+		    <artifactId>powermock-api-mockito</artifactId>
+		    <version>1.6.5</version>
+		</dependency>
+                 		  	
   		<!-- Swagger -->
 		<dependency>
 			<groupId>io.swagger</groupId>
 			<artifactId>swagger-jaxrs</artifactId>
 			<version>1.5.8</version>
-		</dependency>
-        
+		</dependency>        
     </dependencies>
 
     <build>
@@ -105,21 +120,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <!--            <plugin>
-                <groupId>org.wildfly.swarm</groupId>
-                <artifactId>wildfly-swarm-plugin</artifactId>
-                <version>2016.8</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>package</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>-->
-
         </plugins>
     </build>
-
 </project>

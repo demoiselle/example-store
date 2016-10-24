@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.demoiselle.jee7.entity;
+package org.demoiselle.store.venda.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author 70744416353
  */
 @Entity
-@Table(name="itens")
+@Table(name = "itens")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Itens.findAll", query = "SELECT i FROM Itens i"),

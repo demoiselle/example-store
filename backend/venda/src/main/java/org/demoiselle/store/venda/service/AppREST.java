@@ -1,4 +1,4 @@
-package org.demoiselle.jee7.service;
+package org.demoiselle.store.venda.service;
 
 /*
  * Demoiselle Framework
@@ -11,6 +11,7 @@ package org.demoiselle.jee7.service;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
+import io.swagger.annotations.Api;
 import io.swagger.jaxrs.config.BeanConfig;
 
 @ApplicationPath("api")
@@ -22,7 +23,7 @@ public class AppREST extends Application {
 		BeanConfig beanConfig = new BeanConfig();
 		beanConfig.setVersion("1.0.0");
 		beanConfig.setBasePath("/venda/api");
-		beanConfig.setResourcePackage("org.demoiselle.jee7.service");
+		beanConfig.setResourcePackage("org.demoiselle.store.venda.service");
 		beanConfig.setScan(true);
 	}
 }
