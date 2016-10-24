@@ -1,4 +1,4 @@
-package org.demoiselle.jee7.entity;
+package org.demoiselle.store.venda.entity;
 
 import java.math.BigDecimal;
 
