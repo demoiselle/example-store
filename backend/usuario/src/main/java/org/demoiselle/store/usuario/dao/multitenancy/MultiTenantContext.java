@@ -5,11 +5,11 @@ import javax.enterprise.context.RequestScoped;
 import org.demoiselle.store.usuario.entity.Tenant;
 
 @RequestScoped
-public class MultiTenancyContext {
+public class MultiTenantContext {
 
 	private Tenant tenant;
 
-	public MultiTenancyContext() {
+	public MultiTenantContext() {
 
 	}
 

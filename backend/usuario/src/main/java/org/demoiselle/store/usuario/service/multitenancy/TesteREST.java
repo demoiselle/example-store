@@ -25,7 +25,7 @@ import org.demoiselle.jee.security.annotation.Cors;
 import org.demoiselle.jee.security.annotation.LoggedIn;
 import org.demoiselle.jee.security.annotation.RequiredPermission;
 import org.demoiselle.jee.security.annotation.RequiredRole;
-import org.demoiselle.store.usuario.business.TenancyBC;
+import org.demoiselle.store.usuario.business.TenantBC;
 
 import io.swagger.annotations.Api;
 import io.swagger.jaxrs.PATCH;
@@ -44,7 +44,7 @@ public class TesteREST {
 	private SecurityContext securityContext;
 
 	@Inject
-	private TenancyBC business;
+	private TenantBC business;
 
 	// @Inject
 	// private DemoisellePrincipal loggedUser;

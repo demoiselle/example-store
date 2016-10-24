@@ -26,7 +26,7 @@ import org.demoiselle.jee.script.DynamicManager;
 import org.demoiselle.store.usuario.crud.GenericCrudBusiness;
 import org.demoiselle.store.usuario.dao.UsuarioDAO;
 import org.demoiselle.store.usuario.dao.context.PersistenceContextDAO;
-import org.demoiselle.store.usuario.dao.multitenancy.MultiTenancyContext;
+import org.demoiselle.store.usuario.dao.multitenancy.MultiTenantContext;
 import org.demoiselle.store.usuario.entity.Usuario;
 
 /**
@@ -50,7 +50,7 @@ public class UsuarioBC extends GenericCrudBusiness<Usuario> {
 	private UserTransaction userTransaction;
 
 	@Inject
-	private MultiTenancyContext multiTenancyContext;
+	private MultiTenantContext multiTenancyContext;
 
 	private DynamicManager scriptManager = new DynamicManager();
 

@@ -52,9 +52,9 @@
 			<property name="javax.persistence.schema-generation.scripts.action"
 				value="drop-and-create" />
 			<property name="javax.persistence.schema-generation.scripts.create-target"
-				value="../standalone/tmp/demoiselleMultiTenancyCreate.ddl" />
+				value="../standalone/tmp/demoiselleMultiTenantCreate.ddl" />
 			<property name="javax.persistence.schema-generation.scripts.drop-target"
-				value="../standalone/tmp/demoiselleMultiTenancyDrop.ddl" />
+				value="../standalone/tmp/demoiselleMultiTenantDrop.ddl" />
 		</properties>
 	</persistence-unit>
 

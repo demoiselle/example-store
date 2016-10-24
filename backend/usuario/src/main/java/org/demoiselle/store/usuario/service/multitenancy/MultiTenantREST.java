@@ -31,20 +31,20 @@ import javax.ws.rs.core.Response;
 
 import org.demoiselle.jee.rest.annotation.ValidatePayload;
 import org.demoiselle.jee.security.annotation.Cors;
-import org.demoiselle.store.usuario.business.TenancyBC;
+import org.demoiselle.store.usuario.business.TenantBC;
 import org.demoiselle.store.usuario.configuration.AppConfiguration;
 import org.demoiselle.store.usuario.entity.Tenant;
 
 import io.swagger.annotations.Api;
 
 @Path("multiTenancy")
-@Api("Multi-Tenancy")
+@Api("Multitenancy")
 @Consumes({ MediaType.APPLICATION_JSON })
 @Produces({ MediaType.APPLICATION_JSON })
-public class MultiTenancyREST {
+public class MultiTenantREST {
 
 	@Inject
-	private TenancyBC business;
+	private TenantBC business;
 
 	private DataSource dataSource;
 
@@ -71,12 +71,12 @@ public class MultiTenancyREST {
 
 			// Create Schema
 			final Context init = new InitialContext();
-			dataSource = (DataSource) init.lookup(configuration.getMultitenacyTenantsDatabaseDatasource());
+			dataSource = (DataSource) init.lookup(configuration.getMultiTenancyTenantsDatabaseDatasource());
 
 			Connection conn = dataSource.getConnection();
 
 			// Cria o BANCO/SCHEMA
-			conn.createStatement().execute(configuration.getMultitenacyDropDatabaseSQL() + " " + t.getName());
+			conn.createStatement().execute(configuration.getMultiTenancyDropDatabaseSQL() + " " + t.getName());
 
 			// Como a conexão esta fora de contexto é importante fechar ela aqui
 			if (!conn.isClosed()) {
@@ -95,7 +95,7 @@ public class MultiTenancyREST {
 	@Path("multitenancyContext")
 	@Cors
 	public Response multitenancyContext() throws Exception {
-		return Response.ok().entity(business.getMultitenancyName()).build();
+		return Response.ok().entity(business.getTenantName()).build();
 	}
 
 	@POST
@@ -109,15 +109,15 @@ public class MultiTenancyREST {
 
 			// Create Schema
 			final Context init = new InitialContext();
-			dataSource = (DataSource) init.lookup(configuration.getMultitenacyTenantsDatabaseDatasource());
+			dataSource = (DataSource) init.lookup(configuration.getMultiTenancyTenantsDatabaseDatasource());
 
 			Connection conn = dataSource.getConnection();
 
 			// Cria o BANCO/SCHEMA
-			conn.createStatement().execute(configuration.getMultitenacyCreateDatabaseSQL() + " " + tenant.getName());
+			conn.createStatement().execute(configuration.getMultiTenancyCreateDatabaseSQL() + " " + tenant.getName());
 
 			// Usa o BANCO/SCHEMA (MySQL)
-			conn.createStatement().execute(configuration.getMultitenacySetDatabaseSQL() + " " + tenant.getName());
+			conn.createStatement().execute(configuration.getMultiTenancySetDatabaseSQL() + " " + tenant.getName());
 
 			// Roda o DDL - DROP
 			dropDatabase(conn);
@@ -140,7 +140,7 @@ public class MultiTenancyREST {
 	}
 
 	private void dropDatabase(Connection conn) throws SQLException {
-		String filename = configuration.getMultitenacyDropDatabaseDDL();
+		String filename = configuration.getMultiTenancyDropDatabaseDDL();
 		List<String> ddl = getDDLString(filename);
 		for (String ddlLine : ddl) {
 			conn.createStatement().execute(ddlLine);
@@ -148,7 +148,7 @@ public class MultiTenancyREST {
 	}
 
 	private void createDatabase(Connection conn) throws SQLException {
-		String filename = configuration.getMultitenacyCreateDatabaseDDL();
+		String filename = configuration.getMultiTenancyCreateDatabaseDDL();
 		List<String> ddl = getDDLString(filename);
 		for (String ddlLine : ddl) {
 			conn.createStatement().execute(ddlLine);
