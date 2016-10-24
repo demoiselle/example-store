@@ -70,12 +70,7 @@ public class MultiTenantProvider implements MultiTenantConnectionProvider, Servi
 	}
 
 	@Override
-	public void releaseAnyConnection(Connection connection) throws SQLException {
-		try {
-			connection.createStatement().execute(config.getString("demoiselle.multiTenancySetDatabaseSQL") + " " + config.getString("demoiselle.multiTenancyMasterDatabase"));
-		} catch (final SQLException e) {
-			throw new HibernateException("Error trying to alter schema [master]", e);
-		}
+	public void releaseAnyConnection(Connection connection) throws SQLException {	
 		connection.close();
 	}
 

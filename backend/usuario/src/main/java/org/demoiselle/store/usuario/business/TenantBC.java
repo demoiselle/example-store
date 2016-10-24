@@ -34,7 +34,7 @@ public class TenantBC {
 	@PersistenceContext(unitName = "MasterPU")
 	protected EntityManager entityManagerMaster;
 
-	protected TenantDAO getPersistenceDAO() {
+	protected TenantDAO getPersistenceDAO() {		
 		return dao;
 	}
 
@@ -93,6 +93,10 @@ public class TenantBC {
 
 	public String getTenantName() {
 		return getPersistenceDAO().getMultiTenantContext().getTenant().getName();
+	}
+	
+	public String getCreateUserScript() {
+		return getPersistenceDAO().getMultiTenantContext().getTenant().getScriptCreateUser();
 	}
 
 }

@@ -54,6 +54,10 @@ public class TenantSelectorFilter implements ContainerRequestFilter {
 		String tenantNameUrl = requestContext.getUriInfo().getPathSegments().get(0).toString();
 		Tenant tenant = null;
 
+		// Pega sempre o tenant do banco pois existem informações que podem ser
+		// alteradas e precisam ser propagadas rapidamente (Scripts, confs,
+		// status...)
+
 		// Pega os tenants do banco de dados
 		Query query = entityManagerMaster.createQuery("select u from Tenant u where u.name = :value", Tenant.class);
 		query.setParameter("value", tenantNameUrl);

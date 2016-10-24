@@ -98,6 +98,13 @@ public class MultiTenantREST {
 		return Response.ok().entity(business.getTenantName()).build();
 	}
 
+	@GET
+	@Path("multitenancyCreateUserScript")
+	@Cors
+	public Response multitenancyCreateUserScript() throws Exception {
+		return Response.ok().entity(business.getCreateUserScript()).build();
+	}
+
 	@POST
 	@Path("createTenant")
 	@Cors

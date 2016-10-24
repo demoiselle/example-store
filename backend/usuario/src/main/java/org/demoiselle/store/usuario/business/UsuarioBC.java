@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
+import javax.script.ScriptException;
 import javax.script.SimpleBindings;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
@@ -61,24 +62,33 @@ public class UsuarioBC extends GenericCrudBusiness<Usuario> {
 
 	@Transactional
 	@Override
-	public void create(Usuario entity) {
+	public Usuario create(Usuario entity) {
 
 		// Aplica o script no usuário do contexto de multitenancy
 		// multiTenancyContext
-		if (multiTenancyContext.getTenant().getScriptCreateUser() != null
-				&& !multiTenancyContext.getTenant().getScriptCreateUser().isEmpty()) {
+		try {
+			if (multiTenancyContext.getTenant().getScriptCreateUser() != null
+					&& !multiTenancyContext.getTenant().getScriptCreateUser().isEmpty()) {
 
-			SimpleBindings vars = new SimpleBindings();
-			vars.put("usuario", entity);
-			vars.put("tenant", multiTenancyContext.getTenant());
+				SimpleBindings vars = new SimpleBindings();
+				vars.put("usuario", entity);
+				vars.put("tenant", multiTenancyContext.getTenant());
 
-			scriptManager.loadEngine("groovy");
-			scriptManager.loadScript("createUser", multiTenancyContext.getTenant().getScriptCreateUser());
+				String scriptId = "createUser-" + multiTenancyContext.getTenant();
+				
+				// Verifica se existe o script no cache
+				if (scriptManager.getScript(scriptId) == null) {
+					scriptManager.loadEngine("groovy");
+					scriptManager.loadScript(scriptId, multiTenancyContext.getTenant().getScriptCreateUser());
+				} 
 
-			scriptManager.eval("createUser", vars);
+				scriptManager.eval(scriptId, vars);
+			}
+		} catch (ScriptException e) {
+			e.printStackTrace();
 		}
 
-		getPersistenceDAO().create(entity);
+		return getPersistenceDAO().create(entity);
 	}
 
 	public void createTesteTransacional1(Usuario usuario)
