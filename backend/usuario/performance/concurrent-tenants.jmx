@@ -17,7 +17,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">50</stringProp>
+        <stringProp name="ThreadGroup.num_threads">100</stringProp>
         <stringProp name="ThreadGroup.ramp_time">0</stringProp>
         <longProp name="ThreadGroup.start_time">1476976775000</longProp>
         <longProp name="ThreadGroup.end_time">1476976775000</longProp>
@@ -126,8 +126,8 @@
             </elementProp>
             <stringProp name="HTTPSampler.domain">localhost</stringProp>
             <stringProp name="HTTPSampler.port">8080</stringProp>
-            <stringProp name="HTTPSampler.connect_timeout">10000</stringProp>
-            <stringProp name="HTTPSampler.response_timeout">10000</stringProp>
+            <stringProp name="HTTPSampler.connect_timeout">20000</stringProp>
+            <stringProp name="HTTPSampler.response_timeout">20000</stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
             <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
             <stringProp name="HTTPSampler.path">/app/api/cliente${TENANT}/usuario/createTest</stringProp>
@@ -172,7 +172,7 @@
             <stringProp name="ConstantTimer.delay">1000</stringProp>
           </ConstantTimer>
           <hashTree/>
-          <GaussianRandomTimer guiclass="GaussianRandomTimerGui" testclass="GaussianRandomTimer" testname="Temporizador Aleatório Gaussiano" enabled="true">
+          <GaussianRandomTimer guiclass="GaussianRandomTimerGui" testclass="GaussianRandomTimer" testname="Temporizador Aleatório Gaussiano" enabled="false">
             <stringProp name="ConstantTimer.delay">1000</stringProp>
             <stringProp name="RandomTimer.range">500</stringProp>
           </GaussianRandomTimer>
