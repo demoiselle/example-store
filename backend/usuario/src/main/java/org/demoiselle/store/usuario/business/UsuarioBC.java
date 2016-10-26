@@ -53,7 +53,8 @@ public class UsuarioBC extends GenericCrudBusiness<Usuario> {
 	@Inject
 	private MultiTenantContext multiTenancyContext;
 
-	private DynamicManager scriptManager = new DynamicManager("groovy");
+	@Inject
+	private DynamicManager scriptManager;
 
 	@Override
 	protected PersistenceContextDAO<Usuario> getPersistenceDAO() {
@@ -75,11 +76,14 @@ public class UsuarioBC extends GenericCrudBusiness<Usuario> {
 				vars.put("tenant", multiTenancyContext.getTenant());
 
 				String scriptId = "createUser-" + multiTenancyContext.getTenant().getName();
-				
+
 				// Verifica se existe o script no cache
 				if (scriptManager.getScript(scriptId) == null) {
+					System.out.println("Criado o script [" + scriptId + "].");
+
+					scriptManager.loadEngine("groovy");
 					scriptManager.loadScript(scriptId, multiTenancyContext.getTenant().getScriptCreateUser());
-				} 
+				}
 
 				scriptManager.eval(scriptId, vars);
 			}

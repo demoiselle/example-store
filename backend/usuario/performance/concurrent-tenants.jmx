@@ -17,7 +17,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">100</stringProp>
+        <stringProp name="ThreadGroup.num_threads">200</stringProp>
         <stringProp name="ThreadGroup.ramp_time">0</stringProp>
         <longProp name="ThreadGroup.start_time">1476976775000</longProp>
         <longProp name="ThreadGroup.end_time">1476976775000</longProp>
@@ -94,7 +94,7 @@
           </hashTree>
         </hashTree>
         <RunTime guiclass="RunTimeGui" testclass="RunTime" testname="Controlador de Tempo de Execução - CREATE SCRIPT" enabled="true">
-          <stringProp name="RunTime.seconds">300</stringProp>
+          <stringProp name="RunTime.seconds">600</stringProp>
         </RunTime>
         <hashTree>
           <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="Variável Aleatória" enabled="true">
