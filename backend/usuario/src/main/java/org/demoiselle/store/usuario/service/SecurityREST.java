@@ -23,6 +23,7 @@ import org.demoiselle.jee.security.annotation.RequiredRole;
 import org.demoiselle.jee.security.exception.DemoiselleSecurityException;
 import org.demoiselle.jee.security.message.DemoiselleSecurityMessages;
 import org.demoiselle.store.usuario.business.UsuarioBC;
+import org.demoiselle.store.usuario.dao.multitenancy.MultiTenantContext;
 import org.demoiselle.store.usuario.entity.Usuario;
 import org.demoiselle.store.usuario.security.Credentials;
 import org.jose4j.json.internal.json_simple.JSONObject;
@@ -50,6 +51,9 @@ public class SecurityREST {
 	@Inject
 	private UsuarioBC usuarioBC;
 
+	@Inject
+	private MultiTenantContext multiTenantContext;
+
 	@SuppressWarnings("unchecked")
 	public JSONObject loggedUserObject() {
 		JSONObject json = new JSONObject();
@@ -57,6 +61,7 @@ public class SecurityREST {
 		json.put("name", loggedUser.getName());
 		json.put("roles", loggedUser.getRoles());
 		json.put("permissions", loggedUser.getPermissions());
+		json.put("tenant", loggedUser.getParams("Tenant"));
 		return json;
 	}
 
@@ -106,7 +111,7 @@ public class SecurityREST {
 
 	@POST
 	@Path("login")
-	public String testeLogin(Credentials credentials) {
+	public Response testeLogin(Credentials credentials) {
 
 		Usuario usuario = usuarioBC.loadByEmailAndSenha(credentials.getUsername(), credentials.getPassword());
 
@@ -114,8 +119,7 @@ public class SecurityREST {
 			loggedUser.setName(credentials.getUsername());
 			loggedUser.setIdentity("" + System.currentTimeMillis());
 			ArrayList<String> roles = new ArrayList<>();
-			roles.add("ADMINISTRATOR");
-			roles.add("MANAGER");
+			roles.add(usuario.getPerfil());
 
 			Map<String, List<String>> permissions = new HashMap<>();
 			ArrayList<String> p1 = new ArrayList<String>();
@@ -128,11 +132,15 @@ public class SecurityREST {
 			loggedUser.setRoles(roles);
 			loggedUser.setPermissions(permissions);
 
+			// Tenant
+			loggedUser.addParam("Tenant", multiTenantContext.getTenant().getName());
+
 			securityContext.setUser(loggedUser);
 		} else {
-			throw new DemoiselleSecurityException(bundle.invalidCredentials(), 401);
+			throw new DemoiselleSecurityException(bundle.invalidCredentials(),
+					Response.Status.NOT_ACCEPTABLE.getStatusCode());
 		}
 
-		return token.getKey();
+		return Response.ok().entity("{\"token\":\"" + token.getKey() + "\"}").build();
 	}
 }
