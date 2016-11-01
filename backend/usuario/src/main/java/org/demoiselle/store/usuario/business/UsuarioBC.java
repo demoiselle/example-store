@@ -26,7 +26,6 @@ import javax.transaction.UserTransaction;
 import org.demoiselle.jee.script.DynamicManager;
 import org.demoiselle.store.usuario.crud.GenericCrudBusiness;
 import org.demoiselle.store.usuario.dao.UsuarioDAO;
-import org.demoiselle.store.usuario.dao.context.PersistenceContextDAO;
 import org.demoiselle.store.usuario.dao.multitenancy.MultiTenantContext;
 import org.demoiselle.store.usuario.entity.Usuario;
 
@@ -51,13 +50,13 @@ public class UsuarioBC extends GenericCrudBusiness<Usuario> {
 	private UserTransaction userTransaction;
 
 	@Inject
-	private MultiTenantContext multiTenancyContext;
+	private MultiTenantContext multiTenantContext;
 
 	@Inject
 	private DynamicManager scriptManager;
 
 	@Override
-	protected PersistenceContextDAO<Usuario> getPersistenceDAO() {
+	protected UsuarioDAO getPersistenceDAO() {
 		return dao;
 	}
 
@@ -66,23 +65,23 @@ public class UsuarioBC extends GenericCrudBusiness<Usuario> {
 	public Usuario create(Usuario entity) {
 
 		// Aplica o script no usuário do contexto de multitenancy
-		// multiTenancyContext
+		// multiTenantContext
 		try {
-			if (multiTenancyContext.getTenant().getScriptCreateUser() != null
-					&& !multiTenancyContext.getTenant().getScriptCreateUser().isEmpty()) {
+			if (multiTenantContext.getTenant().getScriptCreateUser() != null
+					&& !multiTenantContext.getTenant().getScriptCreateUser().isEmpty()) {
 
 				SimpleBindings vars = new SimpleBindings();
 				vars.put("usuario", entity);
-				vars.put("tenant", multiTenancyContext.getTenant());
+				vars.put("tenant", multiTenantContext.getTenant());
 
-				String scriptId = "createUser-" + multiTenancyContext.getTenant().getName();
+				String scriptId = "createUser-" + multiTenantContext.getTenant().getName();
 
 				// Verifica se existe o script no cache
 				if (scriptManager.getScript(scriptId) == null) {
 					System.out.println("Criado o script [" + scriptId + "].");
 
 					scriptManager.loadEngine("groovy");
-					scriptManager.loadScript(scriptId, multiTenancyContext.getTenant().getScriptCreateUser());
+					scriptManager.loadScript(scriptId, multiTenantContext.getTenant().getScriptCreateUser());
 				}
 
 				scriptManager.eval(scriptId, vars);
@@ -148,6 +147,11 @@ public class UsuarioBC extends GenericCrudBusiness<Usuario> {
 		usuario.setEmail(emailUniqueTest);
 		getPersistenceDAO().create(usuario);
 
+	}
+
+	public Usuario loadByEmailAndSenha(String email, String senha) {
+		Usuario u = getPersistenceDAO().loadByEmailAndSenha(email, senha);
+		return u;
 	}
 
 }

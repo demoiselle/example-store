@@ -18,4 +18,15 @@ public class UsuarioDAO extends PersistenceContextDAO<Usuario> {
 		super(Usuario.class);
 	}
 
+	public Usuario loadByEmailAndSenha(String email, String senha) {
+		Usuario u = null;
+		try {
+			u = getEntityManager()
+					.createQuery("select u from Usuario u where u.email = :email AND senha = :senha", Usuario.class)
+					.setParameter("email", email).setParameter("senha", senha).getSingleResult();
+		} catch (Exception e) {
+		}
+		return u;
+	}
+
 }

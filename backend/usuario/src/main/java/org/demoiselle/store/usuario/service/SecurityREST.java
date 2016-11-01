@@ -22,6 +22,8 @@ import org.demoiselle.jee.security.annotation.RequiredPermission;
 import org.demoiselle.jee.security.annotation.RequiredRole;
 import org.demoiselle.jee.security.exception.DemoiselleSecurityException;
 import org.demoiselle.jee.security.message.DemoiselleSecurityMessages;
+import org.demoiselle.store.usuario.business.UsuarioBC;
+import org.demoiselle.store.usuario.entity.Usuario;
 import org.demoiselle.store.usuario.security.Credentials;
 import org.jose4j.json.internal.json_simple.JSONObject;
 
@@ -44,6 +46,9 @@ public class SecurityREST {
 
 	@Inject
 	private DemoiselleSecurityMessages bundle;
+
+	@Inject
+	private UsuarioBC usuarioBC;
 
 	@SuppressWarnings("unchecked")
 	public JSONObject loggedUserObject() {
@@ -72,28 +77,28 @@ public class SecurityREST {
 	}
 
 	@GET
-	@Path("role/ok")
+	@Path("role/administrator")
 	@RequiredRole("ADMINISTRATOR")
 	public Response testeRoleOK() {
 		return Response.ok(loggedUserObject()).build();
 	}
 
 	@GET
-	@Path("role/error")
+	@Path("role/usuario")
 	@RequiredRole("USUARIO")
 	public Response testeRoleErro() {
 		return Response.ok(loggedUserObject()).build();
 	}
 
 	@GET
-	@Path("permission/ok")
+	@Path("permission/categoria/consultar")
 	@RequiredPermission(resource = "Categoria", operation = "Consultar")
 	public Response testePermissionOK() {
 		return Response.ok(loggedUserObject()).build();
 	}
 
 	@GET
-	@Path("permission/error")
+	@Path("permission/produto/incluir")
 	@RequiredPermission(resource = "Produto", operation = "Incluir")
 	public Response testePermissionErro() {
 		return Response.ok(loggedUserObject()).build();
@@ -102,28 +107,32 @@ public class SecurityREST {
 	@POST
 	@Path("login")
 	public String testeLogin(Credentials credentials) {
-		if (credentials.getUsername().equalsIgnoreCase("Gladson")
-				&& credentials.getPassword().equalsIgnoreCase("123456")) {
+
+		Usuario usuario = usuarioBC.loadByEmailAndSenha(credentials.getUsername(), credentials.getPassword());
+
+		if (usuario != null) {
 			loggedUser.setName(credentials.getUsername());
 			loggedUser.setIdentity("" + System.currentTimeMillis());
 			ArrayList<String> roles = new ArrayList<>();
 			roles.add("ADMINISTRATOR");
 			roles.add("MANAGER");
-			
+
 			Map<String, List<String>> permissions = new HashMap<>();
 			ArrayList<String> p1 = new ArrayList<String>();
 			p1.add("Alterar");
 			ArrayList<String> p2 = new ArrayList<String>();
 			p2.add("Consultar");
-			
+
 			permissions.put("Produto", p1);
 			permissions.put("Categoria", p2);
 			loggedUser.setRoles(roles);
 			loggedUser.setPermissions(permissions);
+
 			securityContext.setUser(loggedUser);
 		} else {
 			throw new DemoiselleSecurityException(bundle.invalidCredentials(), 401);
 		}
+
 		return token.getKey();
 	}
 }
