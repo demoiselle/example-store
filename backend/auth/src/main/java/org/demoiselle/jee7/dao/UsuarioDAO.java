@@ -6,31 +6,23 @@
  */
 package org.demoiselle.jee7.dao;
 
-import java.util.List;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.ws.rs.core.Response;
+import org.demoiselle.jee.persistence.crud.AbstractDAO;
 import org.demoiselle.jee.security.exception.DemoiselleSecurityException;
-import org.demoiselle.jee7.dao.context.PersistenceContextDAO;
 import org.demoiselle.jee7.entity.Usuario;
 
-public class UsuarioDAO extends PersistenceContextDAO<Usuario> {
-
-    /**
-     * O Contrutor desta classe precisa ser sem parâmetros por causa do CDI.
-     */
-    public UsuarioDAO() {
-        super(Usuario.class);
-    }
+public class UsuarioDAO extends AbstractDAO<Usuario> {
 
     public Usuario verifyEmail(String email, String password) {
 
-        CriteriaBuilder builder = emEntity.getCriteriaBuilder();
+        CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Usuario> query = builder.createQuery(Usuario.class);
         Root<Usuario> from = query.from(Usuario.class);
-        TypedQuery<Usuario> typedQuery = emEntity.createQuery(
+        TypedQuery<Usuario> typedQuery = getEntityManager().createQuery(
                 query.select(from)
                 .where(builder.equal(from.get("email"), email))
         );

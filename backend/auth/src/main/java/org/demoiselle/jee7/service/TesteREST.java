@@ -22,6 +22,7 @@ import javax.ws.rs.core.Response;
 import org.demoiselle.jee.core.api.security.DemoisellePrincipal;
 import org.demoiselle.jee.core.api.security.SecurityContext;
 import org.demoiselle.jee.core.api.security.Token;
+import org.demoiselle.jee.persistence.crud.annotation.Crud;
 import org.demoiselle.jee.security.annotation.Cors;
 import org.demoiselle.jee.security.annotation.LoggedIn;
 import org.demoiselle.jee.security.annotation.RequiredPermission;
@@ -130,9 +131,9 @@ public class TesteREST {
     public Response testeGet() {
         return Response.ok("{\"msg\":\"get ok\"}").build();
     }
-
-    @NoCors
+    
     @POST
+    @NoCors
     @CacheControl("max-age=600")
     public Response testePost() {
         return Response.ok("{\"msg\":\"post ok\"}").build();
