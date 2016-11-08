@@ -15,16 +15,15 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.PreMatching;
 import javax.ws.rs.ext.Provider;
 
-import org.demoiselle.store.usuario.dao.multitenancy.MultiTenancyContext;
+import org.demoiselle.store.usuario.configuration.AppConfiguration;
+import org.demoiselle.store.usuario.dao.multitenancy.MultiTenantContext;
 import org.demoiselle.store.usuario.entity.Tenant;
 
 @Provider
@@ -34,20 +33,14 @@ public class TenantSelectorFilter implements ContainerRequestFilter {
 	@Inject
 	private Logger log;
 
-	// @Inject
-	// private AppConfiguration configuration;
-
-	@PersistenceUnit(unitName = "TenantsPU")
-	protected EntityManagerFactory entityManager;
+	@Inject
+	private AppConfiguration configuration;
 
 	@PersistenceContext(unitName = "MasterPU")
 	protected EntityManager entityManagerMaster;
 
-	// @Inject
-	// private TenancyDAO dao;
-
 	@Inject
-	private MultiTenancyContext multitenancyContext;
+	private MultiTenantContext multitenancyContext;
 
 	@PostConstruct
 	public void init() {
@@ -61,9 +54,11 @@ public class TenantSelectorFilter implements ContainerRequestFilter {
 		String tenantNameUrl = requestContext.getUriInfo().getPathSegments().get(0).toString();
 		Tenant tenant = null;
 
+		// Pega sempre o tenant do banco pois existem informações que podem ser
+		// alteradas e precisam ser propagadas rapidamente (Scripts, confs,
+		// status...)
+
 		// Pega os tenants do banco de dados
-		// List<Tenant> tenantsDatabase = dao.find("name", tenantUrl.getName(),
-		// "id", "ASC", 0, 1);
 		Query query = entityManagerMaster.createQuery("select u from Tenant u where u.name = :value", Tenant.class);
 		query.setParameter("value", tenantNameUrl);
 		query.setHint("org.hibernate.cacheable", "true");
@@ -93,8 +88,8 @@ public class TenantSelectorFilter implements ContainerRequestFilter {
 
 		} else {
 			// log.info("Vai para o local normal: " +
-			// requestContext.getUriInfo().getPath());			
-			tenant = new Tenant("master");
+			// requestContext.getUriInfo().getPath());
+			tenant = new Tenant(configuration.getMultiTenancyMasterDatabase());
 		}
 
 		multitenancyContext.setTenant(tenant);

@@ -34,7 +34,7 @@ public class MultiTenantProvider implements MultiTenantConnectionProvider, Servi
 	public void injectServices(ServiceRegistryImplementor serviceRegistry) {
 		try {
 			final Context init = new InitialContext();
-			dataSource = (DataSource) init.lookup(config.getString("demoiselle.multitenacyTenantsDatabaseDatasource"));
+			dataSource = (DataSource) init.lookup(config.getString("demoiselle.multiTenancyTenantsDatabaseDatasource"));
 		} catch (final NamingException e) {
 			throw new RuntimeException(e);
 		}
@@ -62,7 +62,7 @@ public class MultiTenantProvider implements MultiTenantConnectionProvider, Servi
 		final Connection connection = getAnyConnection();
 		try {
 			connection.createStatement()
-					.execute(config.getString("demoiselle.multitenacySetDatabaseSQL") + " " + tenantIdentifier);
+					.execute(config.getString("demoiselle.multiTenancySetDatabaseSQL") + " " + tenantIdentifier);
 		} catch (final SQLException e) {
 			throw new HibernateException("Error trying to alter schema [" + tenantIdentifier + "]", e);
 		}
@@ -70,12 +70,7 @@ public class MultiTenantProvider implements MultiTenantConnectionProvider, Servi
 	}
 
 	@Override
-	public void releaseAnyConnection(Connection connection) throws SQLException {
-		try {
-			connection.createStatement().execute(config.getString("demoiselle.multitenacySetDatabaseSQL") + " master");
-		} catch (final SQLException e) {
-			throw new HibernateException("Error trying to alter schema [master]", e);
-		}
+	public void releaseAnyConnection(Connection connection) throws SQLException {	
 		connection.close();
 	}
 

@@ -7,50 +7,56 @@ public class AppConfiguration {
 
 	private String appSearchUrl;
 
-	private String multitenacySetDatabaseSQL;
+	private String multiTenancySetDatabaseSQL;
 
-	private String multitenacyCreateDatabaseSQL;
+	private String multiTenancyCreateDatabaseSQL;
 
-	private String multitenacyDropDatabaseSQL;
+	private String multiTenancyDropDatabaseSQL;
 
-	private String multitenacyTenantsDatabaseDatasource;
+	private String multiTenancyTenantsDatabaseDatasource;
 
-	private String multitenacyMasterDatabaseDatasource;
+	private String multiTenancyMasterDatabaseDatasource;
 
-	private String multitenacyCreateDatabaseDDL;
+	private String multiTenancyCreateDatabaseDDL;
 
-	private String multitenacyDropDatabaseDDL;
+	private String multiTenancyDropDatabaseDDL;
+
+	private String multiTenancyMasterDatabase;
 
 	public String getAppSearchUrl() {
 		return appSearchUrl;
 	}
 
-	public String getMultitenacySetDatabaseSQL() {
-		return multitenacySetDatabaseSQL;
+	public String getMultiTenancySetDatabaseSQL() {
+		return multiTenancySetDatabaseSQL;
 	}
 
-	public String getMultitenacyCreateDatabaseSQL() {
-		return multitenacyCreateDatabaseSQL;
+	public String getMultiTenancyCreateDatabaseSQL() {
+		return multiTenancyCreateDatabaseSQL;
 	}
 
-	public String getMultitenacyDropDatabaseSQL() {
-		return multitenacyDropDatabaseSQL;
+	public String getMultiTenancyDropDatabaseSQL() {
+		return multiTenancyDropDatabaseSQL;
 	}
 
-	public String getMultitenacyTenantsDatabaseDatasource() {
-		return multitenacyTenantsDatabaseDatasource;
+	public String getMultiTenancyTenantsDatabaseDatasource() {
+		return multiTenancyTenantsDatabaseDatasource;
 	}
 
-	public String getMultitenacyMasterDatabaseDatasource() {
-		return multitenacyMasterDatabaseDatasource;
+	public String getMultiTenancyMasterDatabaseDatasource() {
+		return multiTenancyMasterDatabaseDatasource;
 	}
 
-	public String getMultitenacyCreateDatabaseDDL() {
-		return multitenacyCreateDatabaseDDL;
+	public String getMultiTenancyCreateDatabaseDDL() {
+		return multiTenancyCreateDatabaseDDL;
 	}
 
-	public String getMultitenacyDropDatabaseDDL() {
-		return multitenacyDropDatabaseDDL;
+	public String getMultiTenancyDropDatabaseDDL() {
+		return multiTenancyDropDatabaseDDL;
+	}
+
+	public String getMultiTenancyMasterDatabase() {
+		return multiTenancyMasterDatabase;
 	}
 
 }

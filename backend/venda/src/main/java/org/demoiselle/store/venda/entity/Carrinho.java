@@ -1,24 +1,21 @@
-package org.demoiselle.jee7.cover;
+package org.demoiselle.store.venda.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-//cassiomaes
+/**
+ * Guarda as informações dos itens armazenados no carrinho.
+ * 
+ */
 public class Carrinho implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3678488610454757181L;
-	
 	protected List<ItemCarrinho> itens;	
 	
-	
 	public Carrinho(){
-		 itens = new ArrayList<ItemCarrinho>();	
-		
+		 itens = new ArrayList<ItemCarrinho>();		
 	}
 	
 	public void adicionarItem(ItemCarrinho item){
@@ -41,7 +38,6 @@ public class Carrinho implements Serializable {
 		return itens;
 	}
 	
-
 	public BigDecimal getValorTotal(){
 		BigDecimal total = BigDecimal.valueOf(0.0);
 		for(ItemCarrinho item:itens){

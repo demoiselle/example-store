@@ -33,12 +33,12 @@ public abstract class GenericCrudBusiness<T> {
 	private DemoiselleMessage messages;
 	
 	@Transactional
-	public void create(T entity) {
-		getPersistenceDAO().create(entity);
+	public T create(T entity) {
+		return getPersistenceDAO().create(entity);
 	}
 
 	@Transactional
-	public void edit(int id, T entity) {
+	public T edit(int id, T entity) {
 		try {
 			// é necessário setar o ID do objeto para que ele possa ser alterado
 			// esta ação é feita por reflexão por não termos o tipo do objeto
@@ -49,7 +49,7 @@ public abstract class GenericCrudBusiness<T> {
 			e.printStackTrace();
 		}
 
-		getPersistenceDAO().edit(entity);
+		return getPersistenceDAO().edit(entity);
 	}
 
 	@Transactional

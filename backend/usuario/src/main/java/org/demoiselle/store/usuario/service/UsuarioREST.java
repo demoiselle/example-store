@@ -13,6 +13,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.demoiselle.jee.rest.annotation.ValidatePayload;
 import org.demoiselle.jee.security.annotation.Cors;
@@ -24,7 +25,6 @@ import org.demoiselle.store.usuario.entity.Usuario;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-// @Stateless // TODO: Retestar as transações sem o Stateless!
 @Path("usuario")
 @Api("Usuário")
 @Consumes({ MediaType.APPLICATION_JSON })
@@ -50,8 +50,16 @@ public class UsuarioREST extends GenericCrudWithoutSecurityREST<Usuario> {
 
 	@POST
 	@ValidatePayload
+	@Path("createTest")
+	@Cors
+	public Response createTest(Usuario entity) throws Exception {
+		return Response.ok().entity(business.create(entity)).build();
+	}
+
+	@POST
+	@ValidatePayload
 	@Path("transacional2")
-	@ApiOperation(value = "Testa a transação (JTA/JPA)", notes = "Esta operação dará erro pois não o método de business não foi anotado com @Transaction, por isso não possui contexto transacional.")
+	@ApiOperation(value = "Testa a transação (	JTA/JPA)", notes = "Esta operação dará erro pois não o método de business não foi anotado com @Transaction, por isso não possui contexto transacional.")
 	@Cors
 	public void create2(Usuario entity) {
 		business.createTesteTransacional2(entity);

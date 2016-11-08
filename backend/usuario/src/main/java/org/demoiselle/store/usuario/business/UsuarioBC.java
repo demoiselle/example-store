@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
+import javax.script.ScriptException;
 import javax.script.SimpleBindings;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
@@ -25,8 +26,7 @@ import javax.transaction.UserTransaction;
 import org.demoiselle.jee.script.DynamicManager;
 import org.demoiselle.store.usuario.crud.GenericCrudBusiness;
 import org.demoiselle.store.usuario.dao.UsuarioDAO;
-import org.demoiselle.store.usuario.dao.context.PersistenceContextDAO;
-import org.demoiselle.store.usuario.dao.multitenancy.MultiTenancyContext;
+import org.demoiselle.store.usuario.dao.multitenancy.MultiTenantContext;
 import org.demoiselle.store.usuario.entity.Usuario;
 
 /**
@@ -50,34 +50,47 @@ public class UsuarioBC extends GenericCrudBusiness<Usuario> {
 	private UserTransaction userTransaction;
 
 	@Inject
-	private MultiTenancyContext multiTenancyContext;
+	private MultiTenantContext multiTenantContext;
 
-	private DynamicManager scriptManager = new DynamicManager();
+	@Inject
+	private DynamicManager scriptManager;
 
 	@Override
-	protected PersistenceContextDAO<Usuario> getPersistenceDAO() {
+	protected UsuarioDAO getPersistenceDAO() {
 		return dao;
 	}
 
 	@Transactional
 	@Override
-	public void create(Usuario entity) {
+	public Usuario create(Usuario entity) {
 
 		// Aplica o script no usuário do contexto de multitenancy
-		// multiTenancyContext
-		if (!multiTenancyContext.getTenant().getScriptCreateUser().isEmpty()) {
-			
-			SimpleBindings vars = new SimpleBindings();
-			vars.put("usuario", entity);
-			vars.put("tenant", multiTenancyContext.getTenant());
-			
-			scriptManager.loadEngine("groovy");
-			scriptManager.loadScript("createUser", multiTenancyContext.getTenant().getScriptCreateUser());
-			
-			scriptManager.eval("createUser", vars);
+		// multiTenantContext
+		try {
+			if (multiTenantContext.getTenant().getScriptCreateUser() != null
+					&& !multiTenantContext.getTenant().getScriptCreateUser().isEmpty()) {
+
+				SimpleBindings vars = new SimpleBindings();
+				vars.put("usuario", entity);
+				vars.put("tenant", multiTenantContext.getTenant());
+
+				String scriptId = "createUser-" + multiTenantContext.getTenant().getName();
+
+				// Verifica se existe o script no cache
+				if (scriptManager.getScript(scriptId) == null) {
+					System.out.println("Criado o script [" + scriptId + "].");
+
+					scriptManager.loadEngine("groovy");
+					scriptManager.loadScript(scriptId, multiTenantContext.getTenant().getScriptCreateUser());
+				}
+
+				scriptManager.eval(scriptId, vars);
+			}
+		} catch (ScriptException e) {
+			e.printStackTrace();
 		}
 
-		getPersistenceDAO().create(entity);
+		return getPersistenceDAO().create(entity);
 	}
 
 	public void createTesteTransacional1(Usuario usuario)
@@ -134,6 +147,11 @@ public class UsuarioBC extends GenericCrudBusiness<Usuario> {
 		usuario.setEmail(emailUniqueTest);
 		getPersistenceDAO().create(usuario);
 
+	}
+
+	public Usuario loadByEmailAndSenha(String email, String senha) {
+		Usuario u = getPersistenceDAO().loadByEmailAndSenha(email, senha);
+		return u;
 	}
 
 }

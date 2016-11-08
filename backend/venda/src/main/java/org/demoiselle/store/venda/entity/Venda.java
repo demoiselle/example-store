@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.demoiselle.jee7.entity;
+package org.demoiselle.store.venda.entity;
 
 import java.io.Serializable;
-
+import java.math.BigInteger;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,20 +17,23 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
- * @author 70744416353
+ * Classe que representa uma Venda.
+ * 
  */
 @Entity
-@Table(name="regras")
+@Table(name = "venda")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Regras.findAll", query = "SELECT i FROM Regras i"),
-    @NamedQuery(name = "Regras.findById", query = "SELECT i FROM Regras i WHERE i.id = :id")
- })
-public class Regras implements Serializable {
+    @NamedQuery(name = "Venda.findAll", query = "SELECT v FROM Venda v"),
+    @NamedQuery(name = "Venda.findById", query = "SELECT v FROM Venda v WHERE v.id = :id"),
+    @NamedQuery(name = "Venda.findByDatavenda", query = "SELECT v FROM Venda v WHERE v.datavenda = :datavenda"),
+    @NamedQuery(name = "Venda.findByUsuarioId", query = "SELECT v FROM Venda v WHERE v.usuarioId = :usuarioId")})
+public class Venda implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -37,17 +41,15 @@ public class Regras implements Serializable {
     @Basic(optional = false)
     @Column(nullable = false)
     private Long id;
-    @Column(name = "sistema_id")
-    private Long    sistemaId;
-    
-    @Column(name = "script")
-    private String  script; 
-    
-    
-    public Regras() {
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date datavenda;
+    @Column(name = "usuario_id")
+    private BigInteger usuarioId;
+
+    public Venda() {
     }
 
-    public Regras(Long id) {
+    public Venda(Long id) {
         this.id = id;
     }
 
@@ -59,23 +61,23 @@ public class Regras implements Serializable {
         this.id = id;
     }
 
-    public Long getSistemaId() {
-		return sistemaId;
-	}
+    public Date getDatavenda() {
+        return datavenda;
+    }
 
-	public void setSistemaId(Long sistemaId) {
-		this.sistemaId = sistemaId;
-	}
+    public void setDatavenda(Date datavenda) {
+        this.datavenda = datavenda;
+    }
 
-	public String getScript() {
-		return script;
-	}
+    public BigInteger getUsuarioId() {
+        return usuarioId;
+    }
 
-	public void setScript(String script) {
-		this.script = script;
-	}
+    public void setUsuarioId(BigInteger usuarioId) {
+        this.usuarioId = usuarioId;
+    }
 
-	@Override
+    @Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
@@ -85,10 +87,10 @@ public class Regras implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Itens)) {
+        if (!(object instanceof Venda)) {
             return false;
         }
-        Regras other = (Regras) object;
+        Venda other = (Venda) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -97,7 +99,7 @@ public class Regras implements Serializable {
 
     @Override
     public String toString() {
-        return "org.demoiselle.jee7.entity.Regras[ id=" + id + " ]";
+        return "org.demoiselle.jee7.entity.Venda[ id=" + id + " ]";
     }
     
 }
