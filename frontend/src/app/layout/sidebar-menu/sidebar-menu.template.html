@@ -1,0 +1,18 @@
+<div id="sidebar-menu">
+  
+  <div class="sidebar-menu-container">
+    <div class="menu-content" *ngIf="routes && routes.length">
+      <!--<div class="section">
+        <h3 *ngIf="isBs3"><a href="./index-bs4.html#{{hash}}">View in Bootstrap 4</a></h3>
+        <h3 *ngIf="!isBs3"><a href="./#{{hash}}">View in Bootstrap 3</a></h3>
+      </div>
+      -->
+      <div class="section"
+           *ngFor="let route of routes"
+           [routerLinkActive]="['active']"
+           [routerLinkActiveOptions]="{exact: true}">
+        <a [routerLink]="[route.path]"><h3>{{route.data[0]}}</h3></a>
+      </div>
+    </div>
+  </div>
+</div>

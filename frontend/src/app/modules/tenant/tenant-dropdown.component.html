@@ -1,0 +1,11 @@
+<!-- Single button -->
+  <span dropdown>
+    <a href dropdownToggle>
+      <i class="glyphicon glyphicon-globe"></i> {{selectedTenant.name}}
+    </a>
+    <ul class="dropdown-menu" dropdownMenu aria-labelledby="simple-dropdown">
+      <li style="cursor:pointer;" *ngFor="let tenant of tenants">
+        <a class="dropdown-item" (click)="selectTenant(tenant)">{{tenant.name}}</a>
+      </li>
+    </ul>
+  </span>

@@ -1,0 +1,37 @@
+<div id="content" class="content-box">
+  
+
+<div class="col-md-3">
+    <div class="painel painel-default" >
+        <form name="loginForm" (ngSubmit)="login()" novalidate>
+            <div class="panel-body">
+                <p>
+                    <label for="username">Email</label>
+                    <input type="text" class="form-control" name="username" [(ngModel)]="user.username" #username="ngModel" required />
+                    <span id="username-message" class="text-danger"></span>
+                </p>
+                <p>
+                    <label for="password">Senha</label>
+                    <input type="password" class="form-control" name="password" [(ngModel)]="user.password" #password="ngModel" required />
+                    <span id="password-message" class="text-danger"></span>
+                </p>
+                <p>
+                    <button id="login" class="btn btn-success">Entrar</button>
+                </p>
+                <div id="message" class="text-danger"></div>
+                <p>
+                    Email:admin@demoiselle.org Senha:123456
+                </p>
+                <p>
+                    Email:usuario@demoiselle.org Senha:456789
+                </p>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+    
+</div>
+
+
