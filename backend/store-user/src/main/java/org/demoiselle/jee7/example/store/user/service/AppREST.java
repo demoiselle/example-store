@@ -19,8 +19,8 @@ public class AppREST extends Application {
 		// Configurações minimas do Swagger
 		BeanConfig beanConfig = new BeanConfig();
 		beanConfig.setVersion("1.0.0");
-		beanConfig.setBasePath("/app/api");
-		beanConfig.setResourcePackage("org.demoiselle.store.usuario.service");
+		beanConfig.setBasePath("/user/api");
+		beanConfig.setResourcePackage("org.demoiselle.store.user.service");
 		beanConfig.setScan(true);
 	}
 }

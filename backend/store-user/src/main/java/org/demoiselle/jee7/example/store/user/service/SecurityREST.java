@@ -17,13 +17,13 @@ import javax.ws.rs.core.Response;
 import org.demoiselle.jee.core.api.security.DemoisellePrincipal;
 import org.demoiselle.jee.core.api.security.SecurityContext;
 import org.demoiselle.jee.core.api.security.Token;
+import org.demoiselle.jee.multitenancy.hibernate.context.MultiTenantContext;
 import org.demoiselle.jee.security.annotation.LoggedIn;
 import org.demoiselle.jee.security.annotation.RequiredPermission;
 import org.demoiselle.jee.security.annotation.RequiredRole;
 import org.demoiselle.jee.security.exception.DemoiselleSecurityException;
 import org.demoiselle.jee.security.message.DemoiselleSecurityMessages;
 import org.demoiselle.jee7.example.store.user.business.UserBC;
-import org.demoiselle.jee7.example.store.user.dao.multitenancy.MultiTenantContext;
 import org.demoiselle.jee7.example.store.user.entity.User;
 import org.demoiselle.jee7.example.store.user.security.Credentials;
 import org.jose4j.json.internal.json_simple.JSONObject;
@@ -31,7 +31,7 @@ import org.jose4j.json.internal.json_simple.JSONObject;
 import io.swagger.annotations.Api;
 
 @Path("security")
-@Api("Segurança")
+@Api("Security")
 @Produces({ MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON })
 @Consumes(MediaType.APPLICATION_JSON)
 public class SecurityREST {
