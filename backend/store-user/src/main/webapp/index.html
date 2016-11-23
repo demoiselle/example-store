@@ -12,50 +12,42 @@
             <h1>Api</h1>
             <h3 ng-show="isLoading">loading ...</h3>
             
+            <!--  
             <div ng-show="!isLoading" ng-controller="LoginCtrl">
-            	<!-- <div class="container"> -->
-            		<div class="panel panel-default">
-  						<div class="panel-body">
-		            		<!-- 
-			            	<div class="row">	            		
-			            		<p>Projeto de manutenção de usuários da Loja.</p>	            		
-			            	</div>
-			            	<div class="row">	            		
-			            		<hr />	            		
-			            	</div>
-			            	-->
-			            	<h4><b>Login</b></h4>
-			            	<div class="row">	     
-			            		<div class="col-md-12">       		
-			            			<h5>Passo 1. Informe o usuário e senha abaixo paga pegar o token JWT (Gladson/123456)</h5>
-			            		</div>	            		
-			            	</div>
-			            
-			            	<div class="row">
-			            		<div class="col-md-12"> 
-									<form class="form-inline">
-										<div class="form-group">
-											<label>Name</label>
-											<input type="text" class="form-control" placeholder="Usuário" ng-model="username">
-										</div>
-										<div class="form-group">
-											<label>Email</label>
-											<input type="password" class="form-control" placeholder="Senha" ng-model="password">
-										</div>
-										<button type="submit" class="btn btn-default" ng-click="login()">Login (secutiry/login)</button>
-									</form>
-								</div>
+           		<div class="panel panel-default">
+ 					<div class="panel-body">
+		            	<h4><b>Login</b></h4>
+		            	<div class="row">	     
+		            		<div class="col-md-12">       		
+		            			<h5>Passo 1. Informe o usuário e senha abaixo paga pegar o token JWT</h5>
+		            		</div>	            		
+		            	</div>
+		            
+		            	<div class="row">
+		            		<div class="col-md-12"> 
+								<form class="form-inline">
+									<div class="form-group">
+										<label>Name</label>
+										<input type="text" class="form-control" placeholder="Usuário" ng-model="username">
+									</div>
+									<div class="form-group">
+										<label>Email</label>
+										<input type="password" class="form-control" placeholder="Senha" ng-model="password">
+									</div>
+									<button type="submit" class="btn btn-default" ng-click="login()">Login (secutiry/login)</button>
+								</form>
 							</div>
-							
-							<div class="row">	 
-								<div class="col-md-12">            		
-			            			<h5>Passo 2. Utilize os métodos da sessão Segurança que tenham segurança para verificar o funcionamento.</h5>
-			            		</div>	            		
-			            	</div>
-			            </div>
-					</div>			            	
-				<!-- </div> -->
+						</div>
+						
+						<div class="row">	 
+							<div class="col-md-12">            		
+		            			<h5>Passo 2. Utilize os métodos da sessão Segurança que tenham segurança para verificar o funcionamento.</h5>
+		            		</div>	            		
+		            	</div>
+		            </div>
+				</div>			            	
             </div>
+            -->
             
             <div swagger-ui url="swaggerUrl" loading="isLoading" parser="json" api-explorer="true" error-handler="myErrorHandler" validator-url="false"></div>
         </div>

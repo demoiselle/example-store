@@ -20,7 +20,7 @@ public class AppREST extends Application {
 		BeanConfig beanConfig = new BeanConfig();
 		beanConfig.setVersion("1.0.0");
 		beanConfig.setBasePath("/user/api");
-		beanConfig.setResourcePackage("org.demoiselle.store.user.service");
+		beanConfig.setResourcePackage("org.demoiselle.jee7.example.store.user.service");
 		beanConfig.setScan(true);
 	}
 }
