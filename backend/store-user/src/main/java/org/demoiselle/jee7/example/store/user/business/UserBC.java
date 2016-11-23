@@ -119,13 +119,13 @@ public class UserBC extends GenericCrudBusiness<User> {
 
 		usuario = new User();
 		usuario.setId(null);
-		usuario.setNome(nomeUniqueTest);
+		usuario.setName(nomeUniqueTest);
 		usuario.setEmail(emailUniqueTest);
 		getPersistenceDAO().create(usuario);
 
 		usuario = new User();
 		usuario.setId(null);
-		usuario.setNome(nomeUniqueTest);
+		usuario.setName(nomeUniqueTest);
 		usuario.setEmail(emailUniqueTest);
 		getPersistenceDAO().create(usuario);
 
@@ -147,13 +147,13 @@ public class UserBC extends GenericCrudBusiness<User> {
 
 		usuario = new User();
 		usuario.setId(null);
-		usuario.setNome(nomeUniqueTest);
+		usuario.setName(nomeUniqueTest);
 		usuario.setEmail(emailUniqueTest);
 		getPersistenceDAO().create(usuario);
 
 		usuario = new User();
 		usuario.setId(null);
-		usuario.setNome(nomeUniqueTest);
+		usuario.setName(nomeUniqueTest);
 		usuario.setEmail(emailUniqueTest);
 		getPersistenceDAO().create(usuario);
 

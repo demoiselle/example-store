@@ -18,12 +18,12 @@ public class UserDAO extends PersistenceContextDAO<User> {
 		super(User.class);
 	}
 
-	public User loadByEmailAndSenha(String email, String senha) {
+	public User loadByEmailAndSenha(String email, String password) {
 		User u = null;
 		try {
 			u = getEntityManager()
-					.createQuery("select u from Usuario u where u.email = :email AND senha = :senha", User.class)
-					.setParameter("email", email).setParameter("senha", senha).getSingleResult();
+					.createQuery("select u from User u where u.email = :email AND password = :password", User.class)
+					.setParameter("email", email).setParameter("password", password).getSingleResult();
 		} catch (Exception e) {
 		}
 		return u;

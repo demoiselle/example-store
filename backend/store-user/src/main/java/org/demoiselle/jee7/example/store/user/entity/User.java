@@ -28,12 +28,12 @@ import io.swagger.annotations.ApiModelProperty;
 @XmlRootElement
 @NamedQueries({ @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
 		@NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
-		@NamedQuery(name = "User.findByNome", query = "SELECT u FROM User u WHERE u.nome = :nome"),
-		@NamedQuery(name = "User.findByPerfil", query = "SELECT u FROM User u WHERE u.perfil = :perfil"),
+		@NamedQuery(name = "User.findByName", query = "SELECT u FROM User u WHERE u.name = :name"),
+		@NamedQuery(name = "User.findByRole", query = "SELECT u FROM User u WHERE u.role = :role"),
 		@NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
 		@NamedQuery(name = "User.findByCpf", query = "SELECT u FROM User u WHERE u.cpf = :cpf"),
 		@NamedQuery(name = "User.findByFone", query = "SELECT u FROM User u WHERE u.fone = :fone"),
-		@NamedQuery(name = "User.findBySenha", query = "SELECT u FROM User u WHERE u.senha = :senha") })
+		@NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password") })
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -48,12 +48,12 @@ public class User implements Serializable {
 	@Size(max = 100)
 	@Column(length = 100)
 	@ApiModelProperty(example = "Administrador")
-	private String perfil;
+	private String role;
 
 	@Size(max = 100, min = 2)
 	@Column(length = 100)
 	@NotNull
-	private String nome;
+	private String name;
 
 	@Size(max = 100, min = 4)
 	@Column(length = 100, unique = true)
@@ -70,7 +70,7 @@ public class User implements Serializable {
 
 	@Size(max = 100)
 	@Column(length = 100)
-	private String senha;
+	private String password;
 
 	public User() {
 	}
@@ -83,20 +83,20 @@ public class User implements Serializable {
 		this.id = id;
 	}
 
-	public String getPerfil() {
-		return perfil;
+	public String getRole() {
+		return role;
 	}
 
-	public void setPerfil(String perfil) {
-		this.perfil = perfil;
+	public void setRole(String role) {
+		this.role = role;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getEmail() {
@@ -123,12 +123,12 @@ public class User implements Serializable {
 		this.fone = fone;
 	}
 
-	public String getSenha() {
-		return senha;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override

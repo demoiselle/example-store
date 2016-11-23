@@ -82,7 +82,7 @@ public class AuthREST {
 			loggedUser.setName(credentials.getUsername());
 			loggedUser.setIdentity("" + System.currentTimeMillis());
 			ArrayList<String> roles = new ArrayList<>();
-			roles.add(usuario.getPerfil());
+			roles.add(usuario.getRole());
 
 			Map<String, List<String>> permissions = new HashMap<>();
 			ArrayList<String> p1 = new ArrayList<String>();
