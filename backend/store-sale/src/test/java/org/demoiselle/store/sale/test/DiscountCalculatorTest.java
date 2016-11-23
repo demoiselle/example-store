@@ -1,4 +1,4 @@
-package org.demoiselle.store.venda.test;
+package org.demoiselle.store.sale.test;
 
 import static org.junit.Assert.assertTrue;
 

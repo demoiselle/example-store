@@ -7,6 +7,7 @@ package org.demoiselle.jee7.example.store.sale.service;
  * See the lgpl.txt file in the root directory or <https://www.gnu.org/licenses/lgpl.html>.
  */
 
+
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
@@ -20,8 +21,8 @@ public class AppREST extends Application {
 		// Configurações minimas do Swagger
 		BeanConfig beanConfig = new BeanConfig();
 		beanConfig.setVersion("1.0.0");
-		beanConfig.setBasePath("/venda/api");
-		beanConfig.setResourcePackage("org.demoiselle.store.venda.service");
+		beanConfig.setBasePath("/store-sale/api");
+		beanConfig.setResourcePackage("org.demoiselle.jee7.example.store.sale.service");
 		beanConfig.setScan(true);
 	}
 }

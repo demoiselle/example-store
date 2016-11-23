@@ -8,7 +8,6 @@ package org.demoiselle.jee7.example.store.sale.service;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.script.ScriptException;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -17,14 +16,11 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+
 import javax.ws.rs.core.MediaType;
 
-import org.demoiselle.jee7.example.store.sale.bussines.SaleBC;
-import org.demoiselle.jee7.example.store.sale.entity.Cart;
-import org.demoiselle.jee7.example.store.sale.entity.Sale;
-
-import com.google.gson.Gson;
+import org.demoiselle.jee7.example.store.sale.bussines.RulesBC;
+import org.demoiselle.jee7.example.store.sale.entity.Rules;
 
 import io.swagger.annotations.Api;
 import javax.transaction.Transactional;
@@ -33,19 +29,19 @@ import javax.transaction.Transactional;
  * Process the sales.
  * 
  */
-@Api("Sales")
-@Path("sale")
+@Api("Rules")
+@Path("rules")
 @Consumes({MediaType.APPLICATION_JSON})
-public class SaleREST {
+public class RulesREST {
   
     @Inject
-    private SaleBC bc;
-    
-    
+    private RulesBC bc;
+
+ 
     @GET
     @Path("{id}")
     @Transactional
-    public Sale get(@PathParam("id") final Long id) {
+    public Rules get(@PathParam("id") final Long id) {
         return bc.find(id);
     }
     /**
@@ -60,6 +56,7 @@ public class SaleREST {
         bc.remove((bc.find(id)));
     }
 
+    
     /**
      * Gets the results.
      *
@@ -67,7 +64,7 @@ public class SaleREST {
      */
     @GET
     @Transactional
-    public List<Sale> findAll() {
+    public List<Rules> findAll() {
         return bc.findAll();
     }
 
@@ -79,7 +76,7 @@ public class SaleREST {
      */
     @POST
     @Transactional
-    public void insert(final Sale bean) {
+    public void insert(final Rules bean) {
         bc.create(bean);
     }
 
@@ -93,7 +90,7 @@ public class SaleREST {
      */
     @PUT
     @Transactional
-    public void update(final Sale bean) {
+    public void update(final Rules bean) {
         bc.edit(bean);
     }
 
@@ -107,57 +104,6 @@ public class SaleREST {
     public int count() {
         return bc.count();
     }
-    
-
-    @POST
-    @Path("salePreview")
-    @Produces({MediaType.APPLICATION_JSON})
-	@Transactional
-	public Cart salePreview (String objeto) throws ScriptException {    	
-    	Gson gson = new Gson();
-    	Cart cart = gson.fromJson(objeto, Cart.class);   
-  
-    	return bc.salePreview(cart);
-    }
-    
-    @POST
-    @Path("saleComplete")
-    @Produces({MediaType.APPLICATION_JSON})
-	@Transactional
-    public Cart saleComplete (String objeto) throws ScriptException {   	
-	  Gson gson = new Gson();
-      Cart cart = gson.fromJson(objeto, Cart.class);   
-      
-      return bc.saleComplete(cart);
-    }
-
-    /* Cart Sample ...
-     
-     {
-	  "itens": [
-	    {
-	      "codigoProduto": 1,
-	      "quantidade": 1,
-	      "valor": 100
-	    },
-	    {
-	      "codigoProduto": 2,
-	      "quantidade": 1,
-	      "valor": 100
-	    },
-	    {
-	      "codigoProduto": 3,
-	      "quantidade": 1,
-	      "valor": 100
-	    },
-	    {
-	      "codigoProduto": 4,
-	      "quantidade": 1,
-	      "valor": 100
-	    }
-	  ],
-          "listaCupons": ["desconto10"]
-	}          
-     */
-    
 }
+
+

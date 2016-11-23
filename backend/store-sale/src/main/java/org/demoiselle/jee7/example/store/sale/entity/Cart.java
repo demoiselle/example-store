@@ -14,10 +14,23 @@ public class Cart implements Serializable {
 	private static final long serialVersionUID = -3678488610454757181L;
 	protected List<ItemCart> itens;	
 	
+    private List<String> listaCupons;
+	
 	public Cart(){
 		 itens = new ArrayList<ItemCart>();		
+		 listaCupons = new ArrayList<String>();
 	}
-	
+		
+	public List<String> getListaCupons() {
+		return listaCupons;
+	}
+
+
+	public void setListaCupons(List<String> listaCupons) {
+		this.listaCupons = listaCupons;
+	}
+
+
 	public void adicionarItem(ItemCart item){
 		itens.add(item);
 	}
