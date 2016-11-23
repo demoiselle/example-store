@@ -6,6 +6,7 @@
  */
 package org.demoiselle.jee7.example.store.user.business;
 
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -13,6 +14,8 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
+import javax.script.ScriptException;
+import javax.script.SimpleBindings;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
 import javax.transaction.NotSupportedException;
@@ -22,6 +25,9 @@ import javax.transaction.Transactional;
 import javax.transaction.UserTransaction;
 import javax.ws.rs.core.Response;
 
+import org.demoiselle.jee.multitenancy.hibernate.context.MultiTenantContext;
+import org.demoiselle.jee.multitenancy.hibernate.entity.Tenant;
+import org.demoiselle.jee.script.DynamicManager;
 import org.demoiselle.jee.security.exception.DemoiselleSecurityException;
 import org.demoiselle.jee7.example.store.user.crud.GenericCrudBusiness;
 import org.demoiselle.jee7.example.store.user.dao.UserDAO;
@@ -47,11 +53,11 @@ public class UserBC extends GenericCrudBusiness<User> {
 	@Resource
 	private UserTransaction userTransaction;
 
-//	@Inject
-//	private MultiTenantContext multiTenantContext;
+	@Inject
+	private MultiTenantContext multiTenantContext;
 
-//	@Inject
-//	private DynamicManager scriptManager;
+	@Inject
+	private DynamicManager scriptManager;
 
 	@Override
 	protected UserDAO getPersistenceDAO() {
@@ -64,29 +70,35 @@ public class UserBC extends GenericCrudBusiness<User> {
 
 		// Aplica o script no usuário do contexto de multitenancy
 		// multiTenantContext
-//		try {
-//			if (multiTenantContext.getTenant().getScriptCreateUser() != null
-//					&& !multiTenantContext.getTenant().getScriptCreateUser().isEmpty()) {
-//
-//				SimpleBindings vars = new SimpleBindings();
-//				vars.put("usuario", entity);
-//				vars.put("tenant", multiTenantContext.getTenant());
-//
-//				String scriptId = "createUser-" + multiTenantContext.getTenant().getName();
-//
-//				// Verifica se existe o script no cache
-//				if (scriptManager.getScript(scriptId) == null) {
-//					System.out.println("Criado o script [" + scriptId + "].");
-//
-//					scriptManager.loadEngine("groovy");
-//					scriptManager.loadScript(scriptId, multiTenantContext.getTenant().getScriptCreateUser());
-//				}
-//
-//				scriptManager.eval(scriptId, vars);
-//			}
-//		} catch (ScriptException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			
+			Map<String, Object> confTenant = multiTenantContext.getTenant().getMappedConfiguration();
+			
+			if (confTenant.get("createUserScript") != null
+					&& !confTenant.get("createUserScript").toString().isEmpty()) {
+
+				String script = confTenant.get("createUserScript").toString();
+				Tenant tenant = multiTenantContext.getTenant();
+
+				SimpleBindings vars = new SimpleBindings();
+				vars.put("usuario", entity);
+				vars.put("tenant", tenant);
+
+				String scriptId = "createUser-" + tenant.getName();
+
+				// Verifica se existe o script no cache
+				if (scriptManager.getScript(scriptId) == null) {
+					System.out.println("Criado o script [" + scriptId + "].");
+
+					scriptManager.loadEngine("groovy");
+					scriptManager.loadScript(scriptId, script);
+				}
+
+				scriptManager.eval(scriptId, vars);
+			}
+		} catch (ScriptException e) {
+			e.printStackTrace();
+		}
 
 		return getPersistenceDAO().create(entity);
 	}
@@ -148,12 +160,12 @@ public class UserBC extends GenericCrudBusiness<User> {
 	}
 
 	public User loadByEmailAndSenha(String email, String senha) {
-		User u = getPersistenceDAO().loadByEmailAndSenha(email, senha);	
-		
-        if (u == null) {
-            throw new DemoiselleSecurityException("Usuário não existe", Response.Status.UNAUTHORIZED.getStatusCode());
-        }
-		
+		User u = getPersistenceDAO().loadByEmailAndSenha(email, senha);
+
+		if (u == null) {
+			throw new DemoiselleSecurityException("Usuário não existe", Response.Status.UNAUTHORIZED.getStatusCode());
+		}
+
 		return u;
 	}
 
