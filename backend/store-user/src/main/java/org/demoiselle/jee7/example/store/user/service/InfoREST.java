@@ -15,7 +15,7 @@ import org.jose4j.json.internal.json_simple.JSONObject;
 import io.swagger.annotations.Api;
 
 @Path("info")
-@Api("Informações do Sistema")
+@Api("System Information")
 public class InfoREST {
 
 	@Inject

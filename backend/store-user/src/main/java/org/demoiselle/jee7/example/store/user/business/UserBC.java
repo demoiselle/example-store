@@ -20,7 +20,9 @@ import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.Transactional;
 import javax.transaction.UserTransaction;
+import javax.ws.rs.core.Response;
 
+import org.demoiselle.jee.security.exception.DemoiselleSecurityException;
 import org.demoiselle.jee7.example.store.user.crud.GenericCrudBusiness;
 import org.demoiselle.jee7.example.store.user.dao.UserDAO;
 import org.demoiselle.jee7.example.store.user.entity.User;
@@ -146,7 +148,12 @@ public class UserBC extends GenericCrudBusiness<User> {
 	}
 
 	public User loadByEmailAndSenha(String email, String senha) {
-		User u = getPersistenceDAO().loadByEmailAndSenha(email, senha);
+		User u = getPersistenceDAO().loadByEmailAndSenha(email, senha);	
+		
+        if (u == null) {
+            throw new DemoiselleSecurityException("Usuário não existe", Response.Status.UNAUTHORIZED.getStatusCode());
+        }
+		
 		return u;
 	}
 

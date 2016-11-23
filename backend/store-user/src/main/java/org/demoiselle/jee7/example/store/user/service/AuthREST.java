@@ -1,3 +1,9 @@
+/*
+ * Demoiselle Framework
+ *
+ * License: GNU Lesser General Public License (LGPL), version 3 or later.
+ * See the lgpl.txt file in the root directory or <https://www.gnu.org/licenses/lgpl.html>.
+ */
 package org.demoiselle.jee7.example.store.user.service;
 
 import java.util.ArrayList;
@@ -5,12 +11,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -18,102 +27,56 @@ import org.demoiselle.jee.core.api.security.DemoisellePrincipal;
 import org.demoiselle.jee.core.api.security.SecurityContext;
 import org.demoiselle.jee.core.api.security.Token;
 import org.demoiselle.jee.multitenancy.hibernate.context.MultiTenantContext;
+import org.demoiselle.jee.security.annotation.Cors;
 import org.demoiselle.jee.security.annotation.LoggedIn;
-import org.demoiselle.jee.security.annotation.RequiredPermission;
-import org.demoiselle.jee.security.annotation.RequiredRole;
 import org.demoiselle.jee.security.exception.DemoiselleSecurityException;
+import org.demoiselle.jee.security.jwt.impl.DemoiselleSecurityJWTConfig;
 import org.demoiselle.jee.security.message.DemoiselleSecurityMessages;
 import org.demoiselle.jee7.example.store.user.business.UserBC;
+import org.demoiselle.jee7.example.store.user.crud.GenericCrudBusiness;
 import org.demoiselle.jee7.example.store.user.entity.User;
 import org.demoiselle.jee7.example.store.user.security.Credentials;
 import org.jose4j.json.internal.json_simple.JSONObject;
 
 import io.swagger.annotations.Api;
 
-@Path("security")
-@Api("Security")
-@Produces({ MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON })
-@Consumes(MediaType.APPLICATION_JSON)
-public class SecurityREST {
+@Path("auth")
+@Api("Auth")
+@Consumes({ MediaType.APPLICATION_JSON })
+@Produces({ MediaType.APPLICATION_JSON })
+@RequestScoped
+public class AuthREST {
 
 	@Inject
-	private SecurityContext securityContext;
+	private UserBC business;
 
 	@Inject
 	private DemoisellePrincipal loggedUser;
 
 	@Inject
-	private Token token;
+	private DemoiselleSecurityJWTConfig config;
+
+	@Inject
+	private MultiTenantContext multiTenantContext;
+
+	@Inject
+	private SecurityContext securityContext;
 
 	@Inject
 	private DemoiselleSecurityMessages bundle;
 
 	@Inject
-	private UserBC usuarioBC;
+	private Token token;
 
-	@Inject
-	private MultiTenantContext multiTenantContext;
-
-	@SuppressWarnings("unchecked")
-	public JSONObject loggedUserObject() {
-		JSONObject json = new JSONObject();
-		json.put("identity", loggedUser.getIdentity());
-		json.put("name", loggedUser.getName());
-		json.put("roles", loggedUser.getRoles());
-		json.put("permissions", loggedUser.getPermissions());
-		json.put("tenant", loggedUser.getParams("Tenant"));
-		return json;
-	}
-
-	@GET
-	@Path("sem")
-	@SuppressWarnings("unchecked")
-	public Response testeSem() {
-		JSONObject json = new JSONObject();
-		json.put("message", "Foi sem");
-		return Response.ok(json).build();
-	}
-
-	@GET
-	@Path("com")
-	@LoggedIn
-	public Response testeCom() {
-		return Response.ok(loggedUserObject()).build();
-	}
-
-	@GET
-	@Path("role/administrator")
-	@RequiredRole("ADMINISTRATOR")
-	public Response testeRoleOK() {
-		return Response.ok(loggedUserObject()).build();
-	}
-
-	@GET
-	@Path("role/usuario")
-	@RequiredRole("USUARIO")
-	public Response testeRoleErro() {
-		return Response.ok(loggedUserObject()).build();
-	}
-
-	@GET
-	@Path("permission/categoria/consultar")
-	@RequiredPermission(resource = "Categoria", operation = "Consultar")
-	public Response testePermissionOK() {
-		return Response.ok(loggedUserObject()).build();
-	}
-
-	@GET
-	@Path("permission/produto/incluir")
-	@RequiredPermission(resource = "Produto", operation = "Incluir")
-	public Response testePermissionErro() {
-		return Response.ok(loggedUserObject()).build();
+	protected GenericCrudBusiness<User> getBusiness() {
+		return business;
 	}
 
 	@POST
 	@Path("login")
-	public Response testeLogin(Credentials credentials) {
+	public Response login(Credentials credentials) {
 
-		User usuario = usuarioBC.loadByEmailAndSenha(credentials.getUsername(), credentials.getPassword());
+		User usuario = business.loadByEmailAndSenha(credentials.getUsername(), credentials.getPassword());
 
 		if (usuario != null) {
 			loggedUser.setName(credentials.getUsername());
@@ -143,4 +106,42 @@ public class SecurityREST {
 
 		return Response.ok().entity("{\"token\":\"" + token.getKey() + "\"}").build();
 	}
+
+	@GET
+	@Cors
+	@LoggedIn
+	public void retoken(@Suspended final AsyncResponse asyncResponse) {
+		asyncResponse.resume(doRetoken());
+	}
+
+	private Response doRetoken() {
+		loggedUser = securityContext.getUser();
+		securityContext.setUser(loggedUser);
+		return Response.ok().entity("{\"token\":\"" + token.getKey() + "\"}").build();
+	}
+
+	@GET
+	@Path("publicKey")
+	public Response getPublicKey() {
+		return Response.ok().entity("{\"publicKey\":\"" + config.getPublicKey() + "\"}").build();
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject loggedUserObject() {
+		JSONObject json = new JSONObject();
+		json.put("identity", loggedUser.getIdentity());
+		json.put("name", loggedUser.getName());
+		json.put("roles", loggedUser.getRoles());
+		json.put("permissions", loggedUser.getPermissions());
+		json.put("tenant", loggedUser.getParams("Tenant"));
+		return json;
+	}
+
+	@GET
+	@Path("user")
+	@LoggedIn
+	public Response user() {
+		return Response.ok(loggedUserObject()).build();
+	}
+
 }

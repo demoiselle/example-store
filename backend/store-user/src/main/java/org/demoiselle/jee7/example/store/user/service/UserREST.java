@@ -10,8 +10,6 @@ import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnit;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -88,9 +86,6 @@ public class UserREST {
 			@PathParam("start") int start, @PathParam("size") int size) {
 		return getBusiness().find(field, value, "id", "ASC", start, size);
 	}
-
-	@PersistenceUnit(unitName = "TenantsPU")
-	protected EntityManagerFactory entityManager;
 
 	@GET
 	@ApiOperation(value = "Busca todos os objetos")
