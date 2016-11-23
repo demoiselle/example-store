@@ -1,3 +1,8 @@
-/backend/produto/target/
+/backend/product/target/
+/backend/sale/target/
 /backend/auth/target/
+/backend/user/target/
+/backend/product/nbproject/
+/backend/sale/nbproject/
 /backend/auth/nbproject/
+/backend/user/nbproject/
