@@ -33,7 +33,6 @@ import org.demoiselle.jee.security.exception.DemoiselleSecurityException;
 import org.demoiselle.jee.security.jwt.impl.DemoiselleSecurityJWTConfig;
 import org.demoiselle.jee.security.message.DemoiselleSecurityMessages;
 import org.demoiselle.jee7.example.store.user.business.UserBC;
-import org.demoiselle.jee7.example.store.user.crud.GenericCrudBusiness;
 import org.demoiselle.jee7.example.store.user.entity.User;
 import org.demoiselle.jee7.example.store.user.security.Credentials;
 import org.jose4j.json.internal.json_simple.JSONObject;
@@ -67,10 +66,6 @@ public class AuthREST {
 
 	@Inject
 	private Token token;
-
-	protected GenericCrudBusiness<User> getBusiness() {
-		return business;
-	}
 
 	@POST
 	@Path("login")

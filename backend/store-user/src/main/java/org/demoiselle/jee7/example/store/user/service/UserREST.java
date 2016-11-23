@@ -6,25 +6,18 @@
  */
 package org.demoiselle.jee7.example.store.user.service;
 
-import java.util.List;
-
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
+import org.demoiselle.jee.persistence.crud.AbstractREST;
 import org.demoiselle.jee.rest.annotation.ValidatePayload;
 import org.demoiselle.jee.security.annotation.Cors;
 import org.demoiselle.jee7.example.store.user.business.UserBC;
-import org.demoiselle.jee7.example.store.user.crud.GenericCrudBusiness;
 import org.demoiselle.jee7.example.store.user.entity.User;
 
 import io.swagger.annotations.Api;
@@ -35,81 +28,10 @@ import io.swagger.annotations.ApiOperation;
 @Consumes({ MediaType.APPLICATION_JSON })
 @Produces({ MediaType.APPLICATION_JSON })
 @RequestScoped
-public class UserREST {
+public class UserREST extends AbstractREST<User, Long> {
 
 	@Inject
 	private UserBC business;
-
-	protected GenericCrudBusiness<User> getBusiness() {
-		return business;
-	}
-
-	@POST
-	@ValidatePayload
-	@ApiOperation(value = "Cria objeto")
-	@Cors
-	public void create(User entity) {
-		getBusiness().create(entity);
-	}
-
-	@PUT
-	@Path("{id}")
-	@ValidatePayload
-	@ApiOperation(value = "Edita objeto")
-	@Cors
-	public void edit(@PathParam("id") Integer id, User entity) {
-		getBusiness().edit(id, entity);
-	}
-
-	@DELETE
-	@Path("{id}")
-	@ValidatePayload
-	@ApiOperation(value = "Remove objeto")
-	@Cors
-	public void remove(@PathParam("id") Integer id) {
-		getBusiness().remove(id);
-	}
-
-	@GET
-	@Path("{id}")
-	@ApiOperation(value = "Busca pelo ID objeto")
-	@Cors
-	public User find(@PathParam("id") Integer id) {
-		return getBusiness().find(id);
-	}
-
-	@GET
-	@Path("{field}/{value}/{start}/{size}")
-	@ApiOperation(value = "Busca pelo campo/valor do objeto")
-	@Cors
-	public List<User> findByField(@PathParam("field") String field, @PathParam("value") String value,
-			@PathParam("start") int start, @PathParam("size") int size) {
-		return getBusiness().find(field, value, "id", "ASC", start, size);
-	}
-
-	@GET
-	@ApiOperation(value = "Busca todos os objetos")
-	@Cors
-	public List<User> findAll() {
-		return getBusiness().findAll();
-	}
-
-	@GET
-	@Path("{from}/{to}")
-	@ApiOperation(value = "Busca por intervalo de ID os objetos")
-	@Cors
-	public List<User> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-		return getBusiness().findRange(new int[] { from, to });
-	}
-
-	@GET
-	@Path("count")
-	@Produces(MediaType.TEXT_PLAIN)
-	@ApiOperation(value = "Exibe o total de objetos")
-	@Cors
-	public String count() {
-		return String.valueOf(getBusiness().count());
-	}
 
 	@POST
 	@ValidatePayload
@@ -118,14 +40,6 @@ public class UserREST {
 	@Cors
 	public void create1(User entity) throws Exception {
 		business.createTesteTransacional1(entity);
-	}
-
-	@POST
-	@ValidatePayload
-	@Path("createTest")
-	@Cors
-	public Response createTest(User entity) throws Exception {
-		return Response.ok().entity(business.create(entity)).build();
 	}
 
 	@POST

@@ -27,9 +27,9 @@ import javax.ws.rs.core.Response;
 
 import org.demoiselle.jee.multitenancy.hibernate.context.MultiTenantContext;
 import org.demoiselle.jee.multitenancy.hibernate.entity.Tenant;
+import org.demoiselle.jee.persistence.crud.AbstractBusiness;
 import org.demoiselle.jee.script.DynamicManager;
 import org.demoiselle.jee.security.exception.DemoiselleSecurityException;
-import org.demoiselle.jee7.example.store.user.crud.GenericCrudBusiness;
 import org.demoiselle.jee7.example.store.user.dao.UserDAO;
 import org.demoiselle.jee7.example.store.user.entity.User;
 
@@ -45,7 +45,7 @@ import org.demoiselle.jee7.example.store.user.entity.User;
  */
 @Stateless
 @TransactionManagement(value = TransactionManagementType.BEAN)
-public class UserBC extends GenericCrudBusiness<User> {
+public class UserBC extends AbstractBusiness<User, Long> {
 
 	@Inject
 	private UserDAO dao;
@@ -59,14 +59,9 @@ public class UserBC extends GenericCrudBusiness<User> {
 	@Inject
 	private DynamicManager scriptManager;
 
-	@Override
-	protected UserDAO getPersistenceDAO() {
-		return dao;
-	}
-
 	@Transactional
 	@Override
-	public User create(User entity) {
+	public User persist(User entity) {
 
 		// Aplica o script no usuário do contexto de multitenancy
 		// multiTenantContext
@@ -100,7 +95,7 @@ public class UserBC extends GenericCrudBusiness<User> {
 			e.printStackTrace();
 		}
 
-		return getPersistenceDAO().create(entity);
+		return dao.persist(entity);
 	}
 
 	public void createTesteTransacional1(User usuario)
@@ -108,7 +103,7 @@ public class UserBC extends GenericCrudBusiness<User> {
 			HeuristicRollbackException, SystemException, NotSupportedException {
 
 		userTransaction.begin();
-		getPersistenceDAO().create(usuario);
+		persist(usuario);
 		userTransaction.commit();
 
 		userTransaction.begin();
@@ -121,25 +116,25 @@ public class UserBC extends GenericCrudBusiness<User> {
 		usuario.setId(null);
 		usuario.setName(nomeUniqueTest);
 		usuario.setEmail(emailUniqueTest);
-		getPersistenceDAO().create(usuario);
+		persist(usuario);
 
 		usuario = new User();
 		usuario.setId(null);
 		usuario.setName(nomeUniqueTest);
 		usuario.setEmail(emailUniqueTest);
-		getPersistenceDAO().create(usuario);
+		persist(usuario);
 
 		userTransaction.commit();
 	}
 
 	public void createTesteTransacional2(User usuario) {
-		getPersistenceDAO().create(usuario);
+		persist(usuario);
 	}
 
 	@Transactional
 	public void createTesteTransacional3(User usuario) {
 
-		getPersistenceDAO().create(usuario);
+		persist(usuario);
 
 		UUID uuid = UUID.randomUUID();
 		String emailUniqueTest = uuid.toString() + "@teste.com.br";
@@ -149,18 +144,18 @@ public class UserBC extends GenericCrudBusiness<User> {
 		usuario.setId(null);
 		usuario.setName(nomeUniqueTest);
 		usuario.setEmail(emailUniqueTest);
-		getPersistenceDAO().create(usuario);
+		persist(usuario);
 
 		usuario = new User();
 		usuario.setId(null);
 		usuario.setName(nomeUniqueTest);
 		usuario.setEmail(emailUniqueTest);
-		getPersistenceDAO().create(usuario);
+		persist(usuario);
 
 	}
 
 	public User loadByEmailAndSenha(String email, String senha) {
-		User u = getPersistenceDAO().loadByEmailAndSenha(email, senha);
+		User u = dao.loadByEmailAndSenha(email, senha);
 
 		if (u == null) {
 			throw new DemoiselleSecurityException("Usuário não existe", Response.Status.UNAUTHORIZED.getStatusCode());

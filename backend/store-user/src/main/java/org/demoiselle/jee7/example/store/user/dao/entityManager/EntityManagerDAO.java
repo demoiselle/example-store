@@ -4,18 +4,14 @@
  * License: GNU Lesser General Public License (LGPL), version 3 or later.
  * See the lgpl.txt file in the root directory or <https://www.gnu.org/licenses/lgpl.html>.
  */
-package org.demoiselle.jee7.example.store.user.dao.context;
+package org.demoiselle.jee7.example.store.user.dao.entityManager;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.demoiselle.jee.persistence.jpa.crud.GenericCrudDAO;
+import org.demoiselle.jee.persistence.crud.AbstractDAO;
 
-public abstract class PersistenceContextDAO<T>  extends GenericCrudDAO<T> {
-
-	public PersistenceContextDAO(Class<T> entityClass) {
-		super(entityClass);
-	}
+public abstract class EntityManagerDAO<T> extends AbstractDAO<T, Long> {
 
 	@PersistenceContext(unitName = "TenantsPU")
 	protected EntityManager emEntity;
@@ -24,5 +20,5 @@ public abstract class PersistenceContextDAO<T>  extends GenericCrudDAO<T> {
 	protected EntityManager getEntityManager() {
 		return emEntity;
 	}
-	
+
 }

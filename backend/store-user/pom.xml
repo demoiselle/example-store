@@ -31,6 +31,11 @@
 			<groupId>org.demoiselle.jee</groupId>
 			<artifactId>demoiselle-multitenancy-hibernate</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.demoiselle.jee</groupId>
+			<artifactId>demoiselle-persistence-crud</artifactId>
+		</dependency>
 
 		<!-- Swagger -->
 		<dependency>
