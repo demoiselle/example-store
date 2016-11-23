@@ -14,21 +14,35 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
     </properties>
-    
-    <parent>
-        <groupId>org.demoiselle.jee</groupId>
-        <artifactId>demoiselle-parent-rest</artifactId>
-        <version>3.0.0-BETA2-SNAPSHOT</version>
-        <relativePath>../demoiselle-parent-rest</relativePath>
-    </parent>
-    
-    <dependencies>
-        
+  
+   <parent>
+		<groupId>org.demoiselle.jee</groupId>
+		<artifactId>demoiselle-parent-rest</artifactId>
+		<version>3.0.0-BETA3-SNAPSHOT</version>
+		<relativePath>../demoiselle-parent-rest</relativePath>
+	</parent> 
+         
+    <dependencies>  
+  		 
         <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-jaxrs</artifactId>
-            <version>1.5.10</version>
-        </dependency>
+			<groupId>org.demoiselle.jee</groupId>
+			<artifactId>demoiselle-security-jwt</artifactId>
+			<version>3.0.0-BETA3-SNAPSHOT</version>
+		</dependency>  
+		
+		<dependency>
+			<groupId>org.demoiselle.jee</groupId>
+			<artifactId>demoiselle-persistence-crud</artifactId>
+			<version>3.0.0-BETA3-SNAPSHOT</version>
+		</dependency>
+		
+		
+		<!-- Swagger -->
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-jaxrs</artifactId>
+			<version>1.5.8</version>
+		</dependency>     
         
     </dependencies>
 

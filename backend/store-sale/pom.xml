@@ -14,35 +14,27 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    
+    <parent>
+		<groupId>org.demoiselle.jee</groupId>
+		<artifactId>demoiselle-parent-rest</artifactId>
+		<version>3.0.0-BETA3-SNAPSHOT</version>
+		<relativePath>../demoiselle-parent-rest</relativePath>
+	</parent> 
 
-    <dependencies>
-    	<dependency>
-			<groupId>org.demoiselle.jee</groupId>
-			<artifactId>demoiselle-core</artifactId>
-			<version>3.0.0-BETA3-SNAPSHOT</version>
-		</dependency>
+    <dependencies>    	
+           
 		<dependency>
 			<groupId>org.demoiselle.jee</groupId>
-			<artifactId>demoiselle-persistence-jpa</artifactId>
-			<version>3.0.0-BETA3-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.demoiselle.jee</groupId>
-			<artifactId>demoiselle-rest</artifactId>
-			<version>3.0.0-BETA3-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.demoiselle.jee</groupId>
-			<artifactId>demoiselle-configuration</artifactId>
-			<version>3.0.0-BETA3-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.demoiselle.jee</groupId>
-			<artifactId>demoiselle-script</artifactId>
-			<version>3.0.0-BETA3-SNAPSHOT</version>
+			<artifactId>demoiselle-script</artifactId>			
 		</dependency>
 		
-		<!-- Dependencias -->
+		
+	    <dependency>
+			<groupId>org.demoiselle.jee</groupId>
+			<artifactId>demoiselle-persistence-crud</artifactId>		
+		</dependency>
+			
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
@@ -51,14 +43,13 @@
         <dependency>
     		<groupId>junit</groupId>
     		<artifactId>junit</artifactId>
-    		<version>4.12</version>
 		</dependency>
         <dependency>
     		<groupId>org.powermock</groupId>
     		<artifactId>powermock-module-junit4</artifactId>
     		<version>1.6.5</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.powermock/powermock-api-mockito -->
+		
 		<dependency>
 		    <groupId>org.powermock</groupId>
 		    <artifactId>powermock-api-mockito</artifactId>
@@ -68,8 +59,7 @@
   		<!-- Swagger -->
 		<dependency>
 			<groupId>io.swagger</groupId>
-			<artifactId>swagger-jaxrs</artifactId>
-			<version>1.5.8</version>
+			<artifactId>swagger-jaxrs</artifactId>			
 		</dependency>        
     </dependencies>
 

@@ -5,10 +5,25 @@
  */
 package org.demoiselle.jee7.example.store.product.dao;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.demoiselle.jee.persistence.crud.AbstractDAO;
+import org.demoiselle.jee7.example.store.product.entity.Product;
+
 /**
  *
  * @author 70744416353
  */
-public class ProductDAO {
+public class ProductDAO extends AbstractDAO<Product,Long>{
+
+	@PersistenceContext(unitName = "productPU")
+	private EntityManager em;  
+	
+	@Override
+	protected EntityManager getEntityManager() {
+	
+		return em;
+	}
     
 }

@@ -20,6 +20,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.demoiselle.jee.persistence.crud.AbstractREST;
+import org.demoiselle.jee.security.annotation.LoggedIn;
 import org.demoiselle.jee7.example.store.sale.bussines.SaleBC;
 import org.demoiselle.jee7.example.store.sale.entity.Cart;
 import org.demoiselle.jee7.example.store.sale.entity.Sale;
@@ -43,6 +45,7 @@ public class SaleREST {
     
     
     @GET
+    @LoggedIn
     @Path("{id}")
     @Transactional
     public Sale get(@PathParam("id") final Long id) {

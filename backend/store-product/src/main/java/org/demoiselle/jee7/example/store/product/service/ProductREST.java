@@ -12,19 +12,22 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+
+import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.Response;
 import org.demoiselle.jee.core.api.security.SecurityContext;
+import org.demoiselle.jee.persistence.crud.AbstractREST;
 import org.demoiselle.jee.security.annotation.LoggedIn;
+import org.demoiselle.jee7.example.store.product.entity.Product;
 
 /**
  *
  * @author 70744416353
+ * @param <I>
  */
 @Api("Teste")
 @Path("test")
-@Produces(APPLICATION_JSON)
-@Consumes(APPLICATION_JSON)
-public class ProductREST {
+public class ProductREST extends AbstractREST<Product, Long > {
 
     @Inject
     private SecurityContext securityContext;
