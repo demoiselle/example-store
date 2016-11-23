@@ -6,7 +6,8 @@
 package org.demoiselle.jee7.example.store.sale.entity;
 
 import java.io.Serializable;
-
+import java.math.BigInteger;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,20 +17,23 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Classe que representa a Regra a ser aplicada sobre a compra.
- *
+ * Classe que representa uma Venda.
+ * 
  */
 @Entity
-@Table(name = "regras")
+@Table(name = "venda")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Rule.findAll", query = "SELECT i FROM Rule i"),
-    @NamedQuery(name = "Rule.findById", query = "SELECT i FROM Rule i WHERE i.id = :id")
- })
-public class Rule implements Serializable {
+    @NamedQuery(name = "Sale.findAll", query = "SELECT v FROM Sale v"),
+    @NamedQuery(name = "Sale.findById", query = "SELECT v FROM Sale v WHERE v.id = :id"),
+    @NamedQuery(name = "Sale.findByDatavenda", query = "SELECT v FROM Sale v WHERE v.datavenda = :datavenda"),
+    @NamedQuery(name = "Sale.findByUsuarioId", query = "SELECT v FROM Sale v WHERE v.usuarioId = :usuarioId")})
+public class Sale implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -37,17 +41,15 @@ public class Rule implements Serializable {
     @Basic(optional = false)
     @Column(nullable = false)
     private Long id;
-    @Column(name = "sistema_id")
-    private Long    sistemaId;
-    
-    @Column(name = "script")
-    private String  script; 
-    
-    
-    public Rule() {
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date datavenda;
+    @Column(name = "usuario_id")
+    private BigInteger usuarioId;
+
+    public Sale() {
     }
 
-    public Rule(Long id) {
+    public Sale(Long id) {
         this.id = id;
     }
 
@@ -59,23 +61,23 @@ public class Rule implements Serializable {
         this.id = id;
     }
 
-    public Long getSistemaId() {
-		return sistemaId;
-	}
+    public Date getDatavenda() {
+        return datavenda;
+    }
 
-	public void setSistemaId(Long sistemaId) {
-		this.sistemaId = sistemaId;
-	}
+    public void setDatavenda(Date datavenda) {
+        this.datavenda = datavenda;
+    }
 
-	public String getScript() {
-		return script;
-	}
+    public BigInteger getUsuarioId() {
+        return usuarioId;
+    }
 
-	public void setScript(String script) {
-		this.script = script;
-	}
+    public void setUsuarioId(BigInteger usuarioId) {
+        this.usuarioId = usuarioId;
+    }
 
-	@Override
+    @Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
@@ -85,10 +87,10 @@ public class Rule implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Item)) {
+        if (!(object instanceof Sale)) {
             return false;
         }
-        Rule other = (Rule) object;
+        Sale other = (Sale) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -97,7 +99,7 @@ public class Rule implements Serializable {
 
     @Override
     public String toString() {
-        return "org.demoiselle.jee7.example.store.sale.entity.Rule[ id=" + id + " ]";
+        return "org.demoiselle.store.entity.Sale[ id=" + id + " ]";
     }
     
 }
