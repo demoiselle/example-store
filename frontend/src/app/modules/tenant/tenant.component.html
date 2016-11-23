@@ -1,0 +1,106 @@
+<div class="content-header">
+  <h2>Tenants
+  </h2>
+
+  <p class="description" [innerHTML]="titleDoc"></p>
+</div>
+
+<div id="content" class="content-box">
+  <div id="example" class="section">
+
+    <button (click)="showModalAdd()" class="btn btn-sm btn-success">Adicionar</button>
+    <!--
+    <button (click)="showModalEdit()" [disabled]="!selectedTenant" class="btn btn-sm btn-primary">Editar</button>
+    <button (click)="delete()" [disabled]="!selectedTenant" class="btn btn-sm btn-danger">Remover</button>
+    -->
+
+    <br/><br/>
+
+<table class="table table-hover">
+        <thead>
+            <tr>
+                <th class="col-md-1"><i class="fa" aria-hidden="true"></i>Id</th>
+                <th class="col-md-8"><i class="fa" aria-hidden="true"></i>Nome</th>
+                
+                <th class="col-md-1"></th>
+                <th class="col-md-1"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let tenant of tenants">
+                <td>{{tenant.id}}</td>
+                <td>{{tenant.name}}</td>
+                
+                <td><button class="btn btn-primary btn-xs" (click)="showModalDetail(tenant)">
+            <i class="fa fa-info-circle" aria-hidden="true"></i>Details</button>
+                </td>
+                
+                <td>
+                    <button class="btn btn-danger btn-xs" (click)="deleteTenant(tenant)"><i class="fa fa-trash" aria-hidden="true"></i>Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+   
+<!-- modal definitions -->
+<div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Tenant</h4>
+      </div>
+      <div class="modal-body">
+        
+
+        <section class="panel panel-default" *ngIf="tenant">
+                <form (ngSubmit)="save()">
+                    
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" for="formName">Nome:</label>
+                        <div class="col-sm-10">
+                            <input id="formName" type="text" class="form-control" size="100" 
+                              [(ngModel)]="tenant.name" name="name" [disabled]="viewOnly" />
+                        </div>
+                    </div>
+                    
+                                        
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" for="formDescription">scriptCreateUser:</label>
+                        <div class="col-sm-10">
+                            <textarea id="formDescription" 
+                              name="description" class="form-control" rows="10" [(ngModel)]="tenant.scriptCreateUser"
+                              autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Script"
+                              [disabled]="viewOnly"
+                              >
+                            </textarea>
+                        </div>
+                    </div>
+                    
+                    <input *ngIf="!viewOnly" class="btn btn-sm btn-success" size="40" type="submit" value="Salvar" style="width:68px;height:36px" />
+                    <button *ngIf="!viewOnly" type="button" (click)="tenant.scriptCreateUser=scriptExample" class="btn btn-default">Script Exemplo</button>
+                    <input class="btn btn-sm btn-default pull-right" size="40" (click)="staticModal.hide()" value="Cancelar" style="width:68px;height:36px" />
+                </form>
+            </section>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+    <div class="item">
+      <ng-content></ng-content>
+    </div>
+  </div>
+
+ 
+
+</div>

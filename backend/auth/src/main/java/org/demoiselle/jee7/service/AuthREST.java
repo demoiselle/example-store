@@ -21,7 +21,6 @@ import javax.ws.rs.core.Response;
 import org.demoiselle.jee.core.api.security.DemoisellePrincipal;
 import org.demoiselle.jee.core.api.security.SecurityContext;
 import org.demoiselle.jee.core.api.security.Token;
-import org.demoiselle.jee.core.api.security.TokensManager;
 import org.demoiselle.jee.security.annotation.Cors;
 import org.demoiselle.jee.security.annotation.LoggedIn;
 import org.demoiselle.jee.security.exception.DemoiselleSecurityException;
@@ -43,9 +42,6 @@ public class AuthREST {
 
     @Inject
     private UsuarioDAO dao;
-
-    @Inject
-    private TokensManager tm;
 
     @Inject
     private DemoiselleSecurityJWTConfig config;

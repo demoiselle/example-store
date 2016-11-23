@@ -1,0 +1,99 @@
+<div class="content-header">
+  <h2>Produtos
+    
+  </h2>
+
+  <p class="description" [innerHTML]="titleDoc"></p>
+</div>
+
+<div id="content" class="content-box">
+  <div id="example" class="section">
+
+    <button (click)="showModalAdd()" class="btn btn-sm btn-success">Adicionar</button>
+    <button (click)="showModalEdit()" [disabled]="!selectedProduto" class="btn btn-sm btn-primary">Editar</button>
+    <button (click)="delete()" [disabled]="!selectedProduto" class="btn btn-sm btn-danger">Remover</button>
+
+    <br/><br/>
+
+<!-- ag grid definitions -->
+    <ag-grid-ng2
+      #agGrid
+      class="ag-material"
+      style="width:100%; height:400px; margin-bottom:20px;"
+      [gridOptions]="gridOptions"
+      [columnDefs]="columnDefs"
+      [rowData]="produtos"
+
+      enableColResize
+      enableSorting
+      rowSelection="single"
+      suppressCellSelection
+      rowHeight="52"
+      (rowSelected)="onRowSelected($event)"
+      
+      (rowDoubleClicked)="onRowDoubleClicked($event)">
+
+    </ag-grid-ng2>
+
+   
+<!-- modal definitions -->
+<div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Produto</h4>
+      </div>
+      <div class="modal-body">
+        
+
+        <section class="panel panel-default" *ngIf="produto">
+                <form (ngSubmit)="save()">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="formId">Id:</label>
+                        <div class="col-sm-10">
+                            <input id="formId" type="text" size="100" class="form-control" [(ngModel)]="produto.id" name="id" disabled="true"/>
+                        </div>
+                        
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="formName">Nome:</label>
+                        <div class="col-sm-10">
+                            <input id="formName" type="text" class="form-control" size="100" [(ngModel)]="produto.name" name="name" />
+                        </div>
+                    </div>
+                    
+                                        
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="formDescription">Descrição:</label>
+                        <div class="col-sm-10">
+                            <input id="formDescription" name="description" class="form-control" maxlength="100" [(ngModel)]="produto.description" />
+                        </div>
+                    </div>
+                    
+                    <input class="btn btn-sm btn-success" size="40" type="submit" value="Salvar" style="width:68px;height:36px" />
+                    <input class="btn btn-sm btn-danger" size="40" (click)="delete()" value="Remover" style="width:68px;height:36px" />
+
+                    <input class="btn btn-sm btn-danger" size="40" (click)="staticModal.hide()" value="Cancelar" style="width:68px;height:36px" />
+                </form>
+            </section>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+    <div class="item">
+      <ng-content></ng-content>
+    </div>
+  </div>
+
+ 
+
+</div>

@@ -1,0 +1,28 @@
+<div id="top-nav">
+  <div class="title">
+    <h2 [routerLink]="['']">APP</h2>
+  </div>
+
+  <div id="mobile-sidebar-menu" (click)="toggle()">
+    <img src="/img/menu-left.svg" alt="">
+  </div>
+
+  <div id="navbar" class="pull-right navbar-logo">
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a>
+            <dml-tenant-dropdown></dml-tenant-dropdown>
+          </a>
+        </li>
+        <li>
+            <a *ngIf="loggedIn()" (click)="logout()">
+                <span class="ng-binding">Sair <i class="glyphicon glyphicon-log-out"></i> </span>
+            </a>
+            <a *ngIf="!loggedIn()" href="/#/login">
+                <span class="ng-binding"> <i class="glyphicon glyphicon-log-in"></i> Entrar</span>
+            </a>
+            
+        </li>
+      </ul>
+    </div>
+</div>

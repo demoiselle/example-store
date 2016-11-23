@@ -9,41 +9,31 @@
 
     <name>auth</name>
 
-    <parent>
+    <!--    <parent>
         <groupId>org.demoiselle.jee</groupId>
         <artifactId>demoiselle-parent-rest</artifactId>
-        <version>3.0.0-BETA2-SNAPSHOT</version>
+        <version>3.0.0-BETA3-SNAPSHOT</version>
         <relativePath>../demoiselle-parent-rest</relativePath>
-    </parent>
+    </parent>-->
 
     <dependencies>
-        
+        <dependency>
+            <groupId>org.demoiselle.jee</groupId>
+            <artifactId>demoiselle-security-jwt</artifactId>
+            <version>3.0.0-BETA3-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.demoiselle.jee</groupId>
+            <artifactId>demoiselle-persistence-crud</artifactId>
+            <version>3.0.0-BETA3-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-jaxrs</artifactId>
             <version>1.5.10</version>
         </dependency>
     </dependencies>
-    <!--    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.sebastian-daschner</groupId>
-                <artifactId>jaxrs-analyzer-maven-plugin</artifactId>
-                <version>0.10</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>analyze-jaxrs</goal>
-                        </goals>
-                        <configuration>
-                            <backend>swagger</backend>
-                            <deployedDomain>example.com</deployedDomain>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>-->
+
     <profiles>
         <profile>
             <id>wildfly-swarm</id>
@@ -57,5 +47,9 @@
             </dependencies>
         </profile>
         <!--mvn clean package -Pwildfly-swarm && java -jar -Xmx128m target/produto-swarm.jar -->
-    </profiles> 
+    </profiles>
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
 </project>
