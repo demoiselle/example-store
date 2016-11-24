@@ -43,7 +43,7 @@ public class User implements Serializable {
 	@Basic(optional = false)
 	@Column(nullable = false)
 	@ApiModelProperty(required = false)
-	private Integer id;
+	private Long id;
 
 	@Size(max = 100)
 	@Column(length = 100)
@@ -75,11 +75,11 @@ public class User implements Serializable {
 	public User() {
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -14,7 +14,7 @@ public class UserDAO extends EntityManagerDAO<User> {
 	/**
 	 * O Contrutor desta classe precisa ser sem parâmetros por causa do CDI.
 	 */
-	public UserDAO() {		
+	public UserDAO() {
 	}
 
 	public User loadByEmailAndSenha(String email, String password) {
