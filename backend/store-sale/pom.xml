@@ -23,18 +23,10 @@
 	</parent> 
 
     <dependencies>    	
-           
 		<dependency>
 			<groupId>org.demoiselle.jee</groupId>
 			<artifactId>demoiselle-script</artifactId>			
 		</dependency>
-		
-		
-	    <dependency>
-			<groupId>org.demoiselle.jee</groupId>
-			<artifactId>demoiselle-persistence-crud</artifactId>		
-		</dependency>
-			
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
