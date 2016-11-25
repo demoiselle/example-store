@@ -2,65 +2,68 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.demoiselle.jee.example.store</groupId>
-	<artifactId>store-sale</artifactId>
+<groupId>org.demoiselle.jee.example.store</groupId>
+<artifactId>store-sale</artifactId>
     <version>1.0.0</version>
     <packaging>war</packaging>
-    
-    <name>store-sale</name>
-	<description>Sample Aplication</description>    
+
+    <name>sale</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <failOnMissingWebXml>false</failOnMissingWebXml>
     </properties>
-    
-    <parent>
+  
+   <parent>
 		<groupId>org.demoiselle.jee</groupId>
 		<artifactId>demoiselle-parent-rest</artifactId>
 		<version>3.0.0-BETA3-SNAPSHOT</version>
 		<relativePath>../demoiselle-parent-rest</relativePath>
 	</parent> 
-
-    <dependencies>    	
+         
+    <dependencies>  
+  		 
+        <dependency>
+			<groupId>org.demoiselle.jee</groupId>
+			<artifactId>demoiselle-security-jwt</artifactId>
+			<version>3.0.0-BETA3-SNAPSHOT</version>
+		</dependency>  
+		
 		<dependency>
 			<groupId>org.demoiselle.jee</groupId>
-			<artifactId>demoiselle-script</artifactId>			
-		</dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>1.7.1</version>
-        </dependency>
-        <dependency>
-    		<groupId>junit</groupId>
-    		<artifactId>junit</artifactId>
-		</dependency>
-        <dependency>
-    		<groupId>org.powermock</groupId>
-    		<artifactId>powermock-module-junit4</artifactId>
-    		<version>1.6.5</version>
+			<artifactId>demoiselle-persistence-crud</artifactId>
+			<version>3.0.0-BETA3-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency>
-		    <groupId>org.powermock</groupId>
-		    <artifactId>powermock-api-mockito</artifactId>
-		    <version>1.6.5</version>
+			<groupId>org.demoiselle.jee</groupId>
+			<artifactId>demoiselle-script</artifactId>
+			<version>3.0.0-BETA3-SNAPSHOT</version>	
 		</dependency>
-                 		  	
-  		<!-- Swagger -->
+			
+		<dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>1.7.1</version>
+        </dependency>	
+               		  
+		<!-- Swagger -->
 		<dependency>
 			<groupId>io.swagger</groupId>
-			<artifactId>swagger-jaxrs</artifactId>			
-		</dependency>        
+			<artifactId>swagger-jaxrs</artifactId>
+			<version>1.5.8</version>
+		</dependency>     
+        
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>3.5.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -69,39 +72,21 @@
                     </compilerArguments>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.3</version>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.6</version>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${endorsed.dir}</outputDirectory>
-                            <silent>true</silent>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>javax</groupId>
-                                    <artifactId>javaee-endorsed-api</artifactId>
-                                    <version>7.0</version>
-                                    <type>jar</type>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
-    </build>
+    </build> 
+    
+    <profiles>
+        <profile>
+            <id>wildfly-swarm</id>
+            <dependencies>
+                <!-- WildFly Default Swarm Fractions -->
+                <dependency>
+                    <groupId>org.wildfly.swarm</groupId>
+                    <artifactId>mysql</artifactId>
+                    <version>2016.9</version>
+                </dependency>
+            </dependencies>
+        </profile>
+        <!--mvn clean package -Pwildfly-swarm && java -jar -Xmx128m target/produto-swarm.jar -->
+    </profiles> 
 </project>

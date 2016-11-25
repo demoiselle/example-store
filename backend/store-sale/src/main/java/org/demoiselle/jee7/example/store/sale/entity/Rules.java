@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,6 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  */
 @Entity
+@Cacheable
 @Table(name = "regras")
 @XmlRootElement
 @NamedQueries({
@@ -119,7 +121,7 @@ public class Rules implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Itens)) {
+        if (!(object instanceof Rules)) {
             return false;
         }
         Rules other = (Rules) object;

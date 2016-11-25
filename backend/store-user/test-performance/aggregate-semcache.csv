@@ -1,3 +1,0 @@
-Rótulo,# Amostras,Média,Mediana,90% Line,95% Line,99% Line,Mín.,Máx.,% de Erro,Vazão,KB/s
-Requisição HTTP,75399,39,35,64,81,144,1,584,"0,00%","2432,0","1447,5"
-TOTAL,75399,39,35,64,81,144,1,584,"0,00%","2432,0","1447,5"
