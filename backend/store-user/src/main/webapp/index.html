@@ -1,0 +1,103 @@
+<!doctype html>
+<html class="no-js" ng-app="app">
+    <head>
+        <meta charset="utf-8">
+        <title>Swagger</title>
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/swagger-ui.min.css">
+    </head>
+    <body>
+        <div ng-controller="MyCtrl" class="container" style="margin-bottom:100px">
+            <h1>Api</h1>
+            <h3 ng-show="isLoading">loading ...</h3>
+            
+            <!--  
+            <div ng-show="!isLoading" ng-controller="LoginCtrl">
+           		<div class="panel panel-default">
+ 					<div class="panel-body">
+		            	<h4><b>Login</b></h4>
+		            	<div class="row">	     
+		            		<div class="col-md-12">       		
+		            			<h5>Passo 1. Informe o usuário e senha abaixo paga pegar o token JWT</h5>
+		            		</div>	            		
+		            	</div>
+		            
+		            	<div class="row">
+		            		<div class="col-md-12"> 
+								<form class="form-inline">
+									<div class="form-group">
+										<label>Name</label>
+										<input type="text" class="form-control" placeholder="Usuário" ng-model="username">
+									</div>
+									<div class="form-group">
+										<label>Email</label>
+										<input type="password" class="form-control" placeholder="Senha" ng-model="password">
+									</div>
+									<button type="submit" class="btn btn-default" ng-click="login()">Login (secutiry/login)</button>
+								</form>
+							</div>
+						</div>
+						
+						<div class="row">	 
+							<div class="col-md-12">            		
+		            			<h5>Passo 2. Utilize os métodos da sessão Segurança que tenham segurança para verificar o funcionamento.</h5>
+		            		</div>	            		
+		            	</div>
+		            </div>
+				</div>			            	
+            </div>
+            -->
+            
+            <div swagger-ui url="swaggerUrl" loading="isLoading" parser="json" api-explorer="true" error-handler="myErrorHandler" validator-url="false"></div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-sanitize.min.js"></script>
+        <script src="scripts/swagger-ui.min.js"></script>
+        <script src="scripts/modules/swagger-external-references.min.js"></script>
+        <script src="scripts/modules/swagger1-to-swagger2-converter.min.js"></script>
+        <script type="text/javascript">
+                angular
+                        .module('app', ['ngSanitize', 'swaggerUi'])
+                        .run(function (swaggerModules, swaggerUiExternalReferences, swagger1ToSwagger2Converter) {
+                            swaggerModules.add(swaggerModules.BEFORE_PARSE, swagger1ToSwagger2Converter);
+                            swaggerModules.add(swaggerModules.BEFORE_PARSE, swaggerUiExternalReferences);
+                        })
+                        .controller('MyCtrl', function ($scope) {
+                            // init form
+                            $scope.isLoading = false;
+                            $scope.url = $scope.swaggerUrl = 'api/swagger.json';
+                            // error management
+                            $scope.myErrorHandler = function (data, status) {
+                                alert('failed to load swagger: ' + status + '   ' + data);
+                            };
+                        })
+                        .controller('LoginCtrl', function($scope, $http, $rootScope, $timeout) {
+                        	$scope.login = function() {
+                        		// Faz o login da aplicação
+								$http({
+									method: 'POST',
+									url: '/app/api/security/login',
+									data: {
+										"username": $scope.username,
+										"password": $scope.password
+									}
+								}).then(function (response) {
+									console.log(response.data);
+									// Adiciona em todos os headers
+									$http.defaults.headers.common['Authorization'] = 'Token ' + response.data;
+								}, function (response) {
+									console.log(response);
+									if (response.data.error != undefined) {
+										alert(response.data.error);
+									} else {
+										alert("Erro desconhecido.");	
+									}
+								});
+                        	};                        	
+                        });
+        </script>
+
+    </body>
+
+</html>

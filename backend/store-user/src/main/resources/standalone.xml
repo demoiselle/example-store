@@ -1,0 +1,39 @@
+<subsystem xmlns="urn:jboss:domain:datasources:4.0">
+    <datasources>
+        <datasource jta="true" jndi-name="java:jboss/datasources/TenantsDS" pool-name="TenanciesDS" enabled="true" use-java-context="true">
+            <connection-url>jdbc:mysql://10.200.24.49</connection-url>
+            <driver>com.mysql</driver>
+            <security>
+                <user-name>root</user-name>
+                <password>serpro</password>
+            </security>
+            <validation>
+                <validate-on-match>false</validate-on-match>
+                <background-validation>false</background-validation>
+            </validation>
+            <statement>
+                <share-prepared-statements />
+            </statement>
+        </datasource>
+        <datasource jta="true" jndi-name="java:jboss/datasources/MasterDS" pool-name="MasterDS" enabled="true" use-java-context="true">
+            <connection-url>jdbc:mysql://10.200.24.49/master</connection-url>
+            <driver>com.mysql</driver>
+            <security>
+                <user-name>root</user-name>
+                <password>serpro</password>
+            </security>
+            <validation>
+                <validate-on-match>false</validate-on-match>
+                <background-validation>false</background-validation>
+            </validation>
+            <statement>
+                <share-prepared-statements />
+            </statement>
+        </datasource>
+        <drivers>
+            <driver name="com.mysql" module="com.mysql">
+                <xa-datasource-class>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</xa-datasource-class>
+            </driver>
+        </drivers>
+    </datasources>
+</subsystem>
