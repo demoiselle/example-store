@@ -1,0 +1,32 @@
+<br/>
+<div class="container">
+        <div class="row" *ngIf="details">
+            <div class="col-md-4"><img src={{details.image_src}}/></div>
+            <div class="col-md-4">{{details.name}}
+                <br/>{{details.manufacturer}}
+                <br/>{{details.price}}
+                <br/>{{details.averageReviewRate}}
+                <br/><button class="btn btn-primary" (click)="addToCart()">
+                    <i class="fa fa-lg fa-cart-plus" aria-hidden="true"></i>Comprar
+                </button>
+            </div>
+        </div>
+        <div class="row" *ngIf="details && details.comments">
+            <h3>Comentários</h3>
+            <div class="row" *ngFor="let comment of details.comments">
+               <div class="col-md-4"><img src={{comment.name}}/></div>
+               <div class="col-md-4" *ngIf="comment.rate"><img src={{comment.rate}}/></div>
+               <div class="col-md-4">{{comment.comment}}</div>
+            </div>
+        </div>
+        <div class="row" *ngIf="!details">
+            <h3>Carregando</h3>
+        </div>
+
+        <br/><br/>
+        <div class="row">
+            <button type="button" class="btn btn-sm" (click)="back()">
+        <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>Voltar</button>
+        </div>
+        
+    </div>

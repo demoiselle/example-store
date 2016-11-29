@@ -1,1 +1,2 @@
-export * from './api.service';
+export * from './shared.module';
+export * from './notification.service';

@@ -1,0 +1,14 @@
+        <br/>
+        <div class="container" *ngIf=catalog>
+            <div class="row">
+                <div class="col-md-8">
+                    <!--<item-preview *ngFor="#item of catalog | filterItems:search" [item]="item"></item-preview> -->
+                    <item-preview *ngFor="let item of catalog" [item]="item"></item-preview>
+                    
+                </div>
+                <div class="col-md-4">
+                    Pesquisar:<br/>
+                    <input type="text" [(ngModel)]="search"/>
+                </div>
+            </div>
+        </div>

@@ -1,0 +1,18 @@
+ <br/>
+ <div class="row">
+     <div (click)="viewDetails()" class="item-viewdetails">
+            <div class="col-md-4"><img src={{item.image_src}}/></div>
+            <div class="col-md-4">
+                <br/>
+                <b >{{item.name}}</b><br/>
+                {{item.description}}
+            </div>
+     </div>
+            <div class="col-md-4">
+                <br/>
+                R$ {{item.price}} <br/>
+                <button class="btn btn-primary" (click)="addToCart()">
+                    <i class="fa fa-lg fa-cart-plus" aria-hidden="true"></i>Comprar
+                </button>
+            </div>
+        </div>

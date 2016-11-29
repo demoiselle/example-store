@@ -3,28 +3,23 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule, RequestOptions, XHRBackend, Http } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 
-import { Ng2BootstrapModule } from 'ng2-bootstrap';
-
 import { AppComponent } from './app.component';
-
-import { ApiService } from './shared';
 import { routing } from './app.routing';
+import { CoreModule } from './core/core.module';
 
 // layout
 import { SidebarMenuComponent } from './layout/sidebar-menu/sidebar-menu.component';
 import { TopNavComponent } from './layout/top-nav/top-nav.component';
 
 // feature modules
-import { LoginComponent } from './modules/login';
-import { HomeModule } from './modules/home/home.module';
-import { ProdutoModule } from './modules/produto/produto.module';
-import { UsuarioModule } from './modules/usuario';
-import { TenantModule } from './modules/tenant';
+import { LoginComponent } from './login';
+import { HomeModule } from './home/home.module';
+import { ProdutoModule } from './produto/produto.module';
+import { UsuarioModule } from './usuario';
+import { TenantModule } from './tenant';
+import { ShoppingModule } from './shopping';
 
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
-
-import {SecurityModule, AuthServiceProvider} from '@demoiselle/security';
-import {DmlHttpModule, HttpService, HttpServiceProvider} from '@demoiselle/http';
 
 import {ToastModule, ToastOptions} from 'ng2-toastr/ng2-toastr';
 let toastrOptions: ToastOptions = new ToastOptions({
@@ -41,31 +36,24 @@ let toastrOptions: ToastOptions = new ToastOptions({
     BrowserModule,
     HttpModule,
     FormsModule,
+    routing,
+    CoreModule.forRoot(),
 
     ToastModule.forRoot(toastrOptions),
-    Ng2BootstrapModule,
-    routing,
-    SecurityModule,
-    DmlHttpModule,
 
     HomeModule,
     ProdutoModule,
     UsuarioModule,
-    TenantModule
+    TenantModule,
+    ShoppingModule
   ],
   declarations: [
     AppComponent,
     SidebarMenuComponent,
     TopNavComponent,
-
     LoginComponent
   ],
-  providers: [
-    ApiService,
-
-    HttpServiceProvider(process.env.CONF.endpoints),
-    AuthServiceProvider(process.env.CONF.endpoints.auth)
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {

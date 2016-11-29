@@ -1,0 +1,19 @@
+<div id="content" class="content-box">
+  <div class="section tenant-list">
+
+
+<ul class="list-group">
+    <li (click)="selectTenant(tenant)" class="list-group-item" *ngFor="let tenant of tenants">
+        {{tenant.name}}
+    </li>
+
+</ul>
+
+    <div class="item">
+      <ng-content></ng-content>
+    </div>
+  </div>
+
+ 
+
+</div>

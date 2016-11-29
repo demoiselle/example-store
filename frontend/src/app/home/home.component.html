@@ -1,0 +1,27 @@
+<div id="content" class="content-box">
+  <div id="example" class="section">
+    <h3>Selecione a loja que deseja acessar:</h3>
+
+    <dml-tenant-list> </dml-tenant-list>
+    
+
+    <!-- <div *dmlIsLogged> <br><br>Usuário logado pode ver</div>
+
+    <div *dmlHasRoles="['ADMINISTRADOR','USUARIO']"> <br><br>Usuário AUTORIZADO pode ver</div>
+
+    <input type="text" [dmlHasRolesDisable]="['ADMINISTRADOR','USUARIO']" value="Disable - Usuário AUTORIZADO pode ver"/>
+
+    <div [dmlHasRolesDisable]="['ADMINISTRADOR','USUARIO']">
+      <input type="text"  value="Disable - dentro da div"/>
+    </div>
+    -->
+
+
+    <div class="item">
+      <ng-content></ng-content>
+    </div>
+  </div>
+
+ 
+
+</div>

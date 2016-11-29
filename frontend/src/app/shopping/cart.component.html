@@ -1,0 +1,42 @@
+ <h2>Cart</h2>
+        <div *ngIf="cartItems">
+            <div class="container">
+                <div class="row" *ngFor="let item of cartItems">
+                    <item-cart [item]="item"></item-cart>
+                </div>
+            </div>
+            
+            <div class="container">
+                <div class="row">
+                    Valor Total: {{cartService.getTotalPrice()}}
+                </div>
+            </div>
+
+            <br/>
+            <br/>
+            <div class="container">
+                <div class="row">
+                    <input type="text" #input/>
+                    <button (click)="setDiscount(input.value)">Aplicar Cupom</button>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row" (click)="setPaymentType($event.target.value)">
+                    Selecione o método de pagamento:
+                    <button value="PayPal">PayPal</button>
+                    <button value="Visa">Visa</button>
+                    <button value="MasterCard">MasterCard</button>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <button (click)="pay()">Pagar</button>
+                </div>
+            </div>
+            <div class="container" *ngIf="paymentOutput">
+                <div class="row">
+                    {{paymentOutput}}
+                </div>
+            </div>
+        </div>
