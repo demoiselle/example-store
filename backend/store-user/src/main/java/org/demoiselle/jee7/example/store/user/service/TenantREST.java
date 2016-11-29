@@ -21,7 +21,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.demoiselle.jee.core.api.persistence.Result;
-import org.demoiselle.jee.multitenancy.hibernate.business.TenantBC;
+import org.demoiselle.jee.multitenancy.hibernate.business.TenantManager;
 import org.demoiselle.jee.multitenancy.hibernate.entity.Tenant;
 import org.demoiselle.jee.rest.annotation.ValidatePayload;
 import org.demoiselle.jee.security.annotation.Cors;
@@ -32,14 +32,14 @@ import org.demoiselle.jee.security.annotation.Cors;
 public class TenantREST {
 
 	@Inject
-	private TenantBC business;
+	private TenantManager tenantManager;
 
 	private Logger logger;
 
 	@GET
 	@Cors
 	public Result listAllTenants() throws Exception {
-		return business.find();
+		return tenantManager.find();
 	}
 
 	@DELETE
@@ -47,7 +47,7 @@ public class TenantREST {
 	@Cors
 	public Response deleteTenant(@PathParam("id") Long id) throws Exception {
 		try {
-			business.removeTenant(id);
+			tenantManager.removeTenant(id);
 			return Response.ok().build();
 		} catch (final Exception e) {
 			logger.log(Level.SEVERE, "Error trying to DELETE Tenant", e);
@@ -59,7 +59,7 @@ public class TenantREST {
 	@Path("context")
 	@Cors
 	public Response multitenancyContext() throws Exception {
-		return Response.ok().entity(business.getTenantName()).build();
+		return Response.ok().entity(tenantManager.getTenantName()).build();
 	}
 
 	@POST
@@ -67,7 +67,7 @@ public class TenantREST {
 	@ValidatePayload
 	public Response createTenant(Tenant tenant) throws Exception {
 		try {
-			business.createTenant(tenant);
+			tenantManager.createTenant(tenant);
 			return Response.ok().build();
 		} catch (final Exception e) {
 			logger.log(Level.SEVERE, "Error trying to CREATE Tenant", e);
