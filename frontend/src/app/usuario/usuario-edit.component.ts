@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {ModalDirective} from 'ng2-bootstrap/ng2-bootstrap';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { NotificationService} from '../../shared/notification.service';
+import { NotificationService} from '../shared';
 import {UsuarioService} from './usuario.service';
 import {Usuario, IUsuario} from './usuario.model';
 
@@ -62,11 +62,11 @@ export class UsuarioEditComponent implements OnInit {
     if(!this.id)
         this.service.create(this.usuario).subscribe(
           () => {
-            this.notificationService.error('Usuário criado com sucesso!');
+            this.notificationService.success('Usuário criado com sucesso!');
             this.back();
           },
           error => {
-            this.notificationService.success('Não foi possível salvar o usuário!');
+            this.notificationService.error('Não foi possível salvar o usuário!');
           }
         );
     else {

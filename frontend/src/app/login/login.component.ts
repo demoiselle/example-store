@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@demoiselle/security';
-import {NotificationService} from '../../shared/notification.service';
+import {NotificationService} from '../shared';
 
 @Component({
   selector: 'dml-login',
@@ -34,8 +34,9 @@ export class LoginComponent implements OnInit {
 
         },
         error => {
-          if(error.status == 401) {
-            this.notificationService.error('Usuário e/ou senha incorretos!');
+          if(error.status == 401 || error.status == 406) {
+            let message = JSON.parse(error._body).error;
+            this.notificationService.error(message);
             this.user.password = "";
           };
         }

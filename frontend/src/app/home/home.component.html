@@ -1,15 +1,9 @@
-<div class="content-header">
-  <h2>Home
-    
-  </h2>
-
-  <p class="description" [innerHTML]="titleDoc"></p>
-</div>
-
 <div id="content" class="content-box">
   <div id="example" class="section">
-    <h3>Bem vindo!!</h3>
-    {{news}}
+    <h3>Selecione a loja que deseja acessar:</h3>
+
+    <dml-tenant-list> </dml-tenant-list>
+    
 
     <!-- <div *dmlIsLogged> <br><br>Usuário logado pode ver</div>
 

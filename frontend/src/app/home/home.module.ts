@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
+import {SharedModule} from '../shared';
 import { HomeComponent } from './home.component';
-import {SecurityModule} from '@demoiselle/security';
+import { TenantModule } from '../tenant/tenant.module';
+
 
 @NgModule({
     imports: [
-        SecurityModule
+        SharedModule, TenantModule
     ],
     declarations: [
         HomeComponent

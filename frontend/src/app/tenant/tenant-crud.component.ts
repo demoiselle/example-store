@@ -3,16 +3,16 @@ import {AgRendererComponent} from 'ag-grid-ng2/main';
 import {GridOptions,RowNode} from 'ag-grid/main';
 import {ModalDirective} from 'ng2-bootstrap/ng2-bootstrap';
 
-import { NotificationService} from '../../shared/notification.service';
+import { NotificationService} from '../shared/notification.service';
 import {TenantService} from './tenant.service';
 import {Tenant, ITenant} from './tenant.model';
 
 @Component({
   selector: 'dml-tenant',
-  templateUrl: './tenant.component.html',
-  styleUrls: ['./tenant.component.scss']
+  templateUrl: './tenant-crud.component.html',
+  styleUrls: ['./tenant-crud.component.scss']
 })
-export class TenantComponent implements OnInit {
+export class TenantCrudComponent implements OnInit {
   tenant: ITenant;
   tenants: ITenant[];
   selectedTenant: ITenant;

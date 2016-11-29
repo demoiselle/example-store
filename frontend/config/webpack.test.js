@@ -1,7 +1,9 @@
 module.exports = {
     'endpoints' : {
-        'auth' : 'http://localhost:8080/auth/',
-        'usuario' : 'http://localhost:8080/usuario/',
-    }  
+        'auth' : 'http://supsd.cta.serpro/auth/',
+        'produto' : 'http://supsd.cta.serpro/produto/',
+        'usuario' : 'http://supsd.cta.serpro/usuario/',
+        'venda' : 'http://supsd.cta.serpro/venda/',
+    } 
 
 }

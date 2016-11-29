@@ -1,0 +1,21 @@
+ <br/>
+ <div class="row">
+     <div (click)="viewDetails()" class="item-viewdetails">
+            <div class="col-md-2"><img src={{item.image_src}}/></div>
+            <div class="col-md-4">
+                <br/>
+                <b >{{item.name}}</b><br/>
+                {{item.description}}
+            </div>
+     </div>
+            <div class="col-md-1">
+                <br/>
+                R$ {{item.price}} <br/>
+                
+            </div>
+            <div class="col-md-2">
+                <br/>
+                <amount-spinner [(amount)]="item.amount"></amount-spinner>
+                
+            </div>
+        </div>

@@ -1,12 +1,14 @@
 import { RouterModule, Routes } from '@angular/router';
 
-import { HomeComponent } from './modules/home/home.component';
-import { AboutComponent } from './modules/about/about.component';
-import { LoginComponent } from './modules/login/login.component';
-import { ProdutoComponent } from './modules/produto/produto.component';
-import { UsuarioComponent } from './modules/usuario/usuario.component';
-import { UsuarioEditComponent } from './modules/usuario/usuario-edit.component';
-import { TenantComponent } from './modules/tenant/tenant.component';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { ProdutoComponent } from './produto/produto.component';
+import { UsuarioComponent } from './usuario/usuario.component';
+import { UsuarioEditComponent } from './usuario/usuario-edit.component';
+import { TenantCrudComponent } from './tenant/tenant-crud.component';
+import { CatalogComponent } from './shopping/catalog.component';
+import { DetailsComponent } from './shopping/details.component';
+import { CartComponent } from './shopping/cart.component';
 
 import {AuthGuard} from '@demoiselle/security';
 //import {AuthGuard} from '@demoiselle/security'; // when importing from npm repository
@@ -19,8 +21,7 @@ export const routes: Routes = [
   { 
     path: '',
     data: ['Home'], 
-    component: HomeComponent,
-    canActivate: [AuthGuard] 
+    component: HomeComponent
   },
   { 
     path: 'usuario', 
@@ -46,8 +47,23 @@ export const routes: Routes = [
     path: 'tenant', 
     data: ['Tenants'],
     canActivate: [AuthGuard],
-    component: TenantComponent
-  }
+    component: TenantCrudComponent
+  },
+
+  { 
+    path: 'shopping', 
+    component: CatalogComponent
+  },
+  { 
+    path: 'detail/:id', 
+    component: DetailsComponent
+  },
+  { 
+    path: 'cart', 
+    component: CartComponent
+  },
+
+
 ];
 
 export const routing = RouterModule.forRoot(routes, {useHash: true});

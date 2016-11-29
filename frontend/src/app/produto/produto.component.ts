@@ -3,7 +3,7 @@ import {AgRendererComponent} from 'ag-grid-ng2/main';
 import {GridOptions,RowNode} from 'ag-grid/main';
 import {ModalDirective} from 'ng2-bootstrap/ng2-bootstrap';
 
-import { NotificationService} from '../../shared/notification.service';
+import { NotificationService} from '../shared/notification.service';
 import {ProdutoService} from './produto.service';
 import {Produto, IProduto} from './produto.model';
 

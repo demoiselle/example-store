@@ -3,7 +3,8 @@ import {AgRendererComponent} from 'ag-grid-ng2/main';
 import {GridOptions,RowNode} from 'ag-grid/main';
 import {ModalDirective} from 'ng2-bootstrap/ng2-bootstrap';
 
-import { NotificationService} from '../../shared/notification.service';
+
+import { NotificationService} from '../shared';
 import {UsuarioService} from './usuario.service';
 import {Usuario, IUsuario} from './usuario.model';
 
@@ -11,6 +12,7 @@ import {Usuario, IUsuario} from './usuario.model';
   selector: 'dml-usuario',
   templateUrl: './usuario.component.html',
   styleUrls: ['./usuario.component.scss']
+  
 })
 export class UsuarioComponent implements OnInit {
   usuario: IUsuario;

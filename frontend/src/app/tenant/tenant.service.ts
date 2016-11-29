@@ -10,12 +10,14 @@ export class TenantService {
   
     public tenantsChanged: EventEmitter<Tenant>;
 
+    private apiUrl: string = process.env.CONF.multitenancy.apiUrl;
+
     constructor(private http: Http) {
        this.tenantsChanged = new EventEmitter<Tenant>();
     }
     list () {
 
-        return this.http.get('~multiTenancy/multiTenancy')
+        return this.http.get(this.apiUrl + 'multiTenancy')
                     .map(
                       res => <Tenant[]> res.json()
                       
@@ -24,7 +26,7 @@ export class TenantService {
 
     create (tenant: Tenant) {
       
-      return this.http.post('~multiTenancy/multiTenancy/createTenant', tenant)
+      return this.http.post(this.apiUrl + 'multiTenancy/createTenant', tenant)
         .map(
           () => {
             this.tenantsChanged.emit(tenant);
@@ -41,7 +43,7 @@ export class TenantService {
     // }
 
     delete(tenant: Tenant){
-      return this.http.delete('~multiTenancy/multiTenancy/deleteTenant/' + tenant.id)
+      return this.http.delete(this.apiUrl + 'multiTenancy/deleteTenant/' + tenant.id)
         .map(
           () => {
             this.tenantsChanged.emit(tenant);

@@ -6,7 +6,7 @@ import { Ng2BootstrapModule } from 'ng2-bootstrap';
 
 import { ProdutoComponent } from './produto.component';
 import { SecurityModule } from '@demoiselle/security';
-import { NotificationService} from '../../shared/notification.service';
+import { NotificationService} from '../shared/notification.service';
 
 import {AgGridModule} from 'ag-grid-ng2/main';
 
