@@ -9,15 +9,14 @@ package org.demoiselle.jee7.example.store.user.dao.entityManager;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.demoiselle.jee.persistence.crud.AbstractDAO;
+import org.demoiselle.jee.multitenancy.hibernate.dao.context.EntityManagerMaster;
 
-public abstract class EntityManagerDAO<T> extends AbstractDAO<T, Long> {
+public class EntityManagerMasterDAO implements EntityManagerMaster {
 
-	@PersistenceContext(unitName = "UserTenantsPU")
+	@PersistenceContext(unitName = "UserMasterPU")
 	protected EntityManager emEntity;
 
-	@Override
-	protected EntityManager getEntityManager() {
+	public EntityManager getEntityManager() {
 		return emEntity;
 	}
 

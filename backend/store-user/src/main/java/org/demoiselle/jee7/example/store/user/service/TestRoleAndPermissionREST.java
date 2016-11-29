@@ -1,8 +1,11 @@
 package org.demoiselle.jee7.example.store.user.service;
 
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.demoiselle.jee.core.api.security.DemoisellePrincipal;
@@ -15,6 +18,8 @@ import io.swagger.annotations.Api;
 
 @Path("testRoleAndPermission")
 @Api("Role and Permission Test")
+@Consumes({ MediaType.APPLICATION_JSON })
+@Produces({ MediaType.APPLICATION_JSON })
 public class TestRoleAndPermissionREST {
 
 	@Inject
