@@ -1,16 +1,12 @@
 package org.demoiselle.jee7.example.store.sale.dao;
 
-import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.demoiselle.jee.core.exception.DemoiselleException;
 
 import org.demoiselle.jee7.example.store.sale.dao.EntityManager.EntityManagerDAO;
 import org.demoiselle.jee7.example.store.sale.entity.Rules;
-import org.demoiselle.jee7.example.store.sale.entity.Sale;
-import org.junit.Rule;
 
 public class RulesDAO extends EntityManagerDAO<Rules> {
 		

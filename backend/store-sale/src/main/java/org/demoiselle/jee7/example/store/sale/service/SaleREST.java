@@ -41,6 +41,8 @@ public class SaleREST extends AbstractREST<Sale,Long>{
     	Gson gson = new Gson();
     	Cart cart = gson.fromJson(objeto, Cart.class);   
   
+    	saleBC.getProduct(1L);
+    	
     	return saleBC.salePreview(cart);
     }
     

@@ -19,7 +19,7 @@ public class ApplicationConfig extends Application {
         public ApplicationConfig() {
         BeanConfig beanConfig = new BeanConfig();
         beanConfig.setVersion("1.8.0");
-        beanConfig.setBasePath("/produto/api");
+        beanConfig.setBasePath("/store-product/api");
         beanConfig.setResourcePackage("org.demoiselle.jee7.example.store.product.service");
         beanConfig.setScan(true);
     }

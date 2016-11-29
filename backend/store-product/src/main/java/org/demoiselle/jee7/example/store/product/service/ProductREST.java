@@ -25,21 +25,16 @@ import org.demoiselle.jee7.example.store.product.entity.Product;
  * @author 70744416353
  * @param <I>
  */
-@Api("Teste")
-@Path("test")
+@Api("Produto")
+@Path("product")
 public class ProductREST extends AbstractREST<Product, Long > {
 
     @Inject
     private SecurityContext securityContext;
 
+  
     @GET
-    @Path("sem")
-    public Response testeSem() {
-        return Response.ok().entity("{\"msg\":\"Foi sem\"}").build();
-    }
-
-    @GET
-    @Path("com")
+    @Path("testecom")
     @LoggedIn
     public Response testeCom() {
         return Response.ok().entity(securityContext.getUser().toString()).build();

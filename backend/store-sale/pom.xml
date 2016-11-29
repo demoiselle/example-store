@@ -53,7 +53,20 @@
 			<groupId>io.swagger</groupId>
 			<artifactId>swagger-jaxrs</artifactId>
 			<version>1.5.8</version>
-		</dependency>     
+		</dependency>  
+		
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-client</artifactId>
+			<version>1.8</version>
+		</dependency>
+				
+		<!-- https://mvnrepository.com/artifact/org.bitbucket.b_c/jose4j -->
+		<dependency>
+		    <groupId>org.bitbucket.b_c</groupId>
+		    <artifactId>jose4j</artifactId>
+		    <version>0.5.2</version>
+		</dependency>	
         
     </dependencies>
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.demoiselle.jee7.example.store.product.entity;
+package org.demoiselle.jee7.example.store.sale.entity;
 
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -50,7 +50,7 @@ public class Product implements Serializable {
     //@Max(value=?)  @Min(value =  ?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(precision = 12)
     private Float valor;
-    
+
     @Column(name = "quantidade")
     private Integer quantidade;
     
@@ -62,7 +62,7 @@ public class Product implements Serializable {
 		this.quantidade = quantidade;
 	}
 
-    public Product() {
+	public Product() {
     }
 
     public Product(Long id) {

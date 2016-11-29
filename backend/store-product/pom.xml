@@ -15,13 +15,7 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
     </properties>
   
-   <parent>
-		<groupId>org.demoiselle.jee</groupId>
-		<artifactId>demoiselle-parent-rest</artifactId>
-		<version>3.0.0-BETA3-SNAPSHOT</version>
-		<relativePath>../demoiselle-parent-rest</relativePath>
-	</parent> 
-         
+  
     <dependencies>  
   		 
         <dependency>
@@ -32,18 +26,12 @@
 		
 		<dependency>
 			<groupId>org.demoiselle.jee</groupId>
-			<artifactId>demoiselle-persistence-crud</artifactId>
+			<artifactId>demoiselle-crud</artifactId>
 			<version>3.0.0-BETA3-SNAPSHOT</version>
 		</dependency>
-		
-		
-		<!-- Swagger -->
-		<dependency>
-			<groupId>io.swagger</groupId>
-			<artifactId>swagger-jaxrs</artifactId>
-			<version>1.5.8</version>
-		</dependency>     
-        
+			
+	
+				
     </dependencies>
 
     <build>
