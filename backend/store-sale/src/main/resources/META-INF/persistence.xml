@@ -5,6 +5,7 @@
         <jta-data-source>java:/jboss/datasources/MySQLDS</jta-data-source>             
 	        <class>org.demoiselle.jee7.example.store.sale.entity.Sale</class>    
 	        <class>org.demoiselle.jee7.example.store.sale.entity.Rules</class>	        	                      
+	        <class>org.demoiselle.jee7.example.store.sale.entity.Itens</class>	
 	        <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <!--            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>

@@ -6,8 +6,7 @@ import java.util.List;
 /**
  * Calcula o percentual de desconto Total baseado na lista de descontos de entrada.
  * 
- * @param   lista de descontos a ser aplicada.
- * @return  desconto total aplicado. 
+ * 
  */
 public class DiscountCalculator {
 

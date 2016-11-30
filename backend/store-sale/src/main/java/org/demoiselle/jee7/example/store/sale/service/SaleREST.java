@@ -12,6 +12,8 @@ import javax.script.ScriptException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
+import org.demoiselle.jee.core.api.security.SecurityContext;
+import org.demoiselle.jee.core.api.security.Token;
 import org.demoiselle.jee.persistence.crud.AbstractREST;
 import org.demoiselle.jee7.example.store.sale.business.SaleBC;
 import org.demoiselle.jee7.example.store.sale.entity.Cart;
@@ -28,9 +30,13 @@ import javax.transaction.Transactional;
  */
 @Api("Sales")
 @Path("sale")
-
 public class SaleREST extends AbstractREST<Sale,Long>{
   
+	@Inject
+	private SecurityContext securityContext;
+	
+	
+
 	@Inject 
 	private SaleBC saleBC;
 		       	
@@ -41,8 +47,6 @@ public class SaleREST extends AbstractREST<Sale,Long>{
     	Gson gson = new Gson();
     	Cart cart = gson.fromJson(objeto, Cart.class);   
   
-    	saleBC.getProduct(1L);
-    	
     	return saleBC.salePreview(cart);
     }
     

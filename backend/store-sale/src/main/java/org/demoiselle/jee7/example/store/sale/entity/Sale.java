@@ -8,18 +8,25 @@ package org.demoiselle.jee7.example.store.sale.entity;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.JoinColumn;
 
 /**
  * Classe que representa uma Venda.
@@ -46,10 +53,21 @@ public class Sale implements Serializable {
     @Column(name = "usuario_id")
     private BigInteger usuarioId;
 
-    public Sale() {
-    }
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @JoinTable(name="itens",
+    joinColumns=@JoinColumn(name="venda_id"),
+    inverseJoinColumns=@JoinColumn(name="id"))
+    private List<Itens> listaItens;
+    
+    public List<Itens> getListaItens() {
+		return listaItens;
+	}
 
-    public Sale(Long id) {
+	public void setListaItens(List<Itens> listaItens) {
+		this.listaItens = listaItens;
+	}
+
+	public Sale(Long id) {
         this.id = id;
     }
 
@@ -77,6 +95,9 @@ public class Sale implements Serializable {
         this.usuarioId = usuarioId;
     }
 
+    public Sale(){
+    	
+    }
     @Override
     public int hashCode() {
         int hash = 0;

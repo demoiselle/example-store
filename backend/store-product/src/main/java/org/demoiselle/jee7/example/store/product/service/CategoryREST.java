@@ -18,27 +18,27 @@ import javax.ws.rs.Path;
 import org.demoiselle.jee.core.api.security.SecurityContext;
 import org.demoiselle.jee.persistence.crud.AbstractREST;
 import org.demoiselle.jee.rest.annotation.ValidatePayload;
-import org.demoiselle.jee.security.annotation.LoggedIn;
 import org.demoiselle.jee.security.annotation.RequiredRole;
-import org.demoiselle.jee7.example.store.product.entity.Product;
+import org.demoiselle.jee7.example.store.product.entity.Category;
 
 /**
  *
  */
-@Api("Product")
-@Path("product")
-public class ProductREST extends AbstractREST<Product, Long > {
+@Api("Category")
+@Path("category")
+public class CategoryREST extends AbstractREST<Category, Long > {
 
-    @Inject
+    @SuppressWarnings("unused")
+	@Inject
     private SecurityContext securityContext;
-    
+       
     @Override
     @POST
     @Transactional
     @ValidatePayload
     @ApiOperation(value = "Insere entidade no banco")
     @RequiredRole("ADMIN")
-    public Product persist(Product entity) {
+    public Category persist(Category entity) {
     	entity.setId(null);
         return bc.persist(entity);
     }
@@ -47,9 +47,9 @@ public class ProductREST extends AbstractREST<Product, Long > {
     @PUT
     @Transactional
     @ValidatePayload
-    @LoggedIn
+    @RequiredRole("ADMIN")
     @ApiOperation(value = "Atualiza a entidade", notes = "Atualiza")
-    public Product merge(Product entity) {
+    public Category merge(Category entity) {
         return bc.merge(entity);
     }
     
