@@ -18,6 +18,7 @@ import { ProdutoModule } from './produto/produto.module';
 import { UsuarioModule } from './usuario';
 import { TenantModule } from './tenant';
 import { ShoppingModule } from './shopping';
+import { CartModule } from './cart';
 
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 
@@ -45,7 +46,8 @@ let toastrOptions: ToastOptions = new ToastOptions({
     ProdutoModule,
     UsuarioModule,
     TenantModule,
-    ShoppingModule
+    ShoppingModule,
+    CartModule
   ],
   declarations: [
     AppComponent,

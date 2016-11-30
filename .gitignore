@@ -6,3 +6,17 @@
 /backend/sale/nbproject/
 /backend/auth/nbproject/
 /backend/user/nbproject/
+
+
+/frontend/*.log
+/frontend/coverage
+/frontend/build/Release
+/frontend/node_modules
+/frontend/src/typings/tsd/
+/frontend/typings/
+/frontend/tsd_typings/
+/frontend/dist
+/frontend/public/__build__/
+/frontend/src/*/__build__/
+/frontend/__build__/**
+/frontend/.webpack.json

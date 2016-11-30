@@ -6,11 +6,7 @@ import { PaginationModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { CatalogComponent } from './catalog.component';
 import { CatalogService } from './catalog.service';
 import { ItemPreviewComponent } from './item-preview.component';
-import { ItemCartComponent } from './item-cart.component';
 import { DetailsComponent} from './details.component';
-import { CartComponent} from './cart.component';
-import { AmountSpinnerComponent} from './amount-spinner.component';
-
 
 @NgModule({
     imports: [
@@ -24,10 +20,8 @@ import { AmountSpinnerComponent} from './amount-spinner.component';
     declarations: [
         CatalogComponent,
         ItemPreviewComponent,
-        DetailsComponent,
-        CartComponent,
-        ItemCartComponent,
-        AmountSpinnerComponent
+        DetailsComponent
+
     ],
     providers: [CatalogService]
 })

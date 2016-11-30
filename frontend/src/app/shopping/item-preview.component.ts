@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 
 import {CatalogService} from './catalog.service';
 import {Item} from "./item.model";
-import {CartService} from "./cart.service";
+import {CartService} from "../cart/cart.service";
 import {NotificationService} from '../shared/notification.service';
 
 @Component({

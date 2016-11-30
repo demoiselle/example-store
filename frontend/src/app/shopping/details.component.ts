@@ -3,7 +3,7 @@ import {ModalDirective} from 'ng2-bootstrap/ng2-bootstrap';
 import { Router, ActivatedRoute } from '@angular/router';
 import {CatalogService} from './catalog.service';
 import {Item} from "./item.model";
-import {CartService} from "./cart.service";
+import {CartService} from "../cart/cart.service";
 
 
 @Component({

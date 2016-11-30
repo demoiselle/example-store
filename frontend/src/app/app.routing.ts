@@ -8,7 +8,7 @@ import { UsuarioEditComponent } from './usuario/usuario-edit.component';
 import { TenantCrudComponent } from './tenant/tenant-crud.component';
 import { CatalogComponent } from './shopping/catalog.component';
 import { DetailsComponent } from './shopping/details.component';
-import { CartComponent } from './shopping/cart.component';
+import { CartComponent } from './cart/cart.component';
 
 import {AuthGuard} from '@demoiselle/security';
 //import {AuthGuard} from '@demoiselle/security'; // when importing from npm repository

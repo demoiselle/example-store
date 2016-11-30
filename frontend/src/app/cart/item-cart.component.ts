@@ -1,8 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {CatalogService} from './catalog.service';
-import {Item, CartItem} from "./item.model";
+import {CartItem} from "./cartitem.model";
 import {CartService} from "./cart.service";
 import {NotificationService} from '../shared/notification.service';
 

@@ -4,9 +4,19 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   selector: 'amount-spinner',
   template: `
     <button (click)="decrement()">-</button>
-    <span>{{amount}}</span>
+    <input type="text" [(ngModel)]="amount">
     <button (click)="increment()">+</button>
-  `
+  `,
+  styles: [`
+    input {
+      position: relative;
+      white-space: nowrap;
+      width: 30px;
+      vertical-align: middle;
+      display: table-cell;
+      text-align: right;
+    }
+  `]
 })
 export class AmountSpinnerComponent {
   
@@ -24,7 +34,9 @@ export class AmountSpinnerComponent {
   }
   
   decrement() {
-    this.amount--;
+    if (this.amount > 1) {
+      this.amount--;
+    }
   }
   
   increment() {

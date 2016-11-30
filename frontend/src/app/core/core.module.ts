@@ -7,7 +7,7 @@ import { CommonModule }      from '@angular/common';
 import {AuthServiceProvider} from '@demoiselle/security';
 import {HttpServiceProvider} from '@demoiselle/http';
 
-import { CartService }       from '../shopping/cart.service';
+import { CartService }       from '../cart/cart.service';
 
 
 @NgModule({

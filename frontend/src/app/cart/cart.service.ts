@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Item, CartItem} from './item.model';
+import {Item} from '../shopping/item.model';
+import {CartItem} from './cartitem.model';
 //import {DefaultCheckout, IDiscount} from "./checkout.service";
 //import {discounts} from "../Mock/discounts.mock.json";
 
