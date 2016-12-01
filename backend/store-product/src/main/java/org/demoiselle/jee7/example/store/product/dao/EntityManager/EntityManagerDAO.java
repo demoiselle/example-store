@@ -14,7 +14,7 @@ import org.demoiselle.jee.persistence.crud.AbstractDAO;
 
 public abstract class EntityManagerDAO<T> extends AbstractDAO<T, Long> {
 
-	@PersistenceContext(unitName = "productPU")
+	@PersistenceContext(unitName = "ProductTenantsPU")
 	protected EntityManager em;
 
 	@Override
