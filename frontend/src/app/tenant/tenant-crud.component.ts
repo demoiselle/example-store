@@ -16,7 +16,8 @@ export class TenantCrudComponent implements OnInit {
   tenant: ITenant;
   tenants: ITenant[];
   selectedTenant: ITenant;
-  newTenant: boolean;
+  isNewTenant: boolean;
+  newTenant:ITenant;
   viewOnly: boolean;
 
   scriptExample: string = 'usuario.setNome(tenant.getName() + " - " + usuario.getNome());';
@@ -25,7 +26,7 @@ export class TenantCrudComponent implements OnInit {
 
   
   constructor(private service: TenantService, private notificationService: NotificationService) {
-
+    this.newTenant = new Tenant();
   }
 
  
@@ -35,21 +36,21 @@ export class TenantCrudComponent implements OnInit {
     this.list();
   }
 
-  showModalAdd() {
-    this.viewOnly = false;
-    this.newTenant = true;
-    this.tenant = new Tenant();
-    this.staticModal.show();
-  }
-  showModalEdit() {
-    this.viewOnly = false;
-    this.newTenant = false;
-    this.staticModal.show();
-  }
+  // showModalAdd() {
+  //   this.viewOnly = false;
+  //   this.isNewTenant = true;
+  //   this.tenant = new Tenant();
+  //   this.staticModal.show();
+  // }
+  // showModalEdit() {
+  //   this.viewOnly = false;
+  //   this.isNewTenant = false;
+  //   this.staticModal.show();
+  // }
   showModalDetail(tenant: Tenant) {
     this.viewOnly = true;
     this.tenant = tenant;    
-    this.newTenant = false;
+    this.isNewTenant = false;
     this.staticModal.show();
   }
 
@@ -65,17 +66,21 @@ export class TenantCrudComponent implements OnInit {
   }
  
   save(){
-    if(this.newTenant)
-        this.service.create(this.tenant).subscribe(
+    if(this.isNewTenant)
+        this.service.create(this.newTenant).subscribe(
           () => {
             this.tenant = null;
             this.selectedTenant = null;
             this.staticModal.hide();
             
             this.list();
+            this.notificationService.success('Tenant salvo!');
           },
           error => {
             this.notificationService.error('Não foi possível salvar o tenant!');
+            console.log('ERROR');
+            console.log(error);
+            this.list(); // remover depois que estiver retornando sucesso
           }
         );
     else {
@@ -93,9 +98,12 @@ export class TenantCrudComponent implements OnInit {
           }
         );
     }
+  }
 
-      
-    
+  addTenant() {
+    this.isNewTenant = true;
+    this.save();
+    this.newTenant = new Tenant();
   }
 
   deleteTenant(tenant: Tenant) {

@@ -8,8 +8,8 @@
 <div id="content" class="content-box">
   <div id="example" class="section">
 
-    <button (click)="showModalAdd()" class="btn btn-sm btn-success">Adicionar</button>
     <!--
+    <button (click)="showModalAdd()" class="btn btn-sm btn-success">Adicionar</button>
     <button (click)="showModalEdit()" [disabled]="!selectedTenant" class="btn btn-sm btn-primary">Editar</button>
     <button (click)="delete()" [disabled]="!selectedTenant" class="btn btn-sm btn-danger">Remover</button>
     -->
@@ -100,7 +100,18 @@
       <ng-content></ng-content>
     </div>
   </div>
+</div>
 
- 
-
+<div>
+    <h2>Novo Tenant</h2>
+    <form (ngSubmit)="addTenant()">
+        <div class="form-group row">
+        <label class="col-sm-3 col-form-label" for="formName">Nome:</label>
+        <div class="col-sm-10">
+            <input required id="formNewName" type="text" class="form-control" size="100" 
+            [(ngModel)]="newTenant.name" name="name" />
+        </div>
+        </div>
+        <input class="btn btn-sm btn-success" size="40" type="submit" value="Salvar" [disabled]="!newTenant.name" style="width:68px;height:36px" />
+    </form>
 </div>
