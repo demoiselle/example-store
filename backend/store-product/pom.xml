@@ -1,69 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-<groupId>org.demoiselle.jee.example.store</groupId>
-<artifactId>store-product</artifactId>
-    <version>1.0.0</version>
-    <packaging>war</packaging>
+	<groupId>org.demoiselle.jee.example.store</groupId>
+	<artifactId>store-product</artifactId>
+	<version>1.0.0</version>
+	<packaging>war</packaging>
 
-    <name>produto</name>
+	<name>produto</name>
 
-    <properties>
-        <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <failOnMissingWebXml>false</failOnMissingWebXml>
-    </properties>
-  
-  
-    <dependencies>  
-  		 
-        <dependency>
+	<parent>
+		<groupId>org.demoiselle.jee</groupId>
+		<artifactId>demoiselle-parent-rest</artifactId>
+		<version>3.0.0-BETA3-SNAPSHOT</version>
+		<relativePath>../demoiselle-parent-rest</relativePath>
+	</parent>
+
+	<properties>
+		<endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<failOnMissingWebXml>false</failOnMissingWebXml>
+	</properties>
+
+
+	<dependencies>
+
+		<dependency>
 			<groupId>org.demoiselle.jee</groupId>
 			<artifactId>demoiselle-security-jwt</artifactId>
-			<version>3.0.0-BETA3-SNAPSHOT</version>
-		</dependency>  
-		
+		</dependency>
+
 		<dependency>
 			<groupId>org.demoiselle.jee</groupId>
 			<artifactId>demoiselle-crud</artifactId>
-			<version>3.0.0-BETA3-SNAPSHOT</version>
 		</dependency>
-			
-	
-				
-    </dependencies>
 
-    <build>
-        <finalName>${project.artifactId}</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <compilerArguments>
-                        <endorseddirs>${endorsed.dir}</endorseddirs>
-                    </compilerArguments>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build> 
-    
-    <profiles>
-        <profile>
-            <id>wildfly-swarm</id>
-            <dependencies>
-                <!-- WildFly Default Swarm Fractions -->
-                <dependency>
-                    <groupId>org.wildfly.swarm</groupId>
-                    <artifactId>mysql</artifactId>
-                    <version>2016.9</version>
-                </dependency>
-            </dependencies>
-        </profile>
-        <!--mvn clean package -Pwildfly-swarm && java -jar -Xmx128m target/produto-swarm.jar -->
-    </profiles> 
+		<dependency>
+			<groupId>org.demoiselle.jee</groupId>
+			<artifactId>demoiselle-multitenancy-hibernate</artifactId>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<compilerArguments>
+						<endorseddirs>${endorsed.dir}</endorseddirs>
+					</compilerArguments>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>wildfly-swarm</id>
+			<dependencies>
+				<!-- WildFly Default Swarm Fractions -->
+				<dependency>
+					<groupId>org.wildfly.swarm</groupId>
+					<artifactId>mysql</artifactId>
+					<version>2016.9</version>
+				</dependency>
+			</dependencies>
+		</profile>
+		<!--mvn clean package -Pwildfly-swarm && java -jar -Xmx128m target/produto-swarm.jar -->
+	</profiles>
 </project>
