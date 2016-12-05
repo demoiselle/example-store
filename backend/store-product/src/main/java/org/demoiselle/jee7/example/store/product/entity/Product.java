@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.demoiselle.jee7.example.store.product.entity;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -20,10 +16,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author 70744416353
- */
 @Entity
 @Cacheable
 @Table(name = "product")
@@ -31,9 +23,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
     @NamedQuery(name = "Product.findById", query = "SELECT p FROM Product p WHERE p.id = :id"),
-    @NamedQuery(name = "Product.findByCategoriaId", query = "SELECT p FROM Product p WHERE p.categoriaId = :categoriaId"),
-    @NamedQuery(name = "Product.findByDescricao", query = "SELECT p FROM Product p WHERE p.descricao = :descricao"),
-    @NamedQuery(name = "Product.findByValor", query = "SELECT p FROM Product p WHERE p.valor = :valor")})
+    @NamedQuery(name = "Product.findByCategoryId", query = "SELECT p FROM Product p WHERE p.categoryId = :categoryId"),
+    @NamedQuery(name = "Product.findByDescription", query = "SELECT p FROM Product p WHERE p.description = :description"),
+    @NamedQuery(name = "Product.findByCost", query = "SELECT p FROM Product p WHERE p.cost = :cost")})
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,24 +34,24 @@ public class Product implements Serializable {
     @Basic(optional = false)
     @Column(nullable = false)
     private Long id;
-    @Column(name = "categoria_id")
-    private BigInteger categoriaId;
+    @Column(name = "category_id")
+    private BigInteger categoryId;
     @Size(max = 45)
     @Column(length = 45)
-    private String descricao;
+    private String description;
     //@Max(value=?)  @Min(value =  ?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(precision = 12)
-    private Float valor;
+    private Float cost;
     
-    @Column(name = "quantidade")
-    private Integer quantidade;
+    @Column(name = "quantity")
+    private Integer quantity;
     
-    public Integer getQuantidade() {
-		return quantidade;
+    public Integer getQuantity() {
+		return quantity;
 	}
 
-	public void setQuantidade(Integer quantidade) {
-		this.quantidade = quantidade;
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
     public Product() {
@@ -77,28 +69,28 @@ public class Product implements Serializable {
         this.id = id;
     }
 
-    public BigInteger getCategoriaId() {
-        return categoriaId;
+    public BigInteger getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategoriaId(BigInteger categoriaId) {
-        this.categoriaId = categoriaId;
+    public void setCategoryId(BigInteger categoryId) {
+        this.categoryId = categoryId;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Float getValor() {
-        return valor;
+    public Float getCost() {
+        return cost;
     }
 
-    public void setValor(Float valor) {
-        this.valor = valor;
+    public void setCost(Float cost) {
+        this.cost = cost;
     }
 
     @Override

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.demoiselle.jee7.example.store.product.service;
 
 import io.swagger.annotations.Api;
@@ -21,9 +16,6 @@ import org.demoiselle.jee.rest.annotation.ValidatePayload;
 import org.demoiselle.jee.security.annotation.RequiredRole;
 import org.demoiselle.jee7.example.store.product.entity.Category;
 
-/**
- *
- */
 @Api("Category")
 @Path("category")
 public class CategoryREST extends AbstractREST<Category, Long > {
