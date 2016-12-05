@@ -1,12 +1,19 @@
 package org.demoiselle.jee7.example.store.product.service;
 
 import javax.enterprise.context.RequestScoped;
+import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.demoiselle.jee.persistence.crud.AbstractREST;
+import org.demoiselle.jee.rest.annotation.ValidatePayload;
+import org.demoiselle.jee.security.annotation.RequiredRole;
 import org.demoiselle.jee7.example.store.product.entity.Category;
 
 import io.swagger.annotations.Api;
@@ -18,13 +25,13 @@ import io.swagger.annotations.Api;
 @RequestScoped
 public class CategoryREST extends AbstractREST<Category, Long> {
 
-	/*@Override
+	@Override
 	@POST
 	@Transactional
 	@ValidatePayload
 	@RequiredRole("ADMINISTRATOR")
 	public Category persist(Category entity) {
-		return super.persist(entity);
+		return bc.persist(entity);
 	}
 
 	@Override
@@ -33,7 +40,7 @@ public class CategoryREST extends AbstractREST<Category, Long> {
 	@ValidatePayload
 	@RequiredRole("ADMINISTRATOR")
 	public Category merge(Category entity) {
-		return super.merge(entity);
+		return bc.merge(entity);
 	}
 
 	@Override
@@ -42,18 +49,7 @@ public class CategoryREST extends AbstractREST<Category, Long> {
 	@Transactional
 	@RequiredRole("ADMINISTRATOR")
 	public void remove(@PathParam("id") Long id) {
-		super.remove(id);
-	}*/
-	
-	/*@Override
-    @DELETE
-    @Path("{id}")
-    @Transactional
-    @ApiOperation(value = "Remove entidade")
-	@Consumes({ MediaType.APPLICATION_JSON })
-	@Produces({ MediaType.APPLICATION_JSON })
-    public void remove(@PathParam("id") final Long id) {
-        super.remove(id);
-    }*/
+		bc.remove(id);
+	}
 
 }
