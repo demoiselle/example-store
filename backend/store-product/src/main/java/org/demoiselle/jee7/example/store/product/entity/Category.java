@@ -21,11 +21,13 @@ import javax.validation.constraints.Size;
 public class Category implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Basic(optional = false)
 	@Column(nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	@Size(max = 45)
 	@Column(length = 45)
 	private String description;
