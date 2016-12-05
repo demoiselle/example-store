@@ -7,6 +7,8 @@ import { NotificationService} from '../shared/notification.service';
 import {TenantService} from './tenant.service';
 import {Tenant, ITenant} from './tenant.model';
 
+import {CartService} from "../cart/cart.service";
+
 @Component({
   selector: 'dml-tenant-dropdown',
   templateUrl: './tenant-dropdown.component.html'
@@ -20,7 +22,10 @@ export class TenantDropdownComponent implements OnInit {
         this.loadTenants();
     }
 
-    constructor(private service: TenantService, private notificationService: NotificationService) {
+    constructor(
+        private service: TenantService,
+        private notificationService: NotificationService,
+        private cartService: CartService) {
         service.tenantsChanged.subscribe(
             (tenant) => {
                 this.loadTenants();
@@ -43,5 +48,6 @@ export class TenantDropdownComponent implements OnInit {
         this.service.selectTenant(tenant);
         this.selectedTenant = tenant;
         this.notificationService.success('Tenant <' + tenant.name + '> selecionado com sucesso!');
+        this.cartService.clearCart();
     }
 }

@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {CartItem} from "./cartitem.model";
 import {CartService} from "./cart.service";
-
-
+import { Router } from '@angular/router';
+import {TenantService} from '../tenant/tenant.service';
 
 @Component({
     selector:'cart',
@@ -16,9 +16,19 @@ export class CartComponent {
     private totalPrice: number = 0;
     private paymentOutput: string = "";
 
-    constructor(private cartService:CartService){
+    constructor(private cartService:CartService, private router: Router, private tenantService: TenantService){
         this.cartItems = cartService.getCart();
         this.refreshTotalPrice();
+        tenantService.tenantChanged.subscribe(
+            (tenant) => {
+                this.tenantChanged();
+            }
+        );
+    }
+
+    tenantChanged() {
+        this.cartItems = [];
+        this.totalPrice = 0;
     }
     
     setDiscount(name:string){
@@ -32,6 +42,10 @@ export class CartComponent {
 
     onAmountChange(item: CartItem) {
         this.refreshTotalPrice();
+    }
+
+    continueShopping() {
+        this.router.navigate(['/shopping']);
     }
     
     private refreshTotalPrice(){
