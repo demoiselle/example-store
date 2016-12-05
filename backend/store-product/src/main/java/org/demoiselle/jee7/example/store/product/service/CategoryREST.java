@@ -16,9 +16,6 @@ import org.demoiselle.jee.rest.annotation.ValidatePayload;
 import org.demoiselle.jee.security.annotation.RequiredRole;
 import org.demoiselle.jee7.example.store.product.entity.Category;
 
-import io.swagger.annotations.Api;
-
-@Api("Categories")
 @Path("categories")
 @Consumes({ MediaType.APPLICATION_JSON })
 @Produces({ MediaType.APPLICATION_JSON })
@@ -31,6 +28,7 @@ public class CategoryREST extends AbstractREST<Category, Long> {
 	@ValidatePayload
 	@RequiredRole("ADMINISTRATOR")
 	public Category persist(Category entity) {
+		entity.setId(null);
 		return bc.persist(entity);
 	}
 
