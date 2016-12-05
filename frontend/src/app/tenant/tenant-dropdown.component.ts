@@ -31,6 +31,11 @@ export class TenantDropdownComponent implements OnInit {
                 this.loadTenants();
             }
         );
+        service.tenantChanged.subscribe(
+            (tenant) => {
+                this.selectedTenant = tenant;
+            }
+        );
     }
 
     loadTenants() {
