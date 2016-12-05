@@ -17,7 +17,7 @@
 	<parent>
 		<groupId>org.demoiselle.jee</groupId>
 		<artifactId>demoiselle-parent-rest</artifactId>
-		<version>3.0.0-BETA3-SNAPSHOT</version>
+		<version>3.0.0-RC1-SNAPSHOT</version>
 		<relativePath>../demoiselle-parent-rest</relativePath>
 	</parent>
 
@@ -25,8 +25,7 @@
 		<dependency>
 			<groupId>org.demoiselle.jee</groupId>
 			<artifactId>demoiselle-script</artifactId>
-		</dependency>
-		
+		</dependency>		
 		<dependency>
 			<groupId>org.demoiselle.jee</groupId>
 			<artifactId>demoiselle-multitenancy-hibernate</artifactId>
@@ -36,12 +35,6 @@
 		<dependency>
 			<groupId>io.swagger</groupId>
 			<artifactId>swagger-jaxrs</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 

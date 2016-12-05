@@ -25,7 +25,7 @@ public class ProductREST extends AbstractREST<Product, Long> {
 	@Transactional
 	@ValidatePayload
 	@ApiOperation(value = "Insere entidade no banco")
-	@RequiredRole("ADMIN")
+	@RequiredRole("ADMINISTRATOR")
 	public Product persist(Product entity) {
 		entity.setId(null);
 		return bc.persist(entity);
@@ -45,7 +45,7 @@ public class ProductREST extends AbstractREST<Product, Long> {
 	@DELETE
 	@Path("{id}")
 	@Transactional
-	@RequiredRole("ADMIN")
+	@RequiredRole("ADMINISTRATOR")
 	@ApiOperation(value = "Remove entidade")
 	public void remove(@PathParam("id") Long id) {
 		bc.remove(id);

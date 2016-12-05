@@ -6,18 +6,15 @@ import javax.persistence.Basic;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Cacheable
-@Table(name = "categoria")
-@XmlRootElement
 @NamedQueries({ @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c"),
 		@NamedQuery(name = "Category.findById", query = "SELECT c FROM Category c WHERE c.id = :id"),
 		@NamedQuery(name = "Category.findByDescricao", query = "SELECT c FROM Category c WHERE c.description = :description") })
@@ -26,9 +23,9 @@ public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@Basic(optional = false)
-	@NotNull
 	@Column(nullable = false)
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	@Size(max = 45)
 	@Column(length = 45)
 	private String description;
@@ -36,15 +33,15 @@ public class Category implements Serializable {
 	public Category() {
 	}
 
-	public Category(Integer id) {
+	public Category(Long id) {
 		this.id = id;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
