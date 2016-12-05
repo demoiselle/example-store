@@ -11,8 +11,8 @@ import org.demoiselle.jee7.example.store.product.entity.Category;
 
 import io.swagger.annotations.Api;
 
-@Api("Category")
-@Path("category")
+@Api("Categories")
+@Path("categories")
 @Consumes({ MediaType.APPLICATION_JSON })
 @Produces({ MediaType.APPLICATION_JSON })
 @RequestScoped

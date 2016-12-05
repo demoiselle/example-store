@@ -26,7 +26,7 @@ import org.demoiselle.jee.multitenancy.hibernate.entity.Tenant;
 import org.demoiselle.jee.rest.annotation.ValidatePayload;
 import org.demoiselle.jee.security.annotation.Cors;
 
-@Path("tenant")
+@Path("tenants")
 @Consumes({ MediaType.APPLICATION_JSON })
 @Produces({ MediaType.APPLICATION_JSON })
 public class TenantREST {

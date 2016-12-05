@@ -11,7 +11,7 @@ import javax.ws.rs.core.Application;
 
 import io.swagger.jaxrs.config.BeanConfig;
 
-@ApplicationPath("api")
+@ApplicationPath("api/v1")
 public class AppREST extends Application {
 
 	public AppREST() {
@@ -19,8 +19,9 @@ public class AppREST extends Application {
 		// Configurações minimas do Swagger
 		BeanConfig beanConfig = new BeanConfig();
 		beanConfig.setVersion("1.0.0");
-		beanConfig.setBasePath("/user/api");
+		beanConfig.setBasePath("/users/api/v1");
 		beanConfig.setResourcePackage("org.demoiselle.jee7.example.store.user.service");
 		beanConfig.setScan(true);
+		
 	}
 }

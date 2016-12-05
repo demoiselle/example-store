@@ -16,8 +16,8 @@ import org.demoiselle.jee7.example.store.product.entity.Product;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Api("Product")
-@Path("product")
+@Api("Products")
+@Path("products")
 public class ProductREST extends AbstractREST<Product, Long> {
 
 	@Override

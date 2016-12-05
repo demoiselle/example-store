@@ -22,7 +22,7 @@ import org.demoiselle.jee7.example.store.user.entity.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Path("userTransaction")
+@Path("userTransactions")
 @Api("User Transaction")
 @Consumes({ MediaType.APPLICATION_JSON })
 @Produces({ MediaType.APPLICATION_JSON })

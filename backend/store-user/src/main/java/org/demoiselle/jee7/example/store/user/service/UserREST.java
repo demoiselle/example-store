@@ -17,7 +17,7 @@ import org.demoiselle.jee7.example.store.user.entity.User;
 
 import io.swagger.annotations.Api;
 
-@Path("user")
+@Path("users")
 @Api("User")
 @Consumes({ MediaType.APPLICATION_JSON })
 @Produces({ MediaType.APPLICATION_JSON })
