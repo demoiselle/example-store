@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {CartItem} from "./cartitem.model";
@@ -21,6 +21,10 @@ import {NotificationService} from '../shared/notification.service';
 
 export class ItemCartComponent {
     @Input() item:CartItem;
+
+    @Output() delete = new EventEmitter();
+    @Output() amountChange = new EventEmitter();
+
     constructor(
         private router: Router, 
         private cartService:CartService,
@@ -29,6 +33,17 @@ export class ItemCartComponent {
 
     viewDetails(){
         this.router.navigate( ['/detail', this.item.id]);
+    }
+
+    deleteItem(item: CartItem) {
+        this.cartService.deleteItem(item);
+        this.delete.emit(item);
+    }
+
+    onAmountChange(amount) {
+        this.cartService.updateItem(this.item);
+        this.amountChange.emit(this.item);
+        
     }
    
 }

@@ -22,7 +22,7 @@ export class CatalogService {
                         id: 1,
                         name: 'user 1 catch',
                         description: 'Produto 1111111111111111111111',
-                        price: '2.5',
+                        price: 2.5,
                         image_src: 'http://img5.cliparto.com/pic/s/204746/5102982-monochrome-round-shopping-bag-icon.jpg'
 
                     },
@@ -30,7 +30,7 @@ export class CatalogService {
                         id: 2,
                         name: 'user 2 catch',
                         description: 'Produto com data 12/12/1081',
-                        price: '2.1',
+                        price: 2.1,
                         image_src: 'http://img5.cliparto.com/pic/s/204746/5102982-monochrome-round-shopping-bag-icon.jpg'
 
                     }
@@ -53,7 +53,7 @@ export class CatalogService {
                         id: 1,
                         name: 'user 1 catch',
                         description: 'Produto 1111111111111111111111',
-                        price: '2.5',
+                        price: 2.5,
                         image_src: 'http://img5.cliparto.com/pic/s/204746/5102982-monochrome-round-shopping-bag-icon.jpg'
 
                     }
