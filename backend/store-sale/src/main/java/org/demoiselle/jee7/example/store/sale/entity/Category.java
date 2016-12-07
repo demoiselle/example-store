@@ -18,10 +18,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author 70744416353
- */
 @Entity
 @Cacheable
 @Table(name = "category")

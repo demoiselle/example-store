@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  Classe que respresenta o objeto selecionado pelo usuário para compra. 
+ *  Cart item. 
  */
 public class ItemCart implements Serializable {
 	private static final long serialVersionUID = -7730398389647465451L;
@@ -68,7 +68,6 @@ public class ItemCart implements Serializable {
 		return DiscountCalculator.consolidarDescontos(this.descontos);
 	}	
 
-	
 	public void addDesconto(String identificador, BigDecimal percentual, Boolean acumulativo) {
 		Discount desc = new Discount ( identificador,percentual,acumulativo);
 		if(this.descontos== null)
@@ -76,7 +75,6 @@ public class ItemCart implements Serializable {
 		this.descontos.add(desc);
 		
 	}
-	
 	
 	public void registrarDesconto(Discount desconto) {		
 		this.descontos.add(desconto);

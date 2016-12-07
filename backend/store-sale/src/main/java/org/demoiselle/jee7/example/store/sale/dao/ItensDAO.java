@@ -9,9 +9,9 @@ public class ItensDAO extends EntityManagerDAO<Itens> {
 
 	public List<Itens> getAllItens(Long vendaId) {
         try {
-            return em.createQuery("select * from itens where venda_id =" + vendaId).getResultList();
+            return (List<Itens> )em.createQuery("select i from Itens i where i.venda.id =" + vendaId).getResultList();
         } catch (Throwable th) {
-            // Throw Exception
+            th.printStackTrace();
         }
 		return null;
     }

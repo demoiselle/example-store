@@ -26,10 +26,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.JoinColumn;
 
 /**
- * Classe que representa uma Venda.
+ * Sale.
  * 
  */
 @Entity
@@ -53,10 +56,11 @@ public class Sale implements Serializable {
     @Column(name = "usuario_id")
     private BigInteger usuarioId;
 
-    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-    @JoinTable(name="itens",
-    joinColumns=@JoinColumn(name="venda_id"),
-    inverseJoinColumns=@JoinColumn(name="id"))
+    @JsonIgnore
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "venda", fetch=FetchType.EAGER)
+    //@JoinTable(name="itens",
+    //joinColumns=@JoinColumn(name="venda_id"),
+    //inverseJoinColumns=@JoinColumn(name="id"))
     private List<Itens> listaItens;
     
     public List<Itens> getListaItens() {

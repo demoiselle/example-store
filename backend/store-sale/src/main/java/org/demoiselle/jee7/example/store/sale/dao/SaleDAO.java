@@ -5,8 +5,4 @@ import org.demoiselle.jee7.example.store.sale.entity.Sale;
 
 public class SaleDAO extends EntityManagerDAO<Sale> {
 
-	
-	
-		
-
 }

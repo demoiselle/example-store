@@ -8,20 +8,21 @@ package org.demoiselle.jee7.example.store.sale.entity;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
- * Classe que representa a Regra a ser aplicada sobre a compra.
+ * Sale Itens.
  *
  */
 @Entity
@@ -33,16 +34,37 @@ public class Itens implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)    
     @Basic(optional = false)
     @Column(nullable = false)
     private Long id;
     
-    @ManyToOne
+    
+    @JsonIgnore
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="venda_id")
     private Sale venda;
     
- 
-    @Column(name = "valor")
+    public Sale getVenda() {
+		return venda;
+	}
+
+	public void setVenda(Sale venda) {
+		this.venda = venda;
+	}
+	
+	@Column(name = "quantidade")
+    private Integer quantidade;
+    
+    public Integer getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	@Column(name = "valor")
     private float valor;
     
     @Column(name = "produto_id")
@@ -64,7 +86,6 @@ public class Itens implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 
 	public float getValor() {
 		return valor;

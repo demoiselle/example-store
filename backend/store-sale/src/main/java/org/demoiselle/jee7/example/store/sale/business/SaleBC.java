@@ -16,6 +16,7 @@ import org.demoiselle.jee.core.api.security.SecurityContext;
 import org.demoiselle.jee.core.api.security.Token;
 import org.demoiselle.jee.persistence.crud.AbstractBusiness;
 import org.demoiselle.jee.script.DynamicManager;
+import org.demoiselle.jee7.example.store.sale.dao.ItensDAO;
 import org.demoiselle.jee7.example.store.sale.dao.RulesDAO;
 import org.demoiselle.jee7.example.store.sale.entity.Cart;
 import org.demoiselle.jee7.example.store.sale.entity.ItemCart;
@@ -50,30 +51,50 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
 	 	 
 	 @Inject 
 	 private Logger logger;
-	 	
+	 
+	 @Inject 
+	 private ItensDAO itensDAO;
+	 
 	 /**
 	  * Sale preview.
 	  * 
 	  */
 	 public Cart salePreview(Cart cart) throws ScriptException {	
-		return  processaCarrinhoCupom(preProcessaCarrinho(cart));
+		return  processCartCupom(preProcessingCart(cart));
 	 }
+	 
+	 public  List<Itens> listSaleItens(Long id){		
+		 return itensDAO.getAllItens(id);		 		 
+	 } 
 	 
 	 /**
 	  * Complete the sale.
 	  * 
 	  */		 
 	 public Cart saleComplete(Cart cart) throws ScriptException {
-		Cart temp_cart = processaCarrinhoCupom( preProcessaCarrinho(cart));
-		
+		Cart temp_cart = processCartCupom( preProcessingCart(cart));
+				
 		if(temp_cart != null) {
-			Sale newSale = posProcessaCarrinho(temp_cart);
-			
+			Sale newSale = posProcessingCarrinho(temp_cart);
 			newSale.setDatavenda(new Date());
-			newSale.setUsuarioId(BigInteger.valueOf(1L));
+			newSale.setUsuarioId(BigInteger.valueOf(1L));	
 			
-			this.dao.persist(newSale);
+			newSale = this.dao.persist(newSale);
+			
+			for(ItemCart item : temp_cart.getItens()){        	
+				Itens newitem = new Itens();
+				newitem.setVenda(newSale);
+				newitem.setValor(item.getValorComDesconto().floatValue());
+				newitem.setProduto_id(item.getCodigoProduto());	
+				newitem.setQuantidade(item.getQuantidade());
+				
+				itensDAO.persist(newitem);				
+			}
+			
+			posProcessingSale(newSale);
 		}
+		 
+		
 		return  temp_cart;			 			
 	 }
 	 
@@ -82,21 +103,21 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
 	  * 
 	  */	
 	 public Rules validateCupom(String cupom) {		
-		 try 
-		 { 		    		
-			 Rules rule = rulesDAO.findByName(cupom); 			 
+		try 
+		{ 		    		
+			Rules rule = rulesDAO.findByName(cupom); 			 
  		
-			 Date data = new Date();
+			Date data = new Date();
 		    
-		     if(data.before(rule.getStartDate()) || data.after(rule.getStopDate())){
+		    if(data.before(rule.getStartDate()) || data.after(rule.getStopDate())){
 		    	logger.warning("Cupom \"" + cupom + "\" expired.");
-		     }
-		     else{
+		    }
+		    else{
 		    	 logger.info("Cupom \"" + cupom + "\" validated.");       	 			 
 		    	 return rule;
-		     }
+		    }
  		
-		 }catch(NoResultException e){	        			
+		}catch(NoResultException e){	        			
  		    	logger.warning("Cupom \"" + cupom + "\" not valid!"); 		    	
    		}	 	
 		 
@@ -107,7 +128,7 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
 	  * Cart pre-sale-confirm processing.
 	  * 
 	  */		 
-	 public Cart preProcessaCarrinho (Cart cart) throws ScriptException {     	            
+	 public Cart preProcessingCart (Cart cart) throws ScriptException {     	            
         for(ItemCart item : cart.getItens()){
         	
         	Product p = getProduct(item.getCodigoProduto());
@@ -117,22 +138,41 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
         return cart;
 	 }
 	 
+	 
 	 /**
-	  * Cart pos-sale-confirm processing.
+	  * Cart after-sale-confirm processing.
 	  * 
 	  */	  	 
-	 public Sale posProcessaCarrinho (Cart cart) throws ScriptException {     	            
-         Sale  sale = new Sale();
-         List<Itens> listaItens = new ArrayList<Itens>();
-         
-		 for(ItemCart item : cart.getItens()){
-        	
-			Itens newitem = new Itens();
-			newitem.setId(null);
-			newitem.setValor(item.getValorComDesconto().floatValue());
-			newitem.setProduto_id(item.getCodigoProduto());
+	 public void posProcessingSale(Sale sale){     	            
+                 
+		for(Itens item : sale.getListaItens()){        	
 			
-			listaItens.add( newitem);
+        	Product p = getProduct(item.getProduto_id());
+        	
+        	Integer total= p.getQuantidade();
+        	if(total >= item.getQuantidade()){
+        		p.setQuantidade(total - item.getQuantidade());
+        		
+        		String key = null;
+        		if(!securityContext.isLoggedIn()){
+        			key= doLogin("string","string");
+        		}else
+        		     key = token.getKey();
+        		
+        		putProduct(p,key);
+        	}        	 	
+        }		 		        
+	 }
+	 	 	 	 
+	 /**
+	  * Cart after-sale-confirm processing.
+	  * 
+	  */	  	 
+	 public Sale posProcessingCarrinho (Cart cart) throws ScriptException {     	            
+        Sale  sale = new Sale();
+        List<Itens> listaItens = new ArrayList<Itens>();
+         
+		for(ItemCart item : cart.getItens()){        	
 			
         	Product p = getProduct(item.getCodigoProduto());
         	
@@ -150,6 +190,8 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
         	}
         	 	
         }
+		
+		sale.setListaItens(listaItens);
 		 		
         return sale;
 	 }
@@ -158,8 +200,7 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
 	  * Return the token to perform a service access in other server.
 	  * 
 	  */
-	 public String doLogin(String username,String password) {	 		 		 
-					 		 
+	 public String doLogin(String username,String password) {	 		 		 					 		 
 		Client client = Client.create();
 		Gson gson = new Gson();
 		Credentials login = new Credentials();
@@ -187,8 +228,7 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
 	  * Get the Product List.
 	  * 
 	  */
-	 public Product getProduct(Long id) {	 
-		 
+	 public Product getProduct(Long id) {	 	 
 		Client client = Client.create();
 
 		WebResource webResource = client.resource("http://localhost:8080/store-product/api/product/" + id.toString());				
@@ -209,29 +249,29 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
 	  * 
 	  */	  
 	 public void putProduct(Product p, String token)  {	 		 		 
-		 try {
-			 		 
-				Client client = Client.create();
-				Gson gson = new Gson();
-				String Authorization =  "token " + token;
-			        
-				String baseuri= "http://localhost:8080/store-product/api/product/" ;
-				WebResource webResource = client.resource(baseuri);		
-              
-                System.out.println("Call " + baseuri );
-				System.out.println("Authorization: " + Authorization);
-				System.out.println("PUT :" +  gson.toJson(p));
+		 try 
+		 {		 		 
+			Client client = Client.create();
+			Gson gson = new Gson();
+			String Authorization =  "token " + token;
 		        
-				ClientResponse response = (ClientResponse) webResource.accept("application/json").header("Authorization", Authorization).type("application/json").put(ClientResponse.class,gson.toJson(p));
+			String baseuri= "http://localhost:8080/store-product/api/product/" ;
+			WebResource webResource = client.resource(baseuri);		
+          
+            System.out.println("Call " + baseuri );
+			System.out.println("Authorization: " + Authorization);
+			System.out.println("PUT :" +  gson.toJson(p));
+	        
+			ClientResponse response = (ClientResponse) webResource.accept("application/json").header("Authorization", Authorization).type("application/json").put(ClientResponse.class,gson.toJson(p));
 
-				if (response.getStatus() != 200) {
-				   throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
-				}
+			if (response.getStatus() != 200) {
+			   throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
+			}
 				
-			  } catch (Exception e) {
-				e.printStackTrace();
+		  } catch (Exception e) {
+			e.printStackTrace();
 
-			  }
+		  }
 			 			
 	 }
 	 
@@ -239,28 +279,28 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
 	  * Process the cart with/without cupons.
 	  * 
 	  */	  
-	 public Cart processaCarrinhoCupom (Cart cart) throws ScriptException {     	            
-	        for(String cupom : cart.getListaCupons()){		        	
-	        	dm.loadEngine("groovy");
-	        	
-	        	if (dm.getScript(cupom) == null) {
-	        		Rules rule = validateCupom(cupom);
-	        		    
-	        		if( rule != null) {	        			
-   	        		    dm.loadScript(cupom, rule.getScript());	        		 
-	            			            		
-	            		for(ItemCart item : cart.getItens()){
-	    		        	SimpleBindings context = new SimpleBindings();                                   
-	    		        	context.put(item.getClass().getSimpleName(),item);
-	    		        	context.put(cart.getClass().getSimpleName(),cart);           
-	    		        	dm.eval(cupom, context); 						   //run the script of rule
-	    	        	}
-	    	        	//Remove from cache for tests....
-	    	        	dm.removeScript(cupom);	        				 
-        		    }
-	        	}	        		       			        		
-	        }	        		        	        	        	       
-	        return cart;
+	 public Cart processCartCupom (Cart cart) throws ScriptException {     	            
+        for(String cupom : cart.getListaCupons()){		        	
+        	dm.loadEngine("groovy");
+        	
+        	if (dm.getScript(cupom) == null) {
+        		Rules rule = validateCupom(cupom);
+        		    
+        		if( rule != null) {	        			
+        		    dm.loadScript(cupom, rule.getScript());	        		 
+            			            		
+            		for(ItemCart item : cart.getItens()){
+    		        	SimpleBindings context = new SimpleBindings();                                   
+    		        	context.put(item.getClass().getSimpleName(),item);
+    		        	context.put(cart.getClass().getSimpleName(),cart);           
+    		        	dm.eval(cupom, context); 						   //run the script of rule
+    	        	}
+    	        	//Remove from cache for tests....
+    	        	dm.removeScript(cupom);	        				 
+    		    }
+        	}	        		       			        		
+        }	        		        	        	        	       
+        return cart;
 	 }
 	 
 }

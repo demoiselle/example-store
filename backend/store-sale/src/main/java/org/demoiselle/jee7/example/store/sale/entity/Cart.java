@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Guarda as informações dos itens armazenados no carrinho.
+ * Cart
  * 
  */
 public class Cart implements Serializable {
@@ -24,12 +24,10 @@ public class Cart implements Serializable {
 	public List<String> getListaCupons() {
 		return listaCupons;
 	}
-
-
+	
 	public void setListaCupons(List<String> listaCupons) {
 		this.listaCupons = listaCupons;
 	}
-
 
 	public void adicionarItem(ItemCart item){
 		itens.add(item);

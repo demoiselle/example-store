@@ -11,10 +11,6 @@ import org.demoiselle.jee7.example.store.sale.entity.Rules;
 
 import io.swagger.annotations.Api;
 
-/**
- * Process the sales.
- * 
- */
 @Api("Rules")
 @Path("rules")
 public class RulesREST extends AbstractREST<Rules, Long> {

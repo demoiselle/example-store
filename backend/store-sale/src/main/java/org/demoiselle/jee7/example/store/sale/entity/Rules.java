@@ -21,7 +21,7 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Classe que representa a Regra a ser aplicada sobre a compra.
+ * Rules.
  *
  */
 @Entity

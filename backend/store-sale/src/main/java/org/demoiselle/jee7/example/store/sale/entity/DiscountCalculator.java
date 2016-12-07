@@ -4,9 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Calcula o percentual de desconto Total baseado na lista de descontos de entrada.
- * 
- * 
+ * Calculate the discount.
  */
 public class DiscountCalculator {
 
