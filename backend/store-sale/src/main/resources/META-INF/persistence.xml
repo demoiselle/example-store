@@ -1,23 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-    <persistence-unit name="salePU" transaction-type="JTA">
-    	<provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <jta-data-source>java:/jboss/datasources/MySQLDS</jta-data-source>             
-	        <class>org.demoiselle.jee7.example.store.sale.entity.Sale</class>    
-	        <class>org.demoiselle.jee7.example.store.sale.entity.Rules</class>	        	                      
-	        <class>org.demoiselle.jee7.example.store.sale.entity.Itens</class>	
-	        <exclude-unlisted-classes>true</exclude-unlisted-classes>
-        <properties>
-            <!--            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://10.200.24.49/store"/>
-            <property name="javax.persistence.jdbc.user" value="root"/>
-            <property name="javax.persistence.jdbc.password" value="serpro"/>-->
-            <!--  propriedades do hibernate -->
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-            <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="true"/>
-            <!--  atualiza o banco, gera as tabelas se for preciso -->
-            <!--<property name="hibernate.hbm2ddl.auto" value="update" />-->
-        </properties>
-    </persistence-unit>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+						xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+        
+    <persistence-unit name="SaleTenantsPU"
+		transaction-type="JTA">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>java:jboss/datasources/SaleTenantsDS</jta-data-source>
+		<class>org.demoiselle.jee7.example.store.sale.entity.Sale</class>    
+	    <class>org.demoiselle.jee7.example.store.sale.entity.Rules</class>	        	                      
+	    <class>org.demoiselle.jee7.example.store.sale.entity.Itens</class>	
+		<!-- <exclude-unlisted-classes>true</exclude-unlisted-classes> -->
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<property name="hibernate.multiTenancy" value="SCHEMA" />
+			<property name="hibernate.tenant_identifier_resolver"
+				value="org.demoiselle.jee.multitenancy.hibernate.dao.SchemaResolver" />
+			<property name="hibernate.multi_tenant_connection_provider"
+				value="org.demoiselle.jee.multitenancy.hibernate.dao.MultiTenantProvider" />
+		</properties>
+	</persistence-unit>
+
+	<persistence-unit name="SaleMasterPU"
+		transaction-type="JTA">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>java:jboss/datasources/SaleMasterDS</jta-data-source>
+		<class>org.demoiselle.jee.multitenancy.hibernate.entity.Tenant</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.show_sql" value="false" />
+		</properties>
+	</persistence-unit>
+
+	<persistence-unit name="SaleExportPU"
+		transaction-type="JTA">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>java:jboss/datasources/SaleTenantsDS</jta-data-source>
+		<class>org.demoiselle.jee7.example.store.sale.entity.Sale</class>    
+	    <class>org.demoiselle.jee7.example.store.sale.entity.Rules</class>	        	                      
+	    <class>org.demoiselle.jee7.example.store.sale.entity.Itens</class>			
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<property name="javax.persistence.schema-generation.scripts.action"
+				value="drop-and-create" />
+			<property name="javax.persistence.schema-generation.scripts.create-target"
+				value="../standalone/tmp/demoiselleMultiTenantCreate_Sale.ddl" />
+			<property name="javax.persistence.schema-generation.scripts.drop-target"
+				value="../standalone/tmp/demoiselleMultiTenantDrop_Sale.ddl" />
+		</properties>
+	</persistence-unit>
+    
 </persistence>

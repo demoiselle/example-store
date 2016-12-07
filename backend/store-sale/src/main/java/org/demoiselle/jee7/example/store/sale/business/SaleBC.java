@@ -132,8 +132,8 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
         for(ItemCart item : cart.getItens()){
         	
         	Product p = getProduct(item.getCodigoProduto());
-    	    item.setNomeProduto(p.getDescricao());
-    	    item.setValor(BigDecimal.valueOf(p.getValor()));  		
+    	    item.setNomeProduto(p.getDescription());
+    	    item.setValor(BigDecimal.valueOf(p.getCost()));  		
         }	        		        	        	        	       
         return cart;
 	 }
@@ -149,9 +149,9 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
 			
         	Product p = getProduct(item.getProduto_id());
         	
-        	Integer total= p.getQuantidade();
+        	Integer total= p.getQuantity();
         	if(total >= item.getQuantidade()){
-        		p.setQuantidade(total - item.getQuantidade());
+        		p.setQuantity(total - item.getQuantidade());
         		
         		String key = null;
         		if(!securityContext.isLoggedIn()){
@@ -176,9 +176,9 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
 			
         	Product p = getProduct(item.getCodigoProduto());
         	
-        	Integer total= p.getQuantidade();
+        	Integer total= p.getQuantity();
         	if(total >= item.getQuantidade()){
-        		p.setQuantidade(total - item.getQuantidade());
+        		p.setQuantity(total - item.getQuantidade());
         		
         		String key = null;
         		if(!securityContext.isLoggedIn()){
@@ -207,14 +207,15 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
 		login.setUsername(username);
 		login.setPassword(password);
 		
-		WebResource webResource = client.resource("http://localhost:8080/user/api/auth/login");	
 		
+		String baseuri= "http://localhost:8080/products/api/v1";
+		WebResource webResource = client.resource(baseuri + "/auth/login");												
 		ClientResponse response = (ClientResponse) webResource.accept("application/json").type("application/json").post(ClientResponse.class,gson.toJson(login));
 
 		if (response.getStatus() != 200) {
-		   throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
+			   throw new RuntimeException("Cannot access the service " + baseuri + ". HTTP error code : " + response.getStatus());
 		}
-
+		
 		String resposta = response.getEntity(String.class);		
 		
 		JsonParser parser = new JsonParser();
@@ -230,12 +231,13 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
 	  */
 	 public Product getProduct(Long id) {	 	 
 		Client client = Client.create();
-
-		WebResource webResource = client.resource("http://localhost:8080/store-product/api/product/" + id.toString());				
+		
+		String baseuri= "http://localhost:8080/products/api/v1/";
+		WebResource webResource = client.resource(baseuri + "products/" + id);								
 		ClientResponse response = (ClientResponse) webResource.accept("application/json").get(ClientResponse.class);
 
 		if (response.getStatus() != 200) {
-		   throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
+		   throw new RuntimeException("Cannot access the service " + baseuri + ". HTTP error code : " + response.getStatus());
 		}
 
 		Product produto = response.getEntity(Product.class);		
@@ -254,9 +256,9 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
 			Client client = Client.create();
 			Gson gson = new Gson();
 			String Authorization =  "token " + token;
-		        
-			String baseuri= "http://localhost:8080/store-product/api/product/" ;
-			WebResource webResource = client.resource(baseuri);		
+		    
+			String baseuri= "http://localhost:8080/products/api/v1/";
+			WebResource webResource = client.resource(baseuri + "products/");							
           
             System.out.println("Call " + baseuri );
 			System.out.println("Authorization: " + Authorization);
@@ -265,8 +267,8 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
 			ClientResponse response = (ClientResponse) webResource.accept("application/json").header("Authorization", Authorization).type("application/json").put(ClientResponse.class,gson.toJson(p));
 
 			if (response.getStatus() != 200) {
-			   throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
-			}
+				   throw new RuntimeException("Cannot access the service " + baseuri + ". HTTP error code : " + response.getStatus());
+				}			
 				
 		  } catch (Exception e) {
 			e.printStackTrace();
@@ -276,7 +278,7 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
 	 }
 	 
 	 /**
-	  * Process the cart with/without cupons.
+	  * Process the cart with/without coupons.
 	  * 
 	  */	  
 	 public Cart processCartCupom (Cart cart) throws ScriptException {     	            

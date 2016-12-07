@@ -34,7 +34,7 @@ import javax.transaction.Transactional;
  * 
  */
 @Api("Sales")
-@Path("sale")
+@Path("sales")
 public class SaleREST extends AbstractREST<Sale,Long>{
   
 	@Inject
