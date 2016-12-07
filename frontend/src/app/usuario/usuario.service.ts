@@ -48,9 +48,12 @@ export class UsuarioService {
 
   create(usuario: Usuario) {
     return this.http.post('~usuario/usuario', usuario);
-
-
   }
+
+  createOnTenant(usuario: Usuario, tenant: string) {
+    return this.http.post(process.env.CONF.multitenancy.apiUrl+tenant+'/usuario', usuario);
+  }
+  
   update(usuario: Usuario) {
     return this.http.put('~usuario/usuario/' + usuario.id, usuario);
   }
