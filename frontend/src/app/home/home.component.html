@@ -5,7 +5,7 @@
     <dml-tenant-list> </dml-tenant-list>
 
     <div>
-        <h2>Novo Tenant</h2>
+        <h2>Crie sua loja</h2>
         <form #tenantForm="ngForm" (ngSubmit)="addTenant()">
             <div class="form-group">
                 <label for="tenantName">Nome da loja</label>
@@ -55,7 +55,7 @@
             </div>
 
             <button type="submit" class="btn btn-default"
-                    [disabled]="!tenantForm.form.valid">Adicionar</button>
+                    [disabled]="!tenantForm.form.valid">Criar loja</button>
         </form>
     </div>
 

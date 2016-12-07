@@ -56,7 +56,7 @@ export class CartService {
     getTotalPrice(){
         let cart = this._read();
         let totalPrice = cart.reduce((sum, cartItem)=>{
-            return sum += (cartItem.price * cartItem.amount), sum;
+            return sum += (cartItem.valor * cartItem.amount), sum;
         },0);
         // if(this.discount){
         //     totalPrice -= totalPrice=this.discount.amount;

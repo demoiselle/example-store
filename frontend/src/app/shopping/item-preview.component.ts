@@ -9,6 +9,9 @@ import {NotificationService} from '../shared/notification.service';
 @Component({
     selector: 'item-preview',
     styles:[`
+        .row:hover {
+            background-color:#dce3ef;
+        }
         .row img{
             width:100px;
             height:100px;

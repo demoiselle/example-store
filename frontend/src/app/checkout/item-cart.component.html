@@ -1,6 +1,6 @@
  <br/>
  <div class="row">
-     <div (click)="viewDetails()" class="item-viewdetails">
+     <div class="item-viewdetails">
             <div class="col-md-2"><img src={{item.image_src}}/></div>
             <div class="col-md-3">
                 <br/>
@@ -15,14 +15,9 @@
             </div>
             <div class="col-md-2">
                 <br/>
-                <amount-spinner [(amount)]="item.amount" (amountChange)="onAmountChange(amount)"></amount-spinner>
+                {{item.amount}}
             </div>
-            <div class="col-md-1">
-                <br/>
-                <button class="btn btn-default" (click)="deleteItem(item)">
-                    <i class="fa fa-trash" aria-hidden="true"></i>
-                </button>
-            </div>
+            
             <div class="col-md-1">
                 <br/>
                 {{item.valor * item.amount | currency:'BRL':true:'1.2-2'}} <br/>

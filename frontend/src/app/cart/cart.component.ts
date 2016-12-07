@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {CartItem} from "./cartitem.model";
 import {CartService} from "./cart.service";
-import { Router } from '@angular/router';
+import { Router} from '@angular/router';
 import {TenantService} from '../tenant/tenant.service';
 
 @Component({
@@ -16,14 +16,17 @@ export class CartComponent {
     private totalPrice: number = 0;
     private paymentOutput: string = "";
 
-    constructor(private cartService:CartService, private router: Router, private tenantService: TenantService){
-        this.cartItems = cartService.getCart();
-        this.refreshTotalPrice();
-        tenantService.tenantChanged.subscribe(
-            (tenant) => {
-                this.tenantChanged();
-            }
-        );
+    constructor(
+        private cartService:CartService,
+        private router: Router,
+	    private tenantService: TenantService){
+            this.cartItems = cartService.getCart();
+            this.refreshTotalPrice();
+	        tenantService.tenantChanged.subscribe(
+                (tenant) => {
+                    this.tenantChanged();
+                }
+            );
     }
 
     tenantChanged() {
@@ -31,9 +34,6 @@ export class CartComponent {
         this.totalPrice = 0;
     }
     
-    setDiscount(name:string){
-        this.cartService.applyDiscount(name);
-    }
 
     onDelete(item: CartItem) {
         this.cartItems = this.cartService.getCart();
@@ -50,6 +50,10 @@ export class CartComponent {
     
     private refreshTotalPrice(){
         this.totalPrice = this.cartService.getTotalPrice();
+    }
+
+    checkout() {
+        this.router.navigate(['/checkout']);
     }
     
 }

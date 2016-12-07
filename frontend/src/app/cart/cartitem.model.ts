@@ -6,9 +6,9 @@ export class CartItem extends Item {
     constructor(item?: Item) {
         super();
         this.id = item && item.id;
-        this.description = item && item.description;
-        this.price = item && item.price;
-        this.name = item && item.name;
+        this.descricao = item && item.descricao;
+        this.valor = item && item.valor;
+        this.nome = item && item.nome;
         this.image_src = item && item.image_src;
         this.averageReviewRate = item && item.averageReviewRate;
         

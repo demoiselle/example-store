@@ -5,10 +5,45 @@ import {Observable} from 'rxjs/Rx';
 
 @Injectable()
 export class CatalogService {
+
+    apiUrl = process.env.CONF.endpoints.product;
+
     private catalog: Item[];
     constructor(private http: Http) {
 
     }
+
+    list(rangeStart: number, rangeEnd: number) {
+        return this.http.get(this.apiUrl + 'product')
+            .map(
+                res => {
+                    let content = res.json().content;
+                    for (let item of content) {
+                        item.nome = item.descricao; // copia descricao para o nome, até o backend ter a propriedade
+                        item.image_src = 'http://img5.cliparto.com/pic/s/204746/5102982-monochrome-round-shopping-bag-icon.jpg';
+                    }
+
+                    return content;
+                }
+
+            )
+            .catch(function (error) {
+
+                let p: Item;
+                let prods =<Item[]>[];
+                for(let i = rangeStart; i<= rangeEnd; i++){
+                    p = new Item();
+                    p.id = i;
+                    p.nome = 'produto ' + i;
+                    p.descricao = 'description prod ' + i;
+                    p.valor = 3.2 + i;
+                    p.image_src = 'http://img5.cliparto.com/pic/s/204746/5102982-monochrome-round-shopping-bag-icon.jpg';
+                    prods.push(p);
+                }
+                return Observable.throw(prods);
+            });
+    }
+
     getCatalog() {
         return this.http.get('~usuario/usuario123')
             .map(
@@ -17,24 +52,18 @@ export class CatalogService {
             )
             .catch(function (error) {
 
-                return Observable.throw(<Item[]>[
-                    {
-                        id: 1,
-                        name: 'user 1 catch',
-                        description: 'Produto 1111111111111111111111',
-                        price: 2.5,
-                        image_src: 'http://img5.cliparto.com/pic/s/204746/5102982-monochrome-round-shopping-bag-icon.jpg'
-
-                    },
-                    {
-                        id: 2,
-                        name: 'user 2 catch',
-                        description: 'Produto com data 12/12/1081',
-                        price: 2.1,
-                        image_src: 'http://img5.cliparto.com/pic/s/204746/5102982-monochrome-round-shopping-bag-icon.jpg'
-
-                    }
-                ]);
+                let p: Item;
+                let prods =<Item[]>[];
+                for(let i = 1; i< 20; i++){
+                    p = new Item();
+                    p.id = i;
+                    p.nome = 'produto ' + i;
+                    p.descricao = 'description prod ' + i;
+                    p.valor = 3.2 + i;
+                    p.image_src = 'http://img5.cliparto.com/pic/s/204746/5102982-monochrome-round-shopping-bag-icon.jpg';
+                    prods.push(p);
+                }
+                return Observable.throw(prods);
             });
     }
     setCatalog(catalog: Item[]) {
@@ -42,7 +71,7 @@ export class CatalogService {
     }
     get(id: number) {
         var item: Item = null;
-        return this.http.get('~usuario/usuario123')
+        return this.http.get(this.apiUrl + 'product/' + id)
             .map(
                 res => res.json()
             )
@@ -51,9 +80,9 @@ export class CatalogService {
                 return Observable.throw(<Item>
                     {
                         id: 1,
-                        name: 'user 1 catch',
-                        description: 'Produto 1111111111111111111111',
-                        price: 2.5,
+                        nome: 'user 1 catch',
+                        descricao: 'Produto 1111111111111111111111',
+                        valor: 2.5,
                         image_src: 'http://img5.cliparto.com/pic/s/204746/5102982-monochrome-round-shopping-bag-icon.jpg'
 
                     }

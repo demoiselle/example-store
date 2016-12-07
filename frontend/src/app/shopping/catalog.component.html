@@ -1,14 +1,21 @@
         <br/>
         <div class="container" *ngIf=catalog>
             <div class="row">
-                <div class="col-md-8">
-                    <!--<item-preview *ngFor="#item of catalog | filterItems:search" [item]="item"></item-preview> -->
-                    <item-preview *ngFor="let item of catalog" [item]="item"></item-preview>
-                    
-                </div>
+                    <div class="col-md-8 search-results" 
+                        infinite-scroll
+                        [infiniteScrollDistance]="2"
+                        [infiniteScrollThrottle]="300"
+                        [scrollWindow]="false"
+                        [immediateCheck]="true"
+                        (scrolled)="searchMore()">
+                        <!--<item-preview *ngFor="#item of catalog | filterItems:search" [item]="item"></item-preview> -->
+                        <item-preview *ngFor="let item of catalog" [item]="item"></item-preview>
+                        
+                    </div>
+
                 <div class="col-md-4">
-                    Pesquisar:<br/>
-                    <input type="text" [(ngModel)]="search"/>
+                    <br/>
+                    <input type="text" placeholder="Pesquisar..." [(ngModel)]="search"/>
                 </div>
             </div>
         </div>

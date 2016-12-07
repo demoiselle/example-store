@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 import { CoreModule } from './core/core.module';
+import { SecurityModule } from '@demoiselle/security';
 
 // layout
 import { SidebarMenuComponent } from './layout/sidebar-menu/sidebar-menu.component';
@@ -19,6 +20,7 @@ import { UsuarioModule } from './usuario';
 import { TenantModule } from './tenant';
 import { ShoppingModule } from './shopping';
 import { CartModule } from './cart';
+import { CheckoutModule } from './checkout';
 
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 
@@ -39,6 +41,7 @@ let toastrOptions: ToastOptions = new ToastOptions({
     FormsModule,
     routing,
     CoreModule.forRoot(),
+    SecurityModule,
 
     ToastModule.forRoot(toastrOptions),
 
@@ -47,7 +50,8 @@ let toastrOptions: ToastOptions = new ToastOptions({
     UsuarioModule,
     TenantModule,
     ShoppingModule,
-    CartModule
+    CartModule,
+    CheckoutModule
   ],
   declarations: [
     AppComponent,

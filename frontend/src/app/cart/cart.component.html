@@ -13,7 +13,9 @@
                     <item-cart [item]="item" (delete)="onDelete(item)" (amountChange)="onAmountChange(item)"></item-cart>
                 </div>
             </div>
-            
+
+            <br/>
+            <br/>            
             <div class="container">
                 <div class="row">
                     <b>Valor Total: {{totalPrice | currency:'BRL':true:'1.2-2'}} </b>
@@ -24,17 +26,10 @@
             <br/>
             <div class="container">
                 <div class="row">
-                    <input type="text" #input/>
-                    <button (click)="setDiscount(input.value)">Aplicar Cupom</button>
-                </div>
-            </div>
-
-            <br/>
-            <br/>
-            <div class="container">
-                <div class="row">
-                    <button (click)="pay()">Pagar</button>
-                    <button (click)="continueShopping()">Continuar comprando</button>
+                    <button type="button" class="btn btn-primary" (click)="checkout()">
+                        <i class="fa fa-check" aria-hidden="true"></i>Concluir compra
+                    </button>
+		            <button (click)="continueShopping()">Continuar comprando</button>
                 </div>
             </div>
             <div class="container" *ngIf="paymentOutput">

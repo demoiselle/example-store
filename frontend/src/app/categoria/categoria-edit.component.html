@@ -1,0 +1,36 @@
+<div class="content-header">
+    <h2>Categoria
+
+    </h2>
+
+    <p class="description" [innerHTML]="titleDoc"></p>
+</div>
+
+
+<form (ngSubmit)="save()" *ngIf="categoriaLoaded">
+    <button type="button" class="btn btn-sm btn-danger" (click)="back()">
+        <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>Cancelar</button>
+    <button type="button" class="btn btn-sm btn-default" type="submit" >
+        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>Salvar</button>
+    
+    <hr/>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" for="formId">Id:</label>
+        <div class="col-sm-10">
+            <input id="formId" type="text" size="100" class="form-control" [(ngModel)]="categoria.id" name="id" disabled="true" />
+        </div>
+
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" for="formDescription">Descrição:</label>
+        <div class="col-sm-10">
+            <input id="formDescription" type="text" class="form-control" size="100" [(ngModel)]="categoria.description" name="description" />
+        </div>
+    </div>
+
+
+    
+
+
+</form>

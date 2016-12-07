@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-
-import { Ng2BootstrapConfig, Ng2BootstrapTheme } from 'ng2-bootstrap/components/ng2-bootstrap-config';
 import { routes } from './../../app.routing';
+import { AuthService } from '@demoiselle/security';
 
 // webpack html imports
 let template = require('./sidebar-menu.template.html');
@@ -13,12 +12,11 @@ let template = require('./sidebar-menu.template.html');
 })
 
 export class SidebarMenuComponent {
-  public isBs3:boolean = Ng2BootstrapConfig.theme === Ng2BootstrapTheme.BS3;
   public routes:any = routes;
   public search:any = {};
   public hash:string = '';
 
-  public constructor(private router:Router) {
+  public constructor(private router:Router, private authService: AuthService) {
     this.routes = this.routes.filter(
       (v:any) => v.path !== '**' && v.data
       
@@ -28,5 +26,9 @@ export class SidebarMenuComponent {
         this.hash = event.url;
       }
     });
+
+    
+    //console.log(this.authService.isAuthorized(['ADMINISTRATOR']));
+
   }
 }
