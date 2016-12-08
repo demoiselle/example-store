@@ -14,32 +14,15 @@ export class CategoriaService {
   list(currentPage: number, itemsPerPage: number) {
 
     let start = itemsPerPage * (currentPage - 1);
-    return this.http.get('~usuario/usuario/pagination/' + start + '/' + itemsPerPage + '/id/ASC')
+    return this.http.get('~product/categories')
       .map(
       res => res.json()
 
-      )
-      .catch(function (error) {
-
-        return Observable.throw(<Usuario[]>[
-          {
-            id: 1,
-            name: 'user 1 catch',
-            perfil: 'Produto 1111111111111111111111'
-
-          },
-          {
-            id: 2,
-            name: 'user 2 catch',
-            perfil: 'Produto com data 12/12/1081'
-
-          }
-        ]);
-      });
+      );
   }
 
   get(id: number) {
-    return this.http.get('~usuario/usuario/' + id)
+    return this.http.get('~product/categories/' + id)
       .map(
       res => <Usuario>res.json()
 
@@ -47,15 +30,15 @@ export class CategoriaService {
   }
 
   create(usuario: Usuario) {
-    return this.http.post('~usuario/usuario', usuario);
+    return this.http.post('~product/categories', usuario);
 
 
   }
   update(usuario: Usuario) {
-    return this.http.put('~usuario/usuario/' + usuario.id, usuario);
+    return this.http.put('~product/categories/' + usuario.id, usuario);
   }
 
   delete(usuario: Usuario) {
-    return this.http.delete('~usuario/usuario/' + usuario.id);
+    return this.http.delete('~product/categories/' + usuario.id);
   }
 }

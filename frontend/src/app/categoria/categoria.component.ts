@@ -35,7 +35,7 @@ export class CategoriaComponent implements OnInit {
          this.list();
        },
        error => {
-         this.notificationService.error('Não foi possível carregar a lista de usuarios!');
+         this.notificationService.error('Não foi possível carregar a lista de categorias!');
        }
      );
   }
@@ -56,11 +56,11 @@ export class CategoriaComponent implements OnInit {
     this.service.list(this.currentPage, this.itemsPerPage).subscribe(
        result => {
 
-         this.categorias = result.content;
+         this.categorias = result;
          
        },
        error => {
-         this.notificationService.error('Não foi possível carregar a lista de usuarios!');
+         this.notificationService.error('Não foi possível carregar a lista de categorias!');
        }
      );
   }
@@ -74,7 +74,7 @@ export class CategoriaComponent implements OnInit {
             this.list();
           },
           error => {
-            this.notificationService.error('Não foi possível remover o usuário!');
+            this.notificationService.error('Não foi possível remover a categoria!');
           }
         );
 

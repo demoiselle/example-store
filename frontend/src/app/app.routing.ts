@@ -5,6 +5,8 @@ import { LoginComponent } from './login/login.component';
 import { ProdutoComponent } from './produto/produto.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { UsuarioEditComponent } from './usuario/usuario-edit.component';
+import { CategoriaComponent } from './categoria/categoria.component';
+import { CategoriaEditComponent } from './categoria/categoria-edit.component';
 import { TenantCrudComponent } from './tenant/tenant-crud.component';
 import { CatalogComponent } from './shopping/catalog.component';
 import { DetailsComponent } from './shopping/details.component';
@@ -43,6 +45,26 @@ export const routes: Routes = [
     path: 'usuario/edit',
     canActivate: [AuthGuard],
     component: UsuarioEditComponent 
+  },
+  { 
+    path: 'categoria', 
+    data: ['Categoria'],
+    canActivate: [AuthGuard],
+    component: CategoriaComponent
+  },
+
+  // edição de usuário
+  { 
+    path: 'categoria/edit/:id',
+    canActivate: [AuthGuard],
+    component: CategoriaEditComponent 
+  },
+
+  // novo usuário
+  { 
+    path: 'categoria/edit',
+    canActivate: [AuthGuard],
+    component: CategoriaEditComponent 
   },
   { 
     path: 'tenant', 

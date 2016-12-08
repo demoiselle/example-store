@@ -18,6 +18,7 @@ import { LoginComponent } from './login';
 import { HomeModule } from './home/home.module';
 import { ProdutoModule } from './produto/produto.module';
 import { UsuarioModule } from './usuario';
+import { CategoriaModule } from './categoria'
 import { TenantModule } from './tenant';
 import { ShoppingModule } from './shopping';
 import { CartModule } from './cart';
@@ -49,6 +50,7 @@ let toastrOptions: ToastOptions = new ToastOptions({
     HomeModule,
     ProdutoModule,
     UsuarioModule,
+    CategoriaModule,
     TenantModule,
     ShoppingModule,
     CartModule,
