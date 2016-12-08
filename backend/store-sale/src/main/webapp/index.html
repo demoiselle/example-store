@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" ng-app="app">
+<html class="no-js" data-ng-app="app">
     <head>
         <meta charset="utf-8">
         <title>Swagger</title>
@@ -8,20 +8,20 @@
         <link rel="stylesheet" href="css/swagger-ui.min.css">
     </head>
     <body>
-        <div ng-controller="MyCtrl" class="container" style="margin-bottom:100px">
+        <div data-ng-controller="MyCtrl" class="container" style="margin-bottom:100px">
             <h1>Api</h1>
-            <h3 ng-show="isLoading">loading ...</h3>
+            <h3 data-ng-show="isLoading">loading ...</h3>
 
-            <div ng-show="!isLoading">
+            <div data-ng-show="!isLoading">
                 <div>
                     <div >
                         <label>Token</label>
-                        <input class="form-control" type="text" ng-model="$root.token">
+                        <input class="form-control" type="text" data-ng-model="$root.token">
                     </div>
                 </div>
             </div>
 
-            <div swagger-ui url="swaggerUrl" loading="isLoading" parser="json" api-explorer="true" error-handler="myErrorHandler"></div>
+            <div data-swagger-ui data-url="swaggerUrl" data-loading="isLoading" data-parser="json" data-api-explorer="true" data-error-handler="myErrorHandler"></div>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-sanitize.min.js"></script>

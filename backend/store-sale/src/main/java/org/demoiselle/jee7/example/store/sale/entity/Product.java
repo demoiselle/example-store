@@ -1,17 +1,13 @@
 package org.demoiselle.jee7.example.store.sale.entity;
 
-import java.io.Serializable;
+public class Product {
 
-public class Product  {
-	
-	private static final long serialVersionUID = 1L;
-	
 	private Long id;
-		
+
 	private Category category;
-		
+
 	private String description;
-	
+
 	private Float cost;
 
 	private Integer quantity;
