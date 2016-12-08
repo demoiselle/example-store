@@ -32,7 +32,7 @@ export class CoreModule {
         // put here your global (singleton) services to be available for all components
     
         HttpServiceProvider(process.env.CONF.endpoints, process.env.CONF.multitenancy),
-        AuthServiceProvider('~auth'),
+        AuthServiceProvider('~user'),
         CartService
       ]
     };

@@ -2,6 +2,7 @@ import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule, RequestOptions, XHRBackend, Http } from '@angular/http';
 import { FormsModule } from '@angular/forms';
+import { ComponentsHelper } from 'ng2-bootstrap/ng2-bootstrap';
 
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
@@ -59,7 +60,7 @@ let toastrOptions: ToastOptions = new ToastOptions({
     TopNavComponent,
     LoginComponent
   ],
-  providers: [],
+  providers: [{provide: ComponentsHelper, useClass: ComponentsHelper}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

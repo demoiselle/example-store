@@ -3,7 +3,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Http} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
-import { ITenant, Tenant } from './tenant.model';
+import { Tenant } from './tenant.model';
 
 @Injectable()
 export class TenantService {
@@ -19,7 +19,7 @@ export class TenantService {
     }
     list () {
 
-        return this.http.get(this.apiUrl + 'multiTenancy')
+        return this.http.get(this.apiUrl + 'tenants')
                     .map(
                       res => <Tenant[]> res.json()
                       
@@ -28,7 +28,7 @@ export class TenantService {
 
     create (tenant: Tenant) {
       
-      return this.http.post(this.apiUrl + 'multiTenancy/createTenant', tenant)
+      return this.http.post(this.apiUrl + 'tenants', tenant)
         .map(
           () => {
             this.tenantsChanged.emit(tenant);
@@ -36,16 +36,16 @@ export class TenantService {
         );
 
     }
-    // update (tenant: Tenant) {
-    //     return this.http.put('~livraria/user', tenant)
-    //                 .map(
-    //                   res => <Tenant> res.json()
+    update (tenant: Tenant) {
+        return this.http.put(this.apiUrl + 'tenants', tenant)
+                    .map(
+                      res => <Tenant> res.json()
                       
-    //                 );
-    // }
+                    );
+    }
 
     delete(tenant: Tenant){
-      return this.http.delete(this.apiUrl + 'multiTenancy/deleteTenant/' + tenant.id)
+      return this.http.delete(this.apiUrl + 'tenants/' + tenant.id)
         .map(
           () => {
             this.tenantsChanged.emit(tenant);

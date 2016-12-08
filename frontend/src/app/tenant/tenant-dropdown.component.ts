@@ -5,7 +5,7 @@ import {ModalDirective} from 'ng2-bootstrap/ng2-bootstrap';
 
 import { NotificationService} from '../shared/notification.service';
 import {TenantService} from './tenant.service';
-import {Tenant, ITenant} from './tenant.model';
+import {Tenant} from './tenant.model';
 
 import {CartService} from "../cart/cart.service";
 

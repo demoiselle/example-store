@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule} from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-import { Ng2BootstrapModule } from 'ng2-bootstrap';
-
+import {SharedModule} from '../shared';
 import { ProdutoComponent } from './produto.component';
 import { SecurityModule } from '@demoiselle/security';
 import { NotificationService} from '../shared/notification.service';
@@ -15,9 +13,8 @@ import {ProdutoService} from './produto.service';
 
 @NgModule({
     imports: [
-        SecurityModule,
+        SharedModule, SecurityModule,
         CommonModule, FormsModule,
-        Ng2BootstrapModule,
         AgGridModule.withNg2ComponentSupport()
     ],
     declarations: [

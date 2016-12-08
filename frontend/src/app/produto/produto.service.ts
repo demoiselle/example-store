@@ -3,7 +3,7 @@
 import { Injectable } from '@angular/core';
 import { Http} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
-import { IProduto, Produto } from './produto.model';
+import { Produto } from './produto.model';
 
 @Injectable()
 export class ProdutoService {
@@ -24,16 +24,12 @@ export class ProdutoService {
                           {
                             id: 1,
                             name: 'Demoiselle1',
-                            description: 'Produto 1111111111111111111111',
-                            department: 'depto 21',
-                            role: 'Admin'
+                            description: 'Produto 1111111111111111111111'
                           },
                           {
                             id: 2,
                             name: 'Demoiselle 2',
-                            description: 'Produto com data 12/12/1081',
-                            department: 'depto 22',
-                            role: 'Admin'
+                            description: 'Produto com data 12/12/1081'
                           }
                         ]);
                     });

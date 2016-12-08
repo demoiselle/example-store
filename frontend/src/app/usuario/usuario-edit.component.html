@@ -25,7 +25,7 @@
     <div class="form-group row">
         <label class="col-sm-2 col-form-label" for="formName">Nome:</label>
         <div class="col-sm-10">
-            <input id="formName" type="text" class="form-control" size="100" [(ngModel)]="usuario.nome" name="name" />
+            <input id="formName" type="text" class="form-control" size="100" [(ngModel)]="usuario.name" name="name" />
         </div>
     </div>
 
@@ -33,7 +33,7 @@
     <div class="form-group row">
         <label class="col-sm-2 col-form-label" for="formPerfil">Perfil:</label>
         <div class="col-sm-10">
-            <input id="formPerfil" name="description" class="form-control" maxlength="100" [(ngModel)]="usuario.perfil" />
+            <input id="formPerfil" name="role" class="form-control" maxlength="100" [(ngModel)]="usuario.role" />
         </div>
     </div>
 
@@ -61,7 +61,7 @@
     <div class="form-group row">
         <label class="col-sm-2 col-form-label" for="formSenha">Senha:</label>
         <div class="col-sm-10">
-            <input id="formSenha" type="password" class="form-control" size="100" [(ngModel)]="usuario.senha" name="senha" />
+            <input id="formSenha" type="password" class="form-control" size="100" [(ngModel)]="usuario.password" name="password" />
         </div>
     </div>
 
