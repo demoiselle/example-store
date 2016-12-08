@@ -4,14 +4,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { NotificationService} from '../shared';
 import {CategoriaService} from './categoria.service';
-import {Categoria, ICategoria} from './categoria.model';
+import {Categoria} from './categoria.model';
 
 @Component({
   selector: 'dml-categoria-edit',
   templateUrl: './categoria-edit.component.html'
 })
 export class CategoriaEditComponent implements OnInit {
-  categoria: ICategoria;
+  categoria: Categoria;
   id: number;
   categoriaLoaded: boolean = false;
   private routeSubscribe: any;

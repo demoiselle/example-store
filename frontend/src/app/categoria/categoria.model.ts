@@ -1,12 +1,11 @@
-export interface ICategoria {
+
+export class Categoria{
   id: number;
   description: string;
-}
 
-export class Categoria implements ICategoria {
   constructor(
-    public id?: number,
-    public description?: string
+    id?: number,
+    description?: string
   ) {  }
 
 }

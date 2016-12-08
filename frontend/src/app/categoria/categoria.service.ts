@@ -3,7 +3,7 @@
 import { Injectable } from '@angular/core';
 import { Http} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
-import { ICategoria, Categoria } from './categoria.model';
+import { Categoria } from './categoria.model';
 
 @Injectable()
 export class CategoriaService {
@@ -24,21 +24,21 @@ export class CategoriaService {
   get(id: number) {
     return this.http.get('~product/categories/' + id)
       .map(
-      res => <Usuario>res.json()
+      res => <Categoria>res.json()
 
       );
   }
 
-  create(usuario: Usuario) {
-    return this.http.post('~product/categories', usuario);
+  create(categoria: Categoria) {
+    return this.http.post('~product/categories', categoria);
 
 
   }
-  update(usuario: Usuario) {
-    return this.http.put('~product/categories/' + usuario.id, usuario);
+  update(categoria: Categoria) {
+    return this.http.put('~product/categories/' + categoria.id, categoria);
   }
 
-  delete(usuario: Usuario) {
-    return this.http.delete('~product/categories/' + usuario.id);
+  delete(categoria: Categoria) {
+    return this.http.delete('~product/categories/' + categoria.id);
   }
 }

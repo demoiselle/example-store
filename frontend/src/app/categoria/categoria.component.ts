@@ -6,7 +6,7 @@ import {ModalDirective} from 'ng2-bootstrap/ng2-bootstrap';
 
 import { NotificationService} from '../shared';
 import {CategoriaService} from './categoria.service';
-import {Categoria, ICategoria} from './categoria.model';
+import {Categoria} from './categoria.model';
 
 @Component({
   selector: 'dml-categoria',
@@ -14,8 +14,8 @@ import {Categoria, ICategoria} from './categoria.model';
   
 })
 export class CategoriaComponent implements OnInit {
-  categoria: ICategoria;
-  categorias: ICategoria[];
+  categoria: Categoria;
+  categorias: Categoria[];
 
   @ViewChild('staticModal') public staticModal:ModalDirective;
 
