@@ -14,6 +14,7 @@ import javax.script.SimpleBindings;
 
 import org.demoiselle.jee.core.api.security.SecurityContext;
 import org.demoiselle.jee.core.api.security.Token;
+import org.demoiselle.jee.multitenancy.hibernate.business.TenantManager;
 import org.demoiselle.jee.persistence.crud.AbstractBusiness;
 import org.demoiselle.jee.script.DynamicManager;
 import org.demoiselle.jee7.example.store.sale.dao.ItensDAO;
@@ -55,6 +56,9 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
 	 @Inject 
 	 private ItensDAO itensDAO;
 	 
+	 @Inject
+	 private TenantManager tenantManager;
+	 
 	 /**
 	  * Sale preview.
 	  * 
@@ -93,8 +97,7 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
 			
 			posProcessingSale(newSale);
 		}
-		 
-		
+		 		
 		return  temp_cart;			 			
 	 }
 	 
@@ -182,7 +185,7 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
         		
         		String key = null;
         		if(!securityContext.isLoggedIn()){
-        			key= doLogin("string","string");
+        			key= doLogin("admin-loja1@uol.com","serpro");
         		}else
         		     key = token.getKey();
         		
@@ -201,19 +204,22 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
 	  * 
 	  */
 	 public String doLogin(String username,String password) {	 		 		 					 		 
-		Client client = Client.create();
 		Gson gson = new Gson();
+		
 		Credentials login = new Credentials();
 		login.setUsername(username);
 		login.setPassword(password);
+			
+		String baseuri     = "http://localhost:8080/users/api/v1";
+		String tennantName = "/" + tenantManager.getTenantName();
+		String service     = "/auth/login";
 		
-		
-		String baseuri= "http://localhost:8080/products/api/v1";
-		WebResource webResource = client.resource(baseuri + "/auth/login");												
+		Client client = Client.create();
+		WebResource webResource = client.resource(baseuri + tennantName + service );												
 		ClientResponse response = (ClientResponse) webResource.accept("application/json").type("application/json").post(ClientResponse.class,gson.toJson(login));
 
 		if (response.getStatus() != 200) {
-			   throw new RuntimeException("Cannot access the service " + baseuri + ". HTTP error code : " + response.getStatus());
+			throw new RuntimeException("Cannot access the service " + baseuri + tennantName + service + " user:" + username + "  HTTP error code : " + response.getStatus());
 		}
 		
 		String resposta = response.getEntity(String.class);		
@@ -231,19 +237,21 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
 	  */
 	 public Product getProduct(Long id) {	 	 
 		Client client = Client.create();
+			
+		String baseuri     = "http://localhost:8080/products/api/v1";
+		String tennantName = "/" + tenantManager.getTenantName();
+		String service     = "/products/" + id;
 		
-		String baseuri= "http://localhost:8080/products/api/v1/";
-		WebResource webResource = client.resource(baseuri + "products/" + id);								
+		WebResource webResource = client.resource(baseuri + tennantName + service );		
 		ClientResponse response = (ClientResponse) webResource.accept("application/json").get(ClientResponse.class);
-
+		
 		if (response.getStatus() != 200) {
-		   throw new RuntimeException("Cannot access the service " + baseuri + ". HTTP error code : " + response.getStatus());
+			throw new RuntimeException("Cannot access the service " + baseuri + tennantName + service + ". HTTP error code : " + response.getStatus());
 		}
 
 		Product produto = response.getEntity(Product.class);		
 		
-		return produto;
-					 			
+		return produto;					 			
 	 }
 	 
 	 /**
@@ -257,24 +265,25 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
 			Gson gson = new Gson();
 			String Authorization =  "token " + token;
 		    
-			String baseuri= "http://localhost:8080/products/api/v1/";
-			WebResource webResource = client.resource(baseuri + "products/");							
-          
+			String baseuri     = "http://localhost:8080/products/api/v1";
+			String tennantName = "/" + tenantManager.getTenantName();
+			String service     = "/products/";
+						
+			WebResource webResource = client.resource(baseuri + tennantName + service );		
             System.out.println("Call " + baseuri );
 			System.out.println("Authorization: " + Authorization);
 			System.out.println("PUT :" +  gson.toJson(p));
 	        
 			ClientResponse response = (ClientResponse) webResource.accept("application/json").header("Authorization", Authorization).type("application/json").put(ClientResponse.class,gson.toJson(p));
-
+			
 			if (response.getStatus() != 200) {
-				   throw new RuntimeException("Cannot access the service " + baseuri + ". HTTP error code : " + response.getStatus());
-				}			
+				throw new RuntimeException("Cannot access the service " + baseuri + tennantName + service + ". HTTP error code : " + response.getStatus());
+			}						
 				
 		  } catch (Exception e) {
 			e.printStackTrace();
 
-		  }
-			 			
+		  }			 			
 	 }
 	 
 	 /**

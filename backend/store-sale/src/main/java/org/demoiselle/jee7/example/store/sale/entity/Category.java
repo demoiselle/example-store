@@ -5,38 +5,10 @@
  */
 package org.demoiselle.jee7.example.store.sale.entity;
 
-import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
+public class Category {
 
-@Entity
-@Cacheable
-@Table(name = "category")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c"),
-    @NamedQuery(name = "Category.findById", query = "SELECT c FROM Category c WHERE c.id = :id"),
-    @NamedQuery(name = "Category.findByDescricao", query = "SELECT c FROM Category c WHERE c.descricao = :descricao")})
-public class Category implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(nullable = false)
     private Integer id;
-    @Size(max = 45)
-    @Column(length = 45)
-    private String descricao;
+    private String description;
 
     public Category() {
     }
@@ -49,19 +21,20 @@ public class Category implements Serializable {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
-    public String getDescricao() {
-        return descricao;
-    }
+    public String getDescription() {
+		return description;
+	}
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    @Override
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
