@@ -2,17 +2,17 @@
 import { Item } from '../shopping/item.model'
 
 export class CartItem extends Item {
-    amount: number;
+    quantity: number;
     constructor(item?: Item) {
         super();
         this.id = item && item.id;
-        this.descricao = item && item.descricao;
-        this.valor = item && item.valor;
-        this.nome = item && item.nome;
+        this.description = item && item.description;
+        this.cost = item && item.cost;
+        this.name = item && item.name;
         this.image_src = item && item.image_src;
         this.averageReviewRate = item && item.averageReviewRate;
         
-        this.amount = 1;
+        this.quantity = 1;
     }
 
 }

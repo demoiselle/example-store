@@ -4,13 +4,13 @@
             <div class="col-md-4"><img src={{item.image_src}}/></div>
             <div class="col-md-4">
                 <br/>
-                <b >{{item.nome}}</b><br/>
-                {{item.descricao}}
+                <b >{{item.name}}</b><br/>
+                {{item.description}}
             </div>
      </div>
             <div class="col-md-4">
                 <br/>
-                {{item.valor | currency:'BRL':true:'1.2-2'}} <br/>
+                {{item.cost | currency:'BRL':true:'1.2-2'}} <br/>
                 <button class="btn btn-primary" (click)="addToCart()">
                     <i class="fa fa-lg fa-cart-plus" aria-hidden="true"></i>Comprar
                 </button>

@@ -4,18 +4,18 @@
             <div class="col-md-2"><img src={{item.image_src}}/></div>
             <div class="col-md-3">
                 <br/>
-                <b >{{item.nome}}</b><br/>
-                {{item.descricao}}
+                <b >{{item.name}}</b><br/>
+                {{item.description}}
             </div>
      </div>
             <div class="col-md-1">
                 <br/>
-                {{item.valor | currency:'BRL':true:'1.2-2'}} <br/>
+                {{item.cost | currency:'BRL':true:'1.2-2'}} <br/>
                 
             </div>
             <div class="col-md-2">
                 <br/>
-                <amount-spinner [(amount)]="item.amount" (amountChange)="onAmountChange(amount)"></amount-spinner>
+                <amount-spinner [(amount)]="item.quantity" (amountChange)="onAmountChange(quantity)"></amount-spinner>
             </div>
             <div class="col-md-1">
                 <br/>
@@ -25,7 +25,7 @@
             </div>
             <div class="col-md-1">
                 <br/>
-                {{item.valor * item.amount | currency:'BRL':true:'1.2-2'}} <br/>
+                {{item.cost * item.quantity | currency:'BRL':true:'1.2-2'}} <br/>
                 
             </div>
         </div>

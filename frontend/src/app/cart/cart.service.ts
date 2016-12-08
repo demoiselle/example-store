@@ -13,7 +13,7 @@ export class CartService {
         let itemFound = false;
         for (let i of cart) {
             if (i.id == item.id){
-                i.amount++;
+                i.quantity++;
                 itemFound = true;
                 break;
             }
@@ -56,7 +56,7 @@ export class CartService {
     getTotalPrice(){
         let cart = this._read();
         let totalPrice = cart.reduce((sum, cartItem)=>{
-            return sum += (cartItem.valor * cartItem.amount), sum;
+            return sum += (cartItem.cost * cartItem.quantity), sum;
         },0);
         // if(this.discount){
         //     totalPrice -= totalPrice=this.discount.amount;
