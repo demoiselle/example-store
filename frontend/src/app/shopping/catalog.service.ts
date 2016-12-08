@@ -6,7 +6,8 @@ import {Observable} from 'rxjs/Rx';
 @Injectable()
 export class CatalogService {
 
-    apiUrl = process.env.CONF.endpoints.product;
+    //apiUrl = process.env.CONF.endpoints.product;
+    apiUrl = '~product/'
 
     private catalog: Item[];
     constructor(private http: Http) {
@@ -14,7 +15,7 @@ export class CatalogService {
     }
 
     list(rangeStart: number, rangeEnd: number) {
-        return this.http.get(this.apiUrl + 'product')
+        return this.http.get(this.apiUrl + 'products')
             .map(
                 res => {
                     let content = res.json().content;
@@ -71,7 +72,7 @@ export class CatalogService {
     }
     get(id: number) {
         var item: Item = null;
-        return this.http.get(this.apiUrl + 'product/' + id)
+        return this.http.get(this.apiUrl + 'products/' + id)
             .map(
                 res => res.json()
             )
@@ -86,7 +87,7 @@ export class CatalogService {
                         image_src: 'http://img5.cliparto.com/pic/s/204746/5102982-monochrome-round-shopping-bag-icon.jpg'
 
                     }
-                ]);
+                );
             });
     }
 }

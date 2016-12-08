@@ -5,7 +5,7 @@ import {ModalDirective} from 'ng2-bootstrap/ng2-bootstrap';
 
 import { NotificationService} from '../shared/notification.service';
 import {ProdutoService} from './produto.service';
-import {Produto, IProduto} from './produto.model';
+import {Produto} from './produto.model';
 
 @Component({
   selector: 'dml-produto',
@@ -15,9 +15,9 @@ import {Produto, IProduto} from './produto.model';
   ]
 })
 export class ProdutoComponent implements OnInit {
-  produto: IProduto;
-  produtos: IProduto[];
-  selectedProduto: IProduto;
+  produto: Produto;
+  produtos: Produto[];
+  selectedProduto: Produto;
   newProduto: boolean;
 
   @ViewChild('staticModal') public staticModal:ModalDirective;
@@ -123,7 +123,7 @@ export class ProdutoComponent implements OnInit {
 
   }
 
-  cloneProduto(c: IProduto): IProduto {
+  cloneProduto(c: Produto): Produto {
         let car = new Produto();
         for(let prop in c) {
             car[prop] = c[prop];

@@ -1,22 +1,29 @@
-export interface IUsuario {
+// export interface IUsuario {
+//   id: number;
+//   name: string;
+//   role: string;
+//   email: string;
+//   cpf: string;
+//   fone: string;
+//   password: string;
+// }
+
+export class Usuario{
   id: number;
-  nome: string;
-  perfil: string;
+  name: string;
+  role: string;
   email: string;
   cpf: string;
   fone: string;
-  senha: string;
-}
-
-export class Usuario implements IUsuario {
+  password: string;
   constructor(
-    public id?: number,
-    public nome?: string,
-    public perfil?: string,
-    public email?: string,
-    public cpf?: string,
-    public fone?: string,
-    public senha?: string
+    id?: number,
+    name?: string,
+    role?: string,
+    email?: string,
+    cpf?: string,
+    fone?: string,
+    password?: string
 
   ) {  }
 

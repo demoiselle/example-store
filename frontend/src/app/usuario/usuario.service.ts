@@ -3,7 +3,7 @@
 import { Injectable } from '@angular/core';
 import { Http} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
-import { IUsuario, Usuario } from './usuario.model';
+import { Usuario } from './usuario.model';
 
 @Injectable()
 export class UsuarioService {
@@ -14,7 +14,8 @@ export class UsuarioService {
   list(currentPage: number, itemsPerPage: number) {
 
     let start = itemsPerPage * (currentPage - 1);
-    return this.http.get('~usuario/usuario/pagination/' + start + '/' + itemsPerPage + '/id/ASC')
+    //return this.http.get('~usuario/usuario/pagination/' + start + '/' + itemsPerPage + '/id/ASC')
+    return this.http.get('~user/users')
       .map(
       res => res.json()
 
@@ -25,13 +26,13 @@ export class UsuarioService {
           {
             id: 1,
             name: 'user 1 catch',
-            perfil: 'Produto 1111111111111111111111'
+            role: 'Produto 1111111111111111111111'
 
           },
           {
             id: 2,
             name: 'user 2 catch',
-            perfil: 'Produto com data 12/12/1081'
+            role: 'Produto com data 12/12/1081'
 
           }
         ]);
@@ -39,7 +40,7 @@ export class UsuarioService {
   }
 
   get(id: number) {
-    return this.http.get('~usuario/usuario/' + id)
+    return this.http.get('~user/users/' + id)
       .map(
       res => <Usuario>res.json()
 
@@ -47,18 +48,18 @@ export class UsuarioService {
   }
 
   create(usuario: Usuario) {
-    return this.http.post('~usuario/usuario', usuario);
+    return this.http.post('~user/users', usuario);
   }
 
   createOnTenant(usuario: Usuario, tenant: string) {
-    return this.http.post(process.env.CONF.multitenancy.apiUrl+tenant+'/usuario', usuario);
+    return this.http.post(process.env.CONF.multitenancy.apiUrl+tenant+'/users', usuario);
   }
   
   update(usuario: Usuario) {
-    return this.http.put('~usuario/usuario/' + usuario.id, usuario);
+    return this.http.put('~user/users/' + usuario.id, usuario);
   }
 
   delete(usuario: Usuario) {
-    return this.http.delete('~usuario/usuario/' + usuario.id);
+    return this.http.delete('~user/users/' + usuario.id);
   }
 }

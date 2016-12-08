@@ -1,14 +1,17 @@
-export interface ITenant {
+// export interface ITenant {
+//   id: number;
+//   name: string;
+//   scriptCreateUser: string;
+// }
+
+export class Tenant{
   id: number;
   name: string;
   scriptCreateUser: string;
-}
-
-export class Tenant implements ITenant {
   constructor(
-    public id?: number,
-    public name?: string,
-    public scriptCreateUser?: string
+    id?: number,
+    name?: string,
+    scriptCreateUser?: string
     
   ) {  }
 

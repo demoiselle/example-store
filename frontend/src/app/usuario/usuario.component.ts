@@ -6,7 +6,7 @@ import {ModalDirective} from 'ng2-bootstrap/ng2-bootstrap';
 
 import { NotificationService} from '../shared';
 import {UsuarioService} from './usuario.service';
-import {Usuario, IUsuario} from './usuario.model';
+import {Usuario} from './usuario.model';
 
 @Component({
   selector: 'dml-usuario',
@@ -15,8 +15,8 @@ import {Usuario, IUsuario} from './usuario.model';
   
 })
 export class UsuarioComponent implements OnInit {
-  usuario: IUsuario;
-  usuarios: IUsuario[];
+  usuario: Usuario;
+  usuarios: Usuario[];
 
   @ViewChild('staticModal') public staticModal:ModalDirective;
 
@@ -57,7 +57,7 @@ export class UsuarioComponent implements OnInit {
     this.service.list(this.currentPage, this.itemsPerPage).subscribe(
        result => {
 
-         this.usuarios = result.content;
+         this.usuarios = result;
          
        },
        error => {
@@ -83,7 +83,7 @@ export class UsuarioComponent implements OnInit {
 
   }
 
-  cloneUsuario(c: IUsuario): IUsuario {
+  cloneUsuario(c: Usuario): Usuario {
         let car = new Usuario();
         for(let prop in c) {
             car[prop] = c[prop];

@@ -4,14 +4,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { NotificationService} from '../shared';
 import {UsuarioService} from './usuario.service';
-import {Usuario, IUsuario} from './usuario.model';
+import {Usuario} from './usuario.model';
 
 @Component({
   selector: 'dml-usuario-edit',
   templateUrl: './usuario-edit.component.html'
 })
 export class UsuarioEditComponent implements OnInit {
-  usuario: IUsuario;
+  usuario: Usuario;
   id: number;
   usuarioLoaded: boolean = false;
   private routeSubscribe: any;

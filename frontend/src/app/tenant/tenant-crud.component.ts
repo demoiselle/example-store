@@ -5,7 +5,7 @@ import {ModalDirective} from 'ng2-bootstrap/ng2-bootstrap';
 
 import { NotificationService} from '../shared/notification.service';
 import {TenantService} from './tenant.service';
-import {Tenant, ITenant} from './tenant.model';
+import {Tenant} from './tenant.model';
 
 @Component({
   selector: 'dml-tenant',
@@ -13,11 +13,11 @@ import {Tenant, ITenant} from './tenant.model';
   styleUrls: ['./tenant-crud.component.scss']
 })
 export class TenantCrudComponent implements OnInit {
-  tenant: ITenant;
-  tenants: ITenant[];
-  selectedTenant: ITenant;
+  tenant: Tenant;
+  tenants: Tenant[];
+  selectedTenant: Tenant;
   isNewTenant: boolean;
-  newTenant:ITenant;
+  newTenant:Tenant;
   viewOnly: boolean;
 
   scriptExample: string = 'usuario.setNome(tenant.getName() + " - " + usuario.getNome());';
@@ -122,7 +122,7 @@ export class TenantCrudComponent implements OnInit {
   }
 
 
-  cloneTenant(c: ITenant): ITenant {
+  cloneTenant(c: Tenant): Tenant {
         let car = new Tenant();
         for(let prop in c) {
             car[prop] = c[prop];

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TenantService } from '../tenant/tenant.service';
+import { Tenant } from '../tenant/tenant.model';
 import { NotificationService } from '../shared/notification.service';
 import { Usuario } from '../usuario/usuario.model';
 import { UsuarioService } from '../usuario/usuario.service';
@@ -24,8 +25,10 @@ export class HomeComponent implements OnInit {
   }
 
   addTenant() {
-    console.log(this.tenantName);
-    this.service.create({name: this.tenantName}).subscribe(
+    
+    let tenant = new Tenant();
+    tenant.name = this.tenantName;
+    this.service.create(tenant).subscribe(
       () => {
         this.usuarioService.createOnTenant(new Usuario(
             undefined,
@@ -56,7 +59,9 @@ export class HomeComponent implements OnInit {
   }
 
   rollbackTenant() {
-    this.service.delete({name: this.tenantName}).subscribe(
+    let tenant = new Tenant();
+    tenant.name = this.tenantName;
+    this.service.delete(tenant).subscribe(
       () => { },
       (error) => { }
     );

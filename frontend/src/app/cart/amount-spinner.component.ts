@@ -28,7 +28,7 @@ export class AmountSpinnerComponent {
   }
   
   set amount(val) {
-    if(!isNaN(parseInt(val)) && isFinite(val)) {
+    if(!isNaN(val) && isFinite(val)) {
       this.amountValue = val;
       this.amountChange.emit(this.amountValue);
     }
