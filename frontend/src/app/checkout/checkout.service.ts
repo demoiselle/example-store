@@ -5,7 +5,6 @@ import {Http} from '@angular/http';
 
 @Injectable()
 export class CheckoutService {
-    apiUrl: string = process.env.CONF.endpoints.sale;
 
     constructor(private http: Http){
 
@@ -13,14 +12,14 @@ export class CheckoutService {
 
     salePreview(cartItems: CartItem[], cupons: string[]){
         let data = this.generateSaleData(cartItems, cupons);
-        return this.http.post(this.apiUrl + 'sale/salePreview', data).map(
+        return this.http.post('~sale/sales/salePreview', data).map(
             (res) => res.json()
         );
     }
 
     saleComplete(cartItems: CartItem[], cupons: string[]){
         let data = this.generateSaleData(cartItems, cupons);
-        return this.http.post(this.apiUrl + 'sale/saleComplete', data).map(
+        return this.http.post('~sale/sales/saleComplete', data).map(
             (res) => res.json()
         );
     }

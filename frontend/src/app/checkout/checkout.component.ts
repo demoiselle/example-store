@@ -62,7 +62,11 @@ export class CheckoutComponent implements OnInit {
         // call api saleComplete, use this.validCoupon
 
         let cartItems = this.cartService.getCart();
-        this.checkoutService.saleComplete(cartItems, [this.validCoupon]).subscribe(
+        let couponList = [];
+        if (this.validCoupon) {
+            couponList.push(this.validCoupon);
+        }
+        this.checkoutService.saleComplete(cartItems, couponList).subscribe(
             (res) => {
                 this.processSaleComplete(res);
             },
@@ -93,6 +97,8 @@ export class CheckoutComponent implements OnInit {
     processSaleComplete(res){
         this.cartService.clearCart();
         this.cartItems = null;
+
+        this.notificationService.success('Compra realizada com sucesso! Valor total da compra: ' + res.valorTotal);
     }
     
     
