@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule} from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {SharedModule} from '../shared';
+import { SharedModule } from '../shared';
 import { ProdutoComponent } from './produto.component';
+import { ProdutoEditComponent } from './produto-edit.component';
 import { SecurityModule } from '@demoiselle/security';
 import { NotificationService} from '../shared/notification.service';
-
-import {AgGridModule} from 'ag-grid-ng2/main';
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 
 import {ProdutoService} from './produto.service';
 
@@ -15,10 +15,14 @@ import {ProdutoService} from './produto.service';
     imports: [
         SharedModule, SecurityModule,
         CommonModule, FormsModule,
-        AgGridModule.withNg2ComponentSupport()
+        ConfirmationPopoverModule.forRoot({
+            confirmText: 'Sim',
+            cancelText: 'Não',
+            appendToBody: true
+        })
     ],
     declarations: [
-        ProdutoComponent
+        ProdutoComponent, ProdutoEditComponent
     ],
     providers: [ProdutoService, NotificationService]
 })

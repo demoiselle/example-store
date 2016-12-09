@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { ProdutoComponent } from './produto/produto.component';
+import { ProdutoEditComponent } from './produto/produto-edit.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { UsuarioEditComponent } from './usuario/usuario-edit.component';
 import { CategoriaComponent } from './categoria/categoria.component';
@@ -65,6 +66,26 @@ export const routes: Routes = [
     path: 'categoria/edit',
     canActivate: [AuthGuard],
     component: CategoriaEditComponent 
+  },
+   { 
+    path: 'produto', 
+    data: ['Produto'],
+    canActivate: [AuthGuard],
+    component: ProdutoComponent
+  },
+
+  // edição de produto
+  { 
+    path: 'produto/edit/:id',
+    canActivate: [AuthGuard],
+    component: ProdutoEditComponent 
+  },
+
+  // novo produto
+  { 
+    path: 'produto/edit',
+    canActivate: [AuthGuard],
+    component: ProdutoEditComponent 
   },
   { 
     path: 'tenant', 

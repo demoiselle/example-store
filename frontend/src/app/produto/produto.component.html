@@ -1,99 +1,137 @@
-<div class="content-header">
-  <h2>Produtos
-    
-  </h2>
 
-  <p class="description" [innerHTML]="titleDoc"></p>
+<div class="content-header">
+    <h2>Produtos
+
+    </h2>
+
+    <p class="description" [innerHTML]="titleDoc"></p>
 </div>
 
 <div id="content" class="content-box">
-  <div id="example" class="section">
+    <div id="example" class="section">
 
-    <button (click)="showModalAdd()" class="btn btn-sm btn-success">Adicionar</button>
-    <button (click)="showModalEdit()" [disabled]="!selectedProduto" class="btn btn-sm btn-primary">Editar</button>
-    <button (click)="delete()" [disabled]="!selectedProduto" class="btn btn-sm btn-danger">Remover</button>
+        <button [routerLink]="['/produto','edit']" class="btn btn-sm btn-success">
+        <i class="fa fa-plus" aria-hidden="true"></i>Novo</button>
+        <br/><br/>
 
-    <br/><br/>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th class="col-md-1"><i class="fa" aria-hidden="true"></i>Id</th>
+                    <th class="col-md-4"><i class="fa" aria-hidden="true"></i>Descrição</th>
+                    <th class="col-md-2"><i class="fa" aria-hidden="true"></i>Quant.</th>
+                    <th class="col-md-2"><i class="fa" aria-hidden="true"></i>Valor</th>
 
-<!-- ag grid definitions -->
-    <ag-grid-ng2
-      #agGrid
-      class="ag-material"
-      style="width:100%; height:400px; margin-bottom:20px;"
-      [gridOptions]="gridOptions"
-      [columnDefs]="columnDefs"
-      [rowData]="produtos"
+                    <th class="col-md-1"></th>
+                    <th class="col-md-1"></th>
+                    <th class="col-md-1"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let produto of produtos">
+                    <td>{{produto.id}}</td>
+                    <td>{{produto.description}}</td>
+                    <td>{{produto.quantity}}</td>
+                    <td>{{produto.cost}}</td>
 
-      enableColResize
-      enableSorting
-      rowSelection="single"
-      suppressCellSelection
-      rowHeight="52"
-      (rowSelected)="onRowSelected($event)"
-      
-      (rowDoubleClicked)="onRowDoubleClicked($event)">
+                    <td><button class="btn btn-primary btn-xs" (click)="showModalDetails(produto)">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i>Detalhes</button>
+                    </td>
+                    <td><a class="btn btn-primary btn-xs" [routerLink]="['/produto','edit', produto.id]"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Editar</a></td>
 
-    </ag-grid-ng2>
+                    <td>
+                        <button mwlConfirmationPopover
+                            title="Confirmação"
+                            message="Deseja realmente remover o usuário <b>{{produto.name}}</b>?" 
+                            class="btn btn-danger btn-xs"
+                            placement="left"
+                            (confirm)="delete(produto)">
+                                <i class="fa fa-trash" aria-hidden="true"></i>Remover
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-   
-<!-- modal definitions -->
-<div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
-     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lm">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" aria-label="Close" (click)="staticModal.hide()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">Produto</h4>
-      </div>
-      <div class="modal-body">
-        
+        <pagination *ngIf="totalItems!=0" [maxSize]="5" [rotate]="false" [boundaryLinks]="true" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" class="pagination-sm"
+            previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" (pageChanged)="pageChanged($event)"></pagination>
 
-        <section class="panel panel-default" *ngIf="produto">
-                <form (ngSubmit)="save()">
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label" for="formId">Id:</label>
-                        <div class="col-sm-10">
-                            <input id="formId" type="text" size="100" class="form-control" [(ngModel)]="produto.id" name="id" disabled="true"/>
-                        </div>
-                        
+
+        <!-- modal definitions -->
+        <div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" aria-label="Close" (click)="staticModal.hide()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">Produto</h4>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label" for="formName">Nome:</label>
-                        <div class="col-sm-10">
-                            <input id="formName" type="text" class="form-control" size="100" [(ngModel)]="produto.name" name="name" />
-                        </div>
-                    </div>
-                    
-                                        
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label" for="formDescription">Descrição:</label>
-                        <div class="col-sm-10">
-                            <input id="formDescription" name="description" class="form-control" maxlength="100" [(ngModel)]="produto.description" />
-                        </div>
-                    </div>
-                    
-                    <input class="btn btn-sm btn-success" size="40" type="submit" value="Salvar" style="width:68px;height:36px" />
-                    <input class="btn btn-sm btn-danger" size="40" (click)="delete()" value="Remover" style="width:68px;height:36px" />
+                    <div class="modal-body">
 
-                    <input class="btn btn-sm btn-danger" size="40" (click)="staticModal.hide()" value="Cancelar" style="width:68px;height:36px" />
-                </form>
-            </section>
 
-      </div>
+                        <section class="panel panel-default" *ngIf="produto">
+                            <form>
+                                <fieldset [disabled]="true">
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label" for="formId">Id:</label>
+                                    <div class="col-sm-10">
+                                        <input id="formId" type="text" size="100" class="form-control" [(ngModel)]="produto.id" name="id" disabled="true" />
+                                    </div>
+
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label" for="formDescription">Descrição:</label>
+                                    <div class="col-sm-10">
+                                        <input id="formDescription" type="text" class="form-control" size="100" [(ngModel)]="produto.description" name="description" />
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label" for="formCost">Valor:</label>
+                                    <div class="col-sm-10">
+                                        <input id="formCost" name="cost" class="form-control" maxlength="100" [(ngModel)]="produto.cost" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label" for="formQuantity">Quantidade:</label>
+                                    <div class="col-sm-10">
+                                        <input id="formQuantity" type="text" class="form-control" size="100" [(ngModel)]="produto.quantity" name="quantity" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label" for="formCategory">Categoria:</label>
+                                    <div class="col-sm-10">
+                                        <input id="formCategory" type="text" class="form-control" size="100" [(ngModel)]="produto.category.description" name="category" />
+                                    </div>
+                                </div>
+
+                                
+                                </fieldset>
+                                <button type="button" class="btn btn-sm btn-danger" (click)="staticModal.hide()">
+                                    <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>Cancelar</button>
+
+                            </form>
+                        </section>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="item">
+            <ng-content></ng-content>
+        </div>
     </div>
-  </div>
-</div>
 
 
-
-
-    <div class="item">
-      <ng-content></ng-content>
-    </div>
-  </div>
-
- 
 
 </div>

@@ -3,123 +3,82 @@ import {AgRendererComponent} from 'ag-grid-ng2/main';
 import {GridOptions,RowNode} from 'ag-grid/main';
 import {ModalDirective} from 'ng2-bootstrap/ng2-bootstrap';
 
-import { NotificationService} from '../shared/notification.service';
+
+import { NotificationService} from '../shared';
 import {ProdutoService} from './produto.service';
 import {Produto} from './produto.model';
 
 @Component({
   selector: 'dml-produto',
-  templateUrl: './produto.component.html',
-  styleUrls: [
-    './produto.component.scss' 
-  ]
+  templateUrl: './produto.component.html'
+    
 })
 export class ProdutoComponent implements OnInit {
   produto: Produto;
   produtos: Produto[];
-  selectedProduto: Produto;
-  newProduto: boolean;
 
   @ViewChild('staticModal') public staticModal:ModalDirective;
 
-  private gridOptions: GridOptions;
-    private showGrid: boolean;
-    private rowCount: string;
-    private columnDefs: any[];
+  public itemsPerPage: number = 10;
+  public totalItems: number = 0;
+  public currentPage: number = 1;
+  
   
   constructor(private service: ProdutoService, private notificationService: NotificationService) {
-    this.gridOptions = <GridOptions>{};
-    this.createColumnDefs();
-    this.showGrid = true;``
-    
-
   }
 
-  createColumnDefs()  {
-     this.columnDefs =[ 
-       { headerName: "Id", field: "id", width:100, checkboxSelection: true},
-      { headerName: "Nome", field: "name", width:200},
-     { headerName: "Descrição", field: "description", width:200},
-     { headerName: "Department", field: "department", width:200 },
-     { headerName: "Role", field: "role", width:200 }
-    ]
-
-  }
-
+ 
   ngOnInit() {
-    this.notificationService.info('Módulo produto iniciado!!!');
-
-    this.service.list().subscribe(
-       produtos => {
-         console.log('produtos...');
-         console.log(produtos);
-         this.produtos = produtos
+    this.service.list(1, 1).subscribe( // get total count by fetching only one item 
+       result => {
+         this.totalItems = result.total;
+         this.list();
        },
        error => {
-         this.produtos = error;
-         //this.notificationService.error('Não foi possível carregar a lista de produtos!');
+         this.notificationService.error('Não foi possível carregar a lista de produtos!');
        }
      );
   }
 
-  showModalAdd() {
-    this.newProduto = true;
-    this.produto = new Produto();
-    this.staticModal.show();
-  }
-  showModalEdit() {
-    this.newProduto = false;
+  showModalDetails(produto: Produto) {
+    this.produto = produto;
     this.staticModal.show();
   }
 
-  onRowSelected($event) {
-    if($event.node.selected) {
-      //this.produto = <Produto> $event.node.data;
-      this.produto = this.cloneProduto($event.node.data);
-      this.selectedProduto = $event.node.data;
-
-    } else {
-      if (this.gridOptions.api.getSelectedRows().length == 0) {
-        this.produto = null;
-        this.selectedProduto = null;
-      }
-    }
-    
+  pageChanged(event: any): void {
+        this.currentPage = event.page;
+        this.list();
   }
+  
+  
 
-  onRowDoubleClicked($event) {
-    this.produto = this.cloneProduto($event.data);
-     this.showModalEdit();
-  }
+  list() {
+    this.service.list(this.currentPage, this.itemsPerPage).subscribe(
+       result => {
 
-
-  refreshGrid(){
-    this.gridOptions.api.setRowData(this.gridOptions.rowData);
+         this.produtos = result;
+         
+       },
+       error => {
+         this.notificationService.error('Não foi possível carregar a lista de produtos!');
+       }
+     );
   }
  
-  save(){
-    if(this.newProduto)
-            this.produtos.push(this.produto);
-    else
-            this.produtos[this.findSelectedProdutoIndex()] = this.produto;
+  
+  delete(produto: Produto) {
+      this.service.delete(produto).subscribe(
+          () => {
+            this.produto = null;
+            this.staticModal.hide();
+            this.list();
+          },
+          error => {
+            this.notificationService.error('Não foi possível remover o produto!');
+          }
+        );
 
       
-    this.produto = null;
-    this.selectedProduto = null;
-
-    this.staticModal.hide();
-    this.refreshGrid();
-  }
-
-
-  delete() {
-    // this.service.remove(this.produto);
-      this.produtos.splice(this.findSelectedProdutoIndex(), 1);
-      this.produto = null;
-      this.selectedProduto = null;
-
-      this.staticModal.hide();
-      this.refreshGrid();
 
   }
 
@@ -129,10 +88,6 @@ export class ProdutoComponent implements OnInit {
             car[prop] = c[prop];
         }
         return car;
-    }
-    
-    findSelectedProdutoIndex(): number {
-        return this.produtos.indexOf(this.selectedProduto);
     }
 
 }

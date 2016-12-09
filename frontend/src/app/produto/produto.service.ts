@@ -10,28 +10,30 @@ export class ProdutoService {
   
     constructor(private http: Http) {
 
-    }
-    list () {
+  }
+  list(currentPage: number, itemsPerPage: number) {
 
-        return this.http.get('~livraria/api/user')
-                    .map(
-                      res => <Produto[]> res.json()
-                      
-                    )
-                    .catch( function (error){
+    let start = itemsPerPage * (currentPage - 1);
+    return this.http.get('~product/products').map(
+        res => res.json()
+      );
+  }
 
-                        return Observable.throw(<Produto[]>[
-                          {
-                            id: 1,
-                            name: 'Demoiselle1',
-                            description: 'Produto 1111111111111111111111'
-                          },
-                          {
-                            id: 2,
-                            name: 'Demoiselle 2',
-                            description: 'Produto com data 12/12/1081'
-                          }
-                        ]);
-                    });
-    }
+  get(id: number) {
+    return this.http.get('~product/products/' + id).map(
+        res => <Produto>res.json()
+      );
+  }
+
+  create(produto: Produto) {
+    return this.http.post('~product/products', produto);
+  }
+  
+  update(produto: Produto) {
+    return this.http.put('~product/products/' + produto.id, produto);
+  }
+
+  delete(produto: Produto) {
+    return this.http.delete('~product/products/' + produto.id);
+  }
 }
