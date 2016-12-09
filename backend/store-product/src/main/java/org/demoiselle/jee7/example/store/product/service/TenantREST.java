@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -37,11 +38,19 @@ public class TenantREST {
 	}
 
 	@DELETE
-	@Path("{id}")
+	@Path("{name}")
 	@Cors
-	public Response deleteTenant(@PathParam("id") Long id) throws Exception {
+	public Response deleteTenant(@PathParam("name") String name) throws Exception {
 		try {
-			tenantManager.removeTenant(id);
+			// Load tenant
+			Tenant tenant = tenantManager.find(name);
+
+			if (tenant == null) {
+				throw new NotFoundException();
+			}
+
+			tenantManager.removeTenant(tenant);
+
 			return Response.ok().build();
 		} catch (final Exception e) {
 			logger.log(Level.SEVERE, "Error trying to DELETE Tenant", e);
