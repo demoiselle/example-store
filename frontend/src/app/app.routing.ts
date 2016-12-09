@@ -43,7 +43,7 @@ export const routes: Routes = [
   // novo usuário
   { 
     path: 'usuario/edit',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     component: UsuarioEditComponent 
   },
   { 
@@ -69,7 +69,6 @@ export const routes: Routes = [
   { 
     path: 'tenant', 
     data: ['Tenants'],
-    canActivate: [AuthGuard],
     component: TenantCrudComponent
   },
 
@@ -86,7 +85,8 @@ export const routes: Routes = [
     component: CartComponent
   },
   { 
-    path: 'checkout', 
+    path: 'checkout',
+    canActivate: [AuthGuard],
     component: CheckoutComponent
   },
 

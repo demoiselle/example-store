@@ -95,6 +95,7 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
 				itensDAO.persist(newitem);				
 			}
 			
+			temp_cart.setIdSale(newSale.getId());
 			posProcessingSale(newSale);
 		}
 		 		
@@ -313,5 +314,9 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
         }	        		        	        	        	       
         return cart;
 	 }
+	 
+	
+	 
+	 
 	 
 }

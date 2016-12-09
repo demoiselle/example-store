@@ -1,8 +1,9 @@
-import {Component} from '@angular/core';
-import {CartItem} from "./cartitem.model";
-import {CartService} from "./cart.service";
-import { Router} from '@angular/router';
-import {TenantService} from '../tenant/tenant.service';
+import { Component } from '@angular/core';
+import { CartItem } from "./cartitem.model";
+import { CartService } from "./cart.service";
+import { Router } from '@angular/router';
+import { TenantService } from '../tenant/tenant.service';
+import { LoginService } from '../login/login.service';
 
 @Component({
     selector:'cart',
@@ -12,14 +13,15 @@ import {TenantService} from '../tenant/tenant.service';
 
 
 export class CartComponent {
-    private cartItems: CartItem[] = [];
-    private totalPrice: number = 0;
-    private paymentOutput: string = "";
+    protected cartItems: CartItem[] = [];
+    protected totalPrice: number = 0;
+    protected paymentOutput: string = "";
 
     constructor(
-        private cartService:CartService,
-        private router: Router,
-	    private tenantService: TenantService){
+        protected cartService:CartService,
+        protected router: Router,
+	    protected tenantService: TenantService,
+        protected loginService: LoginService){
             this.cartItems = cartService.getCart();
             this.refreshTotalPrice();
 	        tenantService.tenantChanged.subscribe(
@@ -48,12 +50,13 @@ export class CartComponent {
         this.router.navigate(['/shopping']);
     }
     
-    private refreshTotalPrice(){
+    protected refreshTotalPrice(){
         this.totalPrice = this.cartService.getTotalPrice();
     }
 
     checkout() {
-        this.router.navigate(['/checkout']);
+        //this.router.navigate(['/checkout']);
+        this.loginService.loginIfNot(['/checkout']);
     }
     
 }
