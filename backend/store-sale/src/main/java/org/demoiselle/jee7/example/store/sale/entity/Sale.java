@@ -28,40 +28,38 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 /**
  * Sale.
  * 
  */
 @Entity
-@Table(name = "venda")
+@Table
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Sale.findAll", query = "SELECT v FROM Sale v"),
-    @NamedQuery(name = "Sale.findById", query = "SELECT v FROM Sale v WHERE v.id = :id"),
-    @NamedQuery(name = "Sale.findByDatavenda", query = "SELECT v FROM Sale v WHERE v.datavenda = :datavenda"),
-    @NamedQuery(name = "Sale.findByUsuarioId", query = "SELECT v FROM Sale v WHERE v.usuarioId = :usuarioId")})
+@NamedQueries({ @NamedQuery(name = "Sale.findAll", query = "SELECT v FROM Sale v"),
+		@NamedQuery(name = "Sale.findById", query = "SELECT v FROM Sale v WHERE v.id = :id"),
+		@NamedQuery(name = "Sale.findByDatavenda", query = "SELECT v FROM Sale v WHERE v.datavenda = :datavenda"),
+		@NamedQuery(name = "Sale.findByUsuarioId", query = "SELECT v FROM Sale v WHERE v.usuarioId = :usuarioId") })
 public class Sale implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(nullable = false)
-    private Long id;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date datavenda;
-    @Column(name = "usuario_id")
-    private BigInteger usuarioId;
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(nullable = false)
+	private Long id;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date datavenda;
+	@Column(name = "usuario_id")
+	private BigInteger usuarioId;
 
-    @JsonIgnore
-    @OneToMany(cascade=CascadeType.ALL, mappedBy = "venda", fetch=FetchType.EAGER)
-    //@JoinTable(name="itens",
-    //joinColumns=@JoinColumn(name="venda_id"),
-    //inverseJoinColumns=@JoinColumn(name="id"))
-    private List<Itens> listaItens;
-    
-    public List<Itens> getListaItens() {
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "venda", fetch = FetchType.EAGER)
+	// @JoinTable(name="itens",
+	// joinColumns=@JoinColumn(name="venda_id"),
+	// inverseJoinColumns=@JoinColumn(name="id"))
+	private List<Itens> listaItens;
+
+	public List<Itens> getListaItens() {
 		return listaItens;
 	}
 
@@ -70,58 +68,59 @@ public class Sale implements Serializable {
 	}
 
 	public Sale(Long id) {
-        this.id = id;
-    }
+		this.id = id;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Date getDatavenda() {
-        return datavenda;
-    }
+	public Date getDatavenda() {
+		return datavenda;
+	}
 
-    public void setDatavenda(Date datavenda) {
-        this.datavenda = datavenda;
-    }
+	public void setDatavenda(Date datavenda) {
+		this.datavenda = datavenda;
+	}
 
-    public BigInteger getUsuarioId() {
-        return usuarioId;
-    }
+	public BigInteger getUsuarioId() {
+		return usuarioId;
+	}
 
-    public void setUsuarioId(BigInteger usuarioId) {
-        this.usuarioId = usuarioId;
-    }
+	public void setUsuarioId(BigInteger usuarioId) {
+		this.usuarioId = usuarioId;
+	}
 
-    public Sale(){
-    	
-    }
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+	public Sale() {
 
-    @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof Sale)) {
-            return false;
-        }
-        Sale other = (Sale) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
+	}
 
-    @Override
-    public String toString() {
-        return "org.demoiselle.store.entity.Sale[ id=" + id + " ]";
-    }
-    
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (!(object instanceof Sale)) {
+			return false;
+		}
+		Sale other = (Sale) object;
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "org.demoiselle.store.entity.Sale[ id=" + id + " ]";
+	}
+
 }

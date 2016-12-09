@@ -26,37 +26,34 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Cacheable
-@Table(name = "regras")
+@Table
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Rules.findAll", query = "SELECT i FROM Rules i"),
-    @NamedQuery(name = "Rules.findById", query = "SELECT i FROM Rules i WHERE i.id = :id")
- })
+@NamedQueries({ @NamedQuery(name = "Rules.findAll", query = "SELECT i FROM Rules i"),
+		@NamedQuery(name = "Rules.findById", query = "SELECT i FROM Rules i WHERE i.id = :id") })
 public class Rules implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(nullable = false)
-    private Long id;
-    @Column(name = "sistema_id")
-    private Long    sistemaId;
-    
-    @Column(name = "script")
-    private String  script; 
-    
-    @Column(name = "name")
-    private String  name;
-    
-    @Column(name = "start_date")
-    private Date  startDate;    
-    
-    @Column(name = "stop_date")
-    private Date  stopDate;
-    
-    
-    public Date getStartDate() {
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(nullable = false)
+	private Long id;
+	@Column(name = "sistema_id")
+	private Long sistemaId;
+
+	@Column(name = "script")
+	private String script;
+
+	@Column(name = "name")
+	private String name;
+
+	@Column(name = "start_date")
+	private Date startDate;
+
+	@Column(name = "stop_date")
+	private Date stopDate;
+
+	public Date getStartDate() {
 		return startDate;
 	}
 
@@ -81,21 +78,21 @@ public class Rules implements Serializable {
 	}
 
 	public Rules() {
-    }
+	}
 
-    public Rules(Long id) {
-        this.id = id;
-    }
+	public Rules(Long id) {
+		this.id = id;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Long getSistemaId() {
+	public Long getSistemaId() {
 		return sistemaId;
 	}
 
@@ -112,27 +109,27 @@ public class Rules implements Serializable {
 	}
 
 	@Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof Rules)) {
-            return false;
-        }
-        Rules other = (Rules) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object object) {
+		if (!(object instanceof Rules)) {
+			return false;
+		}
+		Rules other = (Rules) object;
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+			return false;
+		}
+		return true;
+	}
 
-    @Override
-    public String toString() {
-        return "org.demoiselle.store.sale.entity.Rules[ id=" + id + " ]";
-    }
-    
+	@Override
+	public String toString() {
+		return "org.demoiselle.store.sale.entity.Rules[ id=" + id + " ]";
+	}
+
 }
