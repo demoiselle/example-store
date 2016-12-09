@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@demoiselle/security';
-import {NotificationService} from '../shared';
+import { NotificationService } from '../shared';
+import { LoginService } from './login.service';
+import { TenantService } from '../tenant/tenant.service';
 
 @Component({
   selector: 'dml-login',
   templateUrl: './login.component.html'
-
 })
 export class LoginComponent implements OnInit {
   user: any = {
@@ -15,8 +16,15 @@ export class LoginComponent implements OnInit {
 
   };
 
-  constructor(private authService: AuthService, private router: Router, private notificationService: NotificationService) {
-    // Do stuff
+  constructor(protected authService: AuthService, protected router: Router,
+      protected notificationService: NotificationService, protected loginService: LoginService,
+	    protected tenantService: TenantService)
+  {
+      tenantService.tenantChanged.subscribe(
+            (tenant) => {
+                this.tenantChanged();
+            }
+        );
   }
 
   ngOnInit() {
@@ -30,8 +38,7 @@ export class LoginComponent implements OnInit {
       this.authService.login(this.user)
       .subscribe(
         res => {
-          this.router.navigate(['']);
-
+          this.loginService.proceedToRedirect(['']);
         },
         error => {
           if(error.status == 401 || error.status == 406) {
@@ -41,6 +48,10 @@ export class LoginComponent implements OnInit {
           };
         }
       );
+  }
+
+  tenantChanged() {
+    this.authService.logout();
   }
 
 }

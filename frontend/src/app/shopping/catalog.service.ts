@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Item} from './item.model';
 import { Http } from '@angular/http';
 import {Observable} from 'rxjs/Rx';
+import { TenantService } from '../tenant/tenant.service';
 
 @Injectable()
 export class CatalogService {
@@ -10,11 +11,12 @@ export class CatalogService {
     //apiUrl = 'http://10.32.128.43:8080/products/api/v1/xboxlive/';
 
     private catalog: Item[];
-    constructor(private http: Http) {
+    constructor(private http: Http, protected tenantService: TenantService) {
 
     }
 
     list(rangeStart: number, rangeEnd: number) {
+        let tenant = this.tenantService.getSelectedTenant().name;
         return this.http.get(this.apiUrl + 'products')
             .map(
                 res => {
@@ -35,7 +37,7 @@ export class CatalogService {
                 for(let i = rangeStart; i<= rangeEnd; i++){
                     p = new Item();
                     p.id = i;
-                    p.name = 'produto ' + i;
+                    p.name = 'produto ' + i + ' (' + tenant + ')';
                     p.description = 'description prod ' + i;
                     p.cost = 3.2 + i;
                     p.image_src = 'http://lorempixel.com/100/100/technics/?'+ Math.random();

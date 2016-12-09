@@ -24,6 +24,8 @@ import { ShoppingModule } from './shopping';
 import { CartModule } from './cart';
 import { CheckoutModule } from './checkout';
 
+import { LoginService } from './login/login.service';
+
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 
 import {ToastModule, ToastOptions} from 'ng2-toastr/ng2-toastr';
@@ -62,7 +64,7 @@ let toastrOptions: ToastOptions = new ToastOptions({
     TopNavComponent,
     LoginComponent
   ],
-  providers: [{provide: ComponentsHelper, useClass: ComponentsHelper}],
+  providers: [LoginService, {provide: ComponentsHelper, useClass: ComponentsHelper}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

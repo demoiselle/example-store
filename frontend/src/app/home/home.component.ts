@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
             '',
             '',
             this.adminPwd
-        ), this.tenantName).subscribe(
+        ), encodeURI(this.tenantName)).subscribe(
           () => {
             this.tenantName = '';
             this.adminEmail = '';
