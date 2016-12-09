@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {CatalogService} from './catalog.service';
 import {Item} from "./item.model";
 //import {ItemPreviewComponent} from "./item-preview.component";
+import { TenantService } from '../tenant/tenant.service';
 
 
 @Component({
@@ -36,9 +37,15 @@ export class CatalogComponent {
     private lastItemIndex = 30;
     private itemsPerSearch = 10;
 
-    constructor(private catalogService:CatalogService){
+    constructor(private catalogService:CatalogService, protected tenantService: TenantService) {
+        tenantService.tenantChanged.subscribe(
+            (tenant) => {
+                this.initCatalog();
+            }
+        );
     }
-    ngOnInit() {
+
+    initCatalog() {
         this.catalogService.list(1, this.lastItemIndex).subscribe(
             (catalog)=>{
                 this.catalog = catalog;
@@ -47,6 +54,10 @@ export class CatalogComponent {
                 this.catalog = error;
             }
         );
+    }
+
+    ngOnInit() {
+        this.initCatalog();
     }
 
     searchMore(){
