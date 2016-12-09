@@ -14,6 +14,8 @@ public class Cart implements Serializable {
 	private static final long serialVersionUID = -3678488610454757181L;
 	protected List<ItemCart> itens;	
 	
+	private Long idSale;
+	
     private List<String> listaCupons;
 	
 	public Cart(){
@@ -21,6 +23,14 @@ public class Cart implements Serializable {
 		 listaCupons = new ArrayList<String>();
 	}
 		
+	public Long getIdSale() {
+		return idSale;
+	}
+
+	public void setIdSale(Long idSale) {
+		this.idSale = idSale;
+	}
+
 	public List<String> getListaCupons() {
 		return listaCupons;
 	}
