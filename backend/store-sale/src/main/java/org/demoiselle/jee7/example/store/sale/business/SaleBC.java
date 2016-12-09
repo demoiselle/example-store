@@ -81,8 +81,10 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
 		if(temp_cart != null) {
 			Sale newSale = posProcessingCarrinho(temp_cart);
 			newSale.setDatavenda(new Date());
-			newSale.setUsuarioId(BigInteger.valueOf(1L));	
 			
+			if(securityContext.isLoggedIn()){
+				newSale.setUsuarioId( securityContext.getUser().getName() );	
+			}
 			newSale = this.dao.persist(newSale);
 			
 			for(ItemCart item : temp_cart.getItens()){        	
@@ -106,25 +108,24 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
 	  * Validate the cupom
 	  * 
 	  */	
-	 public Rules validateCupom(String cupom) {		
-		try 
-		{ 		    		
-			Rules rule = rulesDAO.findByName(cupom); 			 
- 		
+	 public Rules validateCupom(String cupom) {				 		    		
+		
+		Rules rule = rulesDAO.findByName(cupom); 			 
+		if(rule != null) {					
 			Date data = new Date();
 		    
 		    if(data.before(rule.getStartDate()) || data.after(rule.getStopDate())){
 		    	logger.warning("Cupom \"" + cupom + "\" expired.");
 		    }
 		    else{
-		    	 logger.info("Cupom \"" + cupom + "\" validated.");       	 			 
-		    	 return rule;
-		    }
- 		
-		}catch(NoResultException e){	        			
- 		    	logger.warning("Cupom \"" + cupom + "\" not valid!"); 		    	
-   		}	 	
-		 
+				logger.info("Cupom \"" + cupom + "\" validated.");       	 			 
+				return rule;
+		    }	
+		}
+		else {	        			
+	    	logger.warning("Cupom \"" + cupom + "\" not valid!");    	
+		}
+		 	
 		return null;
 	 }	 
 	 
@@ -186,9 +187,9 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
         		
         		String key = null;
         		if(!securityContext.isLoggedIn()){
-        			key= doLogin("admin-loja1@uol.com","serpro");
+        			key= doLogin("admin-sale@sepro.gov.br","serpro");
         		}else
-        		     key = token.getKey();
+        		    key = token.getKey();
         		
         		putProduct(p,key);
         	}
@@ -282,7 +283,7 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
 			}						
 				
 		  } catch (Exception e) {
-			e.printStackTrace();
+			  e.printStackTrace();
 
 		  }			 			
 	 }
@@ -314,9 +315,5 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
         }	        		        	        	        	       
         return cart;
 	 }
-	 
-	
-	 
-	 
-	 
+	  
 }

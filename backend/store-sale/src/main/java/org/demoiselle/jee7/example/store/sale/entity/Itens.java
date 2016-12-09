@@ -27,7 +27,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @Cacheable
-@Table(name = "itens")
 @XmlRootElement
 
 public class Itens implements Serializable {

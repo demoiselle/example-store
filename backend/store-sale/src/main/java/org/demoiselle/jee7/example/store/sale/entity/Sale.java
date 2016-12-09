@@ -49,8 +49,9 @@ public class Sale implements Serializable {
 	private Long id;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date datavenda;
+	
 	@Column(name = "usuario_id")
-	private BigInteger usuarioId;
+	private String usuarioId;
 
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "venda", fetch = FetchType.EAGER)
@@ -87,11 +88,11 @@ public class Sale implements Serializable {
 		this.datavenda = datavenda;
 	}
 
-	public BigInteger getUsuarioId() {
+	public String getUsuarioId() {
 		return usuarioId;
 	}
 
-	public void setUsuarioId(BigInteger usuarioId) {
+	public void setUsuarioId(String usuarioId) {
 		this.usuarioId = usuarioId;
 	}
 
