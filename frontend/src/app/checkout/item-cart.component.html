@@ -4,23 +4,23 @@
             <div class="col-md-2"><img src={{item.image_src}}/></div>
             <div class="col-md-3">
                 <br/>
-                <b >{{item.nome}}</b><br/>
-                {{item.descricao}}
+                <b >{{item.name}}</b><br/>
+                {{item.description}}
             </div>
      </div>
             <div class="col-md-1">
                 <br/>
-                {{item.valor | currency:'BRL':true:'1.2-2'}} <br/>
+                {{item.quantity | currency:'BRL':true:'1.2-2'}} <br/>
                 
             </div>
             <div class="col-md-2">
                 <br/>
-                {{item.amount}}
+                {{item.quantity}}
             </div>
             
             <div class="col-md-1">
                 <br/>
-                {{item.valor * item.amount | currency:'BRL':true:'1.2-2'}} <br/>
+                {{item.cost * item.quantity | currency:'BRL':true:'1.2-2'}} <br/>
                 
             </div>
         </div>

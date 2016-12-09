@@ -6,8 +6,8 @@ import {Observable} from 'rxjs/Rx';
 @Injectable()
 export class CatalogService {
 
-    //apiUrl = process.env.CONF.endpoints.product;
-    apiUrl = '~product/'
+    apiUrl = '~product/';
+    //apiUrl = 'http://10.32.128.43:8080/products/api/v1/xboxlive/';
 
     private catalog: Item[];
     constructor(private http: Http) {
@@ -18,10 +18,10 @@ export class CatalogService {
         return this.http.get(this.apiUrl + 'products')
             .map(
                 res => {
-                    let content = res.json().content;
+                    let content = res.json();
                     for (let item of content) {
-                        item.nome = item.descricao; // copia descricao para o nome, até o backend ter a propriedade
-                        item.image_src = 'http://img5.cliparto.com/pic/s/204746/5102982-monochrome-round-shopping-bag-icon.jpg';
+                        item.name = item.description; // copia descricao para o nome, até o backend ter a propriedade
+                        item.image_src = 'http://lorempixel.com/100/100/technics/?'+ Math.random();
                     }
 
                     return content;
@@ -35,56 +35,36 @@ export class CatalogService {
                 for(let i = rangeStart; i<= rangeEnd; i++){
                     p = new Item();
                     p.id = i;
-                    p.nome = 'produto ' + i;
-                    p.descricao = 'description prod ' + i;
-                    p.valor = 3.2 + i;
-                    p.image_src = 'http://img5.cliparto.com/pic/s/204746/5102982-monochrome-round-shopping-bag-icon.jpg';
+                    p.name = 'produto ' + i;
+                    p.description = 'description prod ' + i;
+                    p.cost = 3.2 + i;
+                    p.image_src = 'http://lorempixel.com/100/100/technics/?'+ Math.random();
                     prods.push(p);
                 }
                 return Observable.throw(prods);
             });
     }
-
-    getCatalog() {
-        return this.http.get('~usuario/usuario123')
-            .map(
-            res => res.json()
-
-            )
-            .catch(function (error) {
-
-                let p: Item;
-                let prods =<Item[]>[];
-                for(let i = 1; i< 20; i++){
-                    p = new Item();
-                    p.id = i;
-                    p.nome = 'produto ' + i;
-                    p.descricao = 'description prod ' + i;
-                    p.valor = 3.2 + i;
-                    p.image_src = 'http://img5.cliparto.com/pic/s/204746/5102982-monochrome-round-shopping-bag-icon.jpg';
-                    prods.push(p);
-                }
-                return Observable.throw(prods);
-            });
-    }
-    setCatalog(catalog: Item[]) {
-        this.catalog = catalog;
-    }
+    
     get(id: number) {
         var item: Item = null;
         return this.http.get(this.apiUrl + 'products/' + id)
             .map(
-                res => res.json()
+                res => {
+                    let item = res.json();
+                    item.name = item.description; // copia descricao para o nome, até o backend ter a propriedade
+                    item.image_src = 'http://lorempixel.com/100/100/technics/?'+ Math.random();
+                    return item;
+                }
             )
             .catch(function (error) {
 
                 return Observable.throw(<Item>
                     {
                         id: 1,
-                        nome: 'user 1 catch',
-                        descricao: 'Produto 1111111111111111111111',
-                        valor: 2.5,
-                        image_src: 'http://img5.cliparto.com/pic/s/204746/5102982-monochrome-round-shopping-bag-icon.jpg'
+                        name: 'user 1 catch',
+                        description: 'Produto 1111111111111111111111',
+                        cost: 2.5,
+                        image_src: 'http://lorempixel.com/100/100/technics/?'+ Math.random()
 
                     }
                 );

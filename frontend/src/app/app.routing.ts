@@ -53,14 +53,14 @@ export const routes: Routes = [
     component: CategoriaComponent
   },
 
-  // edição de usuário
+  // edição de categoria
   { 
     path: 'categoria/edit/:id',
     canActivate: [AuthGuard],
     component: CategoriaEditComponent 
   },
 
-  // novo usuário
+  // nova categoria
   { 
     path: 'categoria/edit',
     canActivate: [AuthGuard],

@@ -6,7 +6,7 @@
                         [infiniteScrollDistance]="2"
                         [infiniteScrollThrottle]="300"
                         [scrollWindow]="false"
-                        [immediateCheck]="true"
+                        [immediateCheck]="false"
                         (scrolled)="searchMore()">
                         <!--<item-preview *ngFor="#item of catalog | filterItems:search" [item]="item"></item-preview> -->
                         <item-preview *ngFor="let item of catalog" [item]="item"></item-preview>

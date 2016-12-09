@@ -2,8 +2,8 @@
 <div class="container">
         <div class="row" *ngIf="details">
             <div class="col-md-4"><img src={{details.image_src}}/></div>
-            <div class="col-md-4">{{details.descricao}}
-                <br/>{{details.valor | currency:'BRL':true:'1.2-2'}} <br/>
+            <div class="col-md-4">{{details.description}}
+                <br/>{{details.cost | currency:'BRL':true:'1.2-2'}} <br/>
                 <br/>{{details.averageReviewRate}}
                 <br/><button class="btn btn-primary" (click)="addToCart()">
                     <i class="fa fa-lg fa-cart-plus" aria-hidden="true"></i>Comprar

@@ -10,16 +10,18 @@
 
 export class Item {
     id: number;
-    descricao: string;
-    valor: number;
-    nome: string;
+    description: string;
+    cost: number;
+    name: string;
+    category: any;
     image_src: string;
     averageReviewRate:number;
     constructor(
         id?: number,
-        descricao?: string,
-        valor?: number,
-        nome?: string,
+        description?: string,
+        cost?: number,
+        name?: string,
+        category?:any,
         image_src?: string,
         averageReviewRate?:number
     ) {}

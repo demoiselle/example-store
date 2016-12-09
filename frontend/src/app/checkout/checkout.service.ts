@@ -34,7 +34,7 @@ export class CheckoutService {
         for (let item of cartItems){
              let itemObj = {
                  'codigoProduto': item.id,
-                 'quantidade': item.amount
+                 'quantidade': item.quantity
              };
              data.itens.push(itemObj);
         }
