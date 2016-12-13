@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { routes } from './../../app.routing';
 import { AuthService } from '@demoiselle/security';
+import { LoginService } from '../../login/login.service';
 
 // webpack html imports
 let template = require('./sidebar-menu.template.html');
@@ -17,7 +18,7 @@ export class SidebarMenuComponent {
   public search:any = {};
   public hash:string = '';
 
-  public constructor(private router:Router, private authService: AuthService) {
+  public constructor(private router:Router, private authService: AuthService, private loginService: LoginService) {
     this.routes = this.routes.filter(
       (v:any) => v.path !== '**' && v.data
       
@@ -31,5 +32,9 @@ export class SidebarMenuComponent {
     
     //console.log(this.authService.isAuthorized(['ADMINISTRATOR']));
 
+  }
+
+  onRouteSelected(route) {
+    this.loginService.setRedirect(route);
   }
 }

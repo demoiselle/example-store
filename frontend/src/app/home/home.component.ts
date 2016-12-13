@@ -3,7 +3,6 @@ import { TenantService } from '../tenant/tenant.service';
 import { Tenant } from '../tenant/tenant.model';
 import { NotificationService } from '../shared/notification.service';
 import { Usuario } from '../usuario/usuario.model';
-import { UsuarioService } from '../usuario/usuario.service';
 
 @Component({
   selector: 'dml-home',
@@ -16,54 +15,36 @@ export class HomeComponent implements OnInit {
   public adminEmail:string = '';
   public adminPwd:string = '';
 
-  constructor(protected service: TenantService, protected notificationService: NotificationService,
-    protected usuarioService: UsuarioService) {
+  constructor(protected tenantService: TenantService, protected notificationService: NotificationService) {
   }
 
   ngOnInit() {
     console.log('Hello Home');
-  }
-
-  addTenant() {
-    
-    let tenant = new Tenant();
-    tenant.name = this.tenantName;
-    this.service.create(tenant).subscribe(
+    this.tenantService.tenantCreated.subscribe(
       () => {
-        this.usuarioService.createOnTenant(new Usuario(
-            undefined,
-            this.adminEmail,
-            'ADMIN',
-            this.adminEmail,
-            '',
-            '',
-            this.adminPwd
-        ), encodeURI(this.tenantName)).subscribe(
-          () => {
-            this.tenantName = '';
-            this.adminEmail = '';
-            this.adminPwd = '';
-            this.notificationService.success('Nova loja salva com sucesso!');
-          },
-          error => {
-            this.notificationService.error('Não foi possível inserir o usuário administrador!');
-            this.rollbackTenant();
-          }
-        );
+        this.notificationService.error('Nova loja criada!');
+        return true;
       },
       (error) => {
         this.notificationService.error('Não foi possível salvar a loja!');
-        this.rollbackTenant();
+        return false;
       }
     );
   }
 
-  rollbackTenant() {
+  addTenant() {
     let tenant = new Tenant();
     tenant.name = this.tenantName;
-    this.service.delete(tenant).subscribe(
-      () => { },
-      (error) => { }
-    );
+
+    let usuario:Usuario = new Usuario();
+    usuario.id = undefined;
+    usuario.name = this.adminEmail;
+    usuario.role = 'ADMINISTRATOR';
+    usuario.email = this.adminEmail;
+    usuario.cpf = '';
+    usuario.fone = '';
+    usuario.password = this.adminPwd;
+
+    this.tenantService.create(tenant, usuario);
   }
 }

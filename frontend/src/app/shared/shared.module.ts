@@ -5,11 +5,15 @@ import { RouterModule } from '@angular/router';
 import { Ng2BootstrapModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { SecurityModule } from '@demoiselle/security';
 import { NotificationService} from '../shared/notification.service';
+import { LoginService } from '../login/login.service';
 
 @NgModule({
   imports:      [ CommonModule ],
   declarations: [],
-  providers:    [NotificationService],
+  providers:    [
+    NotificationService,
+    LoginService
+  ],
   exports:      [
     CommonModule, 
     FormsModule,

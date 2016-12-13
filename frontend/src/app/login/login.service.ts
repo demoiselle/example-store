@@ -20,10 +20,16 @@ export class LoginService {
     }
 
     proceedToRedirect(path) {
+        console.log('REDIRECT');
+        console.log(this.redirectTo);
         if (this.redirectTo) {
             this.router.navigate(this.redirectTo);
         } else {
             this.router.navigate(path);
         }
+    }
+
+    setRedirect(path) {
+        this.redirectTo = ['/'+path];
     }
 }

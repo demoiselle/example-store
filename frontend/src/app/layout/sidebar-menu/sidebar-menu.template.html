@@ -8,7 +8,7 @@
            *ngFor="let route of routes"
            [routerLinkActive]="['active']"
            [routerLinkActiveOptions]="{exact: true}">
-        <a [routerLink]="[route.path]"><h3>{{route.data[0]}}</h3></a>
+        <a [routerLink]="[route.path]" (click)=onRouteSelected(route.path)><h3>{{route.data[0]}}</h3></a>
       </div>
     </div>
   </div>
