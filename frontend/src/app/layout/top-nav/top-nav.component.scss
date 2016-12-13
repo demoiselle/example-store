@@ -82,7 +82,6 @@
   max-height: 500px;
 }
 
-
 #mobile-sidebar-menu {
   display: none;
   cursor: pointer;
@@ -146,15 +145,6 @@
   #mobile-sidebar-menu {
     display: inline-block;
   }
-
-  #sidebar-menu {
-    left: -100%;
-    height: calc(100% - 54px);
-  }
-
-  .isOpenMenu #sidebar-menu {
-    left: 0;
-  }
 }
 
 @media (max-width: 600px) {
@@ -166,15 +156,11 @@
     margin: 0 15px 0 0;
   }
 
-  #mobile-sidebar-menu {
-    padding: 17px 15px;
-  }
-
   #top-nav .top-nav-container {
     top: 105px;
   }
 
-  #sidebar-menu {
-    height: calc(100% - 55px);
+  #mobile-sidebar-menu {
+    padding: 17px 15px;
   }
 }

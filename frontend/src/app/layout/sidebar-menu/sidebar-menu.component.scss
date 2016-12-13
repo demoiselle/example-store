@@ -123,3 +123,22 @@
 #sidebar-menu .section .item li:not(.active):hover {
   cursor: pointer;
 }
+
+@media (max-width: 1020px) {
+
+  #sidebar-menu {
+    left: -100%;
+    height: calc(100% - 69px);
+  }
+  #sidebar-menu.isOpenMenu {
+    left: 0;
+  }
+}
+
+
+@media (max-width: 600px) {
+
+  #sidebar-menu {
+    height: calc(100% - 55px);
+  }
+}
