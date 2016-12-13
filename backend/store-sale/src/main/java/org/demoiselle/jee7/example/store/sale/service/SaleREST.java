@@ -15,6 +15,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
+import org.demoiselle.jee.core.api.crud.Result;
 import org.demoiselle.jee.persistence.crud.AbstractREST;
 import org.demoiselle.jee7.example.store.sale.business.SaleBC;
 import org.demoiselle.jee7.example.store.sale.entity.Cart;
@@ -64,6 +65,12 @@ public class SaleREST extends AbstractREST<Sale, Long> {
 	public List<Itens> listSaleItens(@PathParam("id") final Long id) {
 
 		return saleBC.listSaleItens(id);
+	}
+
+	@Override
+	public Result find(String field, String order, int init, int qtde) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/*

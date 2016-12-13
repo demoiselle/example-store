@@ -11,6 +11,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.demoiselle.jee.core.api.crud.Result;
 import org.demoiselle.jee.persistence.crud.AbstractREST;
 import org.demoiselle.jee.rest.annotation.ValidatePayload;
 import org.demoiselle.jee.security.annotation.RequiredRole;
@@ -48,6 +49,12 @@ public class CategoryREST extends AbstractREST<Category, Long> {
 	@RequiredRole("ADMINISTRATOR")
 	public void remove(@PathParam("id") Long id) {
 		bc.remove(id);
+	}
+
+	@Override
+	public Result find(String field, String order, int init, int qtde) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

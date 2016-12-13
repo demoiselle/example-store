@@ -8,7 +8,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.demoiselle.jee.core.api.security.DemoisellePrincipal;
+import org.demoiselle.jee.core.api.security.DemoiselleUser;
 import org.demoiselle.jee.security.annotation.LoggedIn;
 import org.demoiselle.jee.security.annotation.RequiredPermission;
 import org.demoiselle.jee.security.annotation.RequiredRole;
@@ -23,7 +23,7 @@ import io.swagger.annotations.Api;
 public class TestRoleAndPermissionREST {
 
 	@Inject
-	private DemoisellePrincipal loggedUser;
+	private DemoiselleUser loggedUser;
 
 	@SuppressWarnings("unchecked")
 	public JSONObject loggedUserObject() {

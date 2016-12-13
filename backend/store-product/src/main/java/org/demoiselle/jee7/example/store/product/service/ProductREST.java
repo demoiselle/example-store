@@ -14,6 +14,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
+import org.demoiselle.jee.core.api.crud.Result;
 import org.demoiselle.jee.persistence.crud.AbstractBusiness;
 import org.demoiselle.jee.persistence.crud.AbstractREST;
 import org.demoiselle.jee.rest.annotation.ValidatePayload;
@@ -59,6 +60,12 @@ public class ProductREST extends AbstractREST<Product, Long> {
 	@RequiredRole("ADMINISTRATOR")
 	public void remove(@PathParam("id") Long id) {
 		bc.remove(id);
+	}
+
+	@Override
+	public Result find(String field, String order, int init, int qtde) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

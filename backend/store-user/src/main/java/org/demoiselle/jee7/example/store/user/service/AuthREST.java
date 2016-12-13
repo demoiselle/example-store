@@ -23,7 +23,7 @@ import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.demoiselle.jee.core.api.security.DemoisellePrincipal;
+import org.demoiselle.jee.core.api.security.DemoiselleUser;
 import org.demoiselle.jee.core.api.security.SecurityContext;
 import org.demoiselle.jee.core.api.security.Token;
 import org.demoiselle.jee.multitenancy.hibernate.context.MultiTenantContext;
@@ -50,7 +50,7 @@ public class AuthREST {
 	private UserBC business;
 
 	@Inject
-	private DemoisellePrincipal loggedUser;
+	private DemoiselleUser loggedUser;
 
 	@Inject
 	private DemoiselleSecurityJWTConfig config;
