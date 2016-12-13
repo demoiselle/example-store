@@ -10,7 +10,8 @@ import {Tenant} from './tenant.model';
 
 @Component({
   selector: 'dml-tenant-list',
-  templateUrl: './tenant-list.component.html'
+  templateUrl: './tenant-list.component.html',
+  styleUrls: ['./tenant-list.component.scss']
 })
 export class TenantListComponent implements OnInit {
     tenants: Array<Tenant>;

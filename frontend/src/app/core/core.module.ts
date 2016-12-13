@@ -37,7 +37,13 @@ export class CoreModule {
           'unAuthorizedRoute': '/login',
           'tokenKey' : 'id_token'
         }),
-        AuthServiceProvider('~user'),
+        AuthServiceProvider({
+          'authEndpointUrl': '~user/', // may be in the form 'http://localhost:9090/app/api/v1/'
+          'loginResourcePath': 'auth/login',
+          'tokenKey': 'id_token',
+          'loginRoute': '/login'
+        }),
+
         CartService
       ]
     };
