@@ -10,7 +10,7 @@ export class Produto {
     description: string;
     cost: number;
     name: string;
-    category: any;
+    category: Categoria;
     image_src: string;
     averageReviewRate:number;
     constructor(
