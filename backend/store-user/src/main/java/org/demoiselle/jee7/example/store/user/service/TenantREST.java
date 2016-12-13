@@ -49,7 +49,7 @@ public class TenantREST {
 	public Response deleteTenant(@PathParam("name") String name) throws Exception {
 		try {
 			// Load tenant
-			Tenant tenant = tenantManager.find(name);
+			Tenant tenant = tenantManager.findByName(name);
 
 			if (tenant == null) {
 				throw new NotFoundException();
