@@ -11,7 +11,7 @@ if (w && w.__theme === 'bs4') {
 }
 
 // global style
-import '../style/app.scss';
+import '../style/global.scss';
 
 // the app.component template is the layout itself
 let template = require('./layout/layout.template.html');
@@ -19,6 +19,7 @@ let template = require('./layout/layout.template.html');
 
 @Component({
   selector: 'my-app', // <my-app></my-app>
+  styleUrls: ['./app.component.scss'],
   template: template
 })
 export class AppComponent implements AfterContentInit {
