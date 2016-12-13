@@ -9,6 +9,7 @@ let template = require('./top-nav.template.html');
 
 @Component({
   selector: 'top-nav',
+  styleUrls: ['./top-nav.component.scss'],
   template
 })
 export class TopNavComponent implements AfterViewInit {

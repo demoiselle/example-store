@@ -1,0 +1,198 @@
+/************* START MAIN **************/
+
+#main {
+  width: calc(100% - 270px);
+  height: 100%;
+  float: right;
+  margin-top: 35px;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+#main .content-header {
+  border-left: 3px solid #babfc4;
+  padding-left: 15px;
+}
+
+#main .content-header h2 {
+  /*font-size: 34px;*/
+  font-weight: 700;
+  color: #333;
+  text-transform: uppercase;
+  margin-top: 35px;
+  margin-bottom: 20px;
+  /*line-height: 23px;*/
+}
+
+#main .content-header h2 a {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 4px;
+  line-height: 0;
+}
+
+#main .content-header h2 img {
+  width: 15px;
+  vertical-align: top;
+}
+
+#main .content-header p {
+  font-size: 18px;
+  color: #333;
+  font-weight: 300;
+  line-height: 30px;
+}
+
+#main .content-box {
+  margin-top: 20px;
+  padding: 15px;
+  box-sizing: border-box;
+  background-color: #fff;
+  margin-bottom: 30px;
+}
+
+/************* END MAIN **************/
+
+/************* START CONTENT **************/
+
+#content p,
+#content li:not([class^='L']) ,
+#content .accordion h4 {
+  font-weight: 300;
+  font-size: 16px;
+  color: #333;
+}
+
+#content p {
+  line-height: 30px;
+}
+
+#content p,
+#content li:not([class^='L']) {
+  line-height: 30px;
+}
+
+#content li:not([class^='L']) a,
+#content p a {
+  /*color: #0808df;*/
+  text-decoration: none;
+}
+
+#content .bash-code {
+  color: #55555c !important;
+  padding: 0 5px;
+  border-radius: 2px;
+  background-color: #eef5f9 !important;
+}
+
+#content .code-container {
+  border-radius: 2px;
+  margin: 15px 0;
+  background-color: #eef5f9 !important;
+  padding: 15px;
+}
+
+#content .code-container:empty {
+  display: none;
+}
+
+#content .code-style {
+  font-size: 16px;
+  color: #333;
+}
+
+#content .bash-code,
+#content .code-container,
+#content .code-style {
+  font-family: 'Source Code Pro' !important;
+}
+
+#content .section:not(:first-child) {
+  border-top: 1px solid #babfc4;
+  padding: 30px 0 0;
+  margin: 30px 0 0;
+}
+
+#content .section > h3 {
+  color: #333;
+  font-size: 28px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+#content .list-container ul {
+  padding: 0;
+}
+
+#content .list-container ul li {
+  list-style: none;
+}
+
+#content .list-container ul li:before {
+  content: '•';
+  display: inline-block;
+  margin-right: 5px;
+}
+
+#content .list-container ol {
+  list-style: decimal;
+  margin-left: 18px;
+}
+
+
+
+#content .item > h4 {
+  font-size: 22px;
+  margin: 20px 0 15px;
+}
+
+/************* END CONTENT **************/
+
+@media (max-width: 1020px) {
+  #main {
+    width: 100%;
+    float: none;
+  }
+}
+
+// @media (max-width: 600px) {
+// }
+
+
+/* Specify styling for tooltip contents */
+.tooltip.customClass .tooltip-inner {
+  color: #880000;
+  background-color: #ffff66;
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+}
+/* Hide arrow */
+.tooltip.customClass .tooltip-arrow {
+  display: none;
+}
+
+.nav-item.customClass {
+	float: right;
+}
+.nav-item.customClass a {
+	background-color: #50ff50;
+}
+
+
+
+/* font awesome and table style */
+
+// @Merlin: estou verificando se realmente precisa dar este padding
+//          ou se utilizar o espaço entre a tag 'i' e o 'span' já resolve.
+// .fa {
+//   padding-right: 5px;
+// }
+
+.table tbody tr td {
+    padding: 5px;
+}
+
+.tenant-list li:hover {
+  background-color:#DDD;
+  cursor: pointer;
+  cursor: hand;
+}

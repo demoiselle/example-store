@@ -16,22 +16,25 @@
         </li>
         <li>
           <a routerLink="/cart">
-            <i class="fa fa-shopping-cart"></i>Carrinho
+            <i class="fa fa-shopping-cart"></i>
+            <span>Carrinho</span>
           </a>
         </li>
         <li>
           <a routerLink="/myaccount">
-            <i class="fa fa-user"></i>Minha Conta
+            <i class="fa fa-user"></i>
+            <span>Minha Conta</span>
           </a>
         </li>
         <li>
             <a *ngIf="loggedIn()" (click)="logout()">
-                <span class="ng-binding"><i class="fa fa-sign-out"></i>Sair</span>
+                <i class="fa fa-sign-out"></i>
+                <span>Sair</span>
             </a>
             <a *ngIf="!loggedIn()" href="/#/login">
-                <span class="ng-binding"> <i class="fa fa-sign-in"></i>Entrar</span>
+                  <i class="fa fa-sign-in"></i>
+                  <span>Entrar</span>
             </a>
-            
         </li>
       </ul>
     </div>

@@ -8,6 +8,7 @@ let template = require('./sidebar-menu.template.html');
 
 @Component({
   selector: 'sidebar-menu',
+  styleUrls: ['./sidebar-menu.component.scss'],
   template
 })
 
