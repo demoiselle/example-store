@@ -1,31 +1,27 @@
-# example-store
+# exemplo-loja
 
-**Note: This guide is following the Angular's [Style Guide](http://angular.io/styleguide) so I will be changing conventions here and there eventually. You are free to use your own conventions with this starter.**
+>Atenção: Esteja certo de estar usando a última versão do Node.js e do NPM
 
->Warning: Make sure you're using the latest version of Node.js and NPM
+### Início Rápido
 
-[Is Angular 2 Ready Yet?](http://splintercode.github.io/is-angular-2-ready/)
-
-### Quick start
-
-> Clone/Download the repo then edit `app.ts` inside [`/src/app/app.component.ts`](/src/app/app.component.ts)
+> ?? Clone/Download the repo then edit `app.ts` inside [`/src/app/app.component.ts`](/src/app/app.component.ts)
 
 ```bash
-# clone our repo
-$ git clone https://repository my-app
+# clone o repositório
+$ git clone https://github.com/demoiselle/example-store.git exemplo-loja
 
-# change directory to your app
-$ cd my-app
+# navegue para a pasta do projeto
+$ cd exemplo-loja
 
-# install the dependencies with npm
+# instale as dependências com npm
 $ npm install
 
-# start the server
+# inicie o servidor
 $ npm start
 ```
-go to [http://localhost:7070](http://localhost:7070) in your browser.
+vá para [http://localhost:7070](http://localhost:7070) no seu navegador.
 
-# Table of Contents
+# Índice
 
 * [Getting Started](#getting-started)
     * [Dependencies](#dependencies)
@@ -39,68 +35,43 @@ go to [http://localhost:7070](http://localhost:7070) in your browser.
 * [TypeScript](#typescript)
 * [License](#license)
 
-# Getting Started
+# Iniciando
 
-## Dependencies
+## Dependências
+O que você precisa para rodar o app:
+* `node` e `npm` (Use o [NVM](https://github.com/creationix/nvm) para gerenciar as versões do Node)
+* Certifique-se se estar usando as versões (`v6.x.x`+) do Node (`3.x.x`+) do NPM
 
-What you need to run this app:
-* `node` and `npm` (Use [NVM](https://github.com/creationix/nvm))
-* Ensure you're running Node (`v5.x.x`+) and NPM (`3.x.x`+)
+## Instalando
 
-## Installing
+* `clone` o repositório e instale suas dependências (Início Rápido)
 
-* `fork` this repo
-* `clone` your fork
-* `npm install` to install all dependencies
+## Configurando
 
-## Configuring
-
-You can configure multiple endpoint's URLs in webpack(.dev/.prod/.test) files in the /config folder.
-Example:
+Você pode configurar múltiplos endpoints nos arquivos webpack(.dev/.prod/.test) na pasta /config.
+Exemplo:
 ```
 'endpoints' : {
     'endpoint1' : 'http://localhost:8080/app/'
 }
 ```
-        
-You can then use the endpoint key to make your requests like this:
+
+Então você pode usar a chave do endpoint para fazer requisições dessa forma:
 ```
 this.http.get('~endpoint1/usuario/')
 ```
 
-## Developing
+## Desenvolvendo
 
-After you have installed all dependencies you can now start developing with:
+Depois de instalar todas as dependências com `npm install` você deve iniciar o servidor com:
 
 * `npm start`
 
-It will start a local server using `webpack-dev-server` which will watch, build (in-memory), and reload for you. The application can be checked at `http://localhost:7070`.
+Isso vai iniciar um servidor local usando `webpack-dev-server` que irá monitorar, construir (em memória) e recarregar para você. A aplicação ficará disponível em: `http://localhost:7070`.
 
-As an alternative, you can work using Hot Module Replacement (HMR):
+Tudo pronto! Agora você pode modificar componentes em tempo real sem ter que se preocupar em ficar recarregando a página.
 
-* `npm run start:hmr`
-
-And you are all set! You can now modify your components on the fly without having to reload the entire page.
-
-## Testing
-
-#### 1. Unit Tests
-
-* single run: `npm test`
-* live mode (TDD style): `npm run test-watch`
-
-#### 2. End-to-End Tests (aka. e2e, integration)
-
-* single run:
-  * in a tab, *if not already running!*: `npm start`
-  * in a new tab: `npm run webdriver-start`
-  * in another new tab: `npm run e2e`
-* interactive mode:
-  * instead of the last command above, you can run: `npm run e2e-live`
-  * when debugging or first writing test suites, you may find it helpful to try out Protractor commands without starting up the entire test suite. You can do this with the element explorer.
-  * you can learn more about [Protractor Interactive Mode here](https://github.com/angular/protractor/blob/master/docs/debugging.md#testing-out-protractor-interactively)
-
-## Production
+## Produção
 
 To build your application, run:
 
