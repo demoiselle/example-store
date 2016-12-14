@@ -25,7 +25,6 @@ vá para [http://localhost:7070](http://localhost:7070) no seu navegador.
     * [Instalando](#instalando)
     * [Configurando](#configurando)
     * [Desenvolvendo](#desenvolvendo)
-    * [Testando](#testando)
     * [Produção](#producao)
 * [Perguntas Frequentes](#faq)
 * [TypeScript](#typescript)
@@ -37,7 +36,7 @@ vá para [http://localhost:7070](http://localhost:7070) no seu navegador.
 
 O que você precisa para rodar o app:
 * `node` e `npm` (Use o [NVM](https://github.com/creationix/nvm) para gerenciar as versões do Node)
-* Este projeto utilizou as versões (`v6.x.x`+) do Node (`3.x.x`+) do NPM
+* Este projeto utiliza as versões (`v6.x.x`+) do Node (`3.x.x`+) do NPM
 
 ## Instalando
 
@@ -45,7 +44,7 @@ O que você precisa para rodar o app:
 
 ## Configurando
 
-Você pode configurar múltiplos endpoints nos arquivos webpack(.dev/.prod/.test) na pasta /config.
+Múltiplos endpoints podem ser configurados nos arquivos webpack(.dev/.prod/.test) na pasta /config.
 Exemplo:
 ```
 'endpoints' : {
@@ -53,24 +52,24 @@ Exemplo:
 }
 ```
 
-Então você pode usar a chave do endpoint para fazer requisições dessa forma:
+A chave do endpoint pode ser usada para fazer requisições dessa forma:
 ```
 this.http.get('~endpoint1/usuario/')
 ```
 
 ## Desenvolvendo
 
-Depois de instalar todas as dependências com `npm install` você deve iniciar o servidor com:
+Depois de instalar todas as dependências com `npm install`, iniciar o servidor com:
 
 * `npm start`
 
-Isso vai iniciar um servidor local usando `webpack-dev-server` que irá monitorar, construir (em memória) e recarregar para você. A aplicação ficará disponível em: `http://localhost:7070`.
+Isso vai iniciar um servidor local usando `webpack-dev-server` que irá monitorar, construir (em memória) e recarregar automaticamente. A aplicação ficará disponível em: `http://localhost:7070`.
 
-Tudo pronto! Agora você pode modificar componentes em tempo real sem ter que se preocupar em ficar recarregando a página.
+Tudo pronto! Agora os componentes podem ser modificados em tempo real sem ter que se preocupar em ficar recarregando a página.
 
 ## Produção
 
-Para construir a aplicação, rode:
+Para construir a aplicação, rodar o comando:
 
 * `npm run build`
 
