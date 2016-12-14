@@ -18,6 +18,28 @@
   }
 
   @media (max-width: 767px) {
+
+    .container-fluid {
+      display: flex;
+      
+      & > * {
+        min-width: 40px;
+      }
+      
+      .navbar-header {
+        flex-grow: 1;
+      }
+
+      dml-usuario-dropdown {
+        order: 1;
+      }
+    }
+    
+    .navbar-text {
+      margin: 0 15px;
+      padding: 10px 0;
+    }
+
     i + span {
       // esconde o texto do menu
       // mostra apenas o ícone

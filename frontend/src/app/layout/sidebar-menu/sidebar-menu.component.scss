@@ -55,7 +55,7 @@ $sidebar-hover-bg: #00abff;
 
   .sidebar-menu-container {
     overflow-y: auto;
-    height: calc(100% - 56px);
+    height: calc(100% - 57px);
   }
 }
 
@@ -63,6 +63,6 @@ $sidebar-hover-bg: #00abff;
 @media (max-width: 767px) {
   #sidebar-menu {
     left: -100%;
-    height: calc(100% - 69px);
+    height: calc(100% - 57px);
   }
 }
