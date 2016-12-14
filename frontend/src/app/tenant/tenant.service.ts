@@ -79,7 +79,7 @@ export class TenantService {
     }
 
     delete(tenant: Tenant){
-      return this.http.delete(this.apiUrl + 'tenants/' + tenant.id)
+      return this.http.delete(this.apiUrl + 'tenants/' + tenant.name)
         .map(
           () => {
             this.tenantsChanged.emit(tenant);

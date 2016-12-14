@@ -6,6 +6,7 @@ import {ModalDirective} from 'ng2-bootstrap/ng2-bootstrap';
 import { NotificationService} from '../shared/notification.service';
 import {TenantService} from './tenant.service';
 import {Tenant} from './tenant.model';
+import { Usuario } from '../usuario/usuario.model';
 
 @Component({
   selector: 'dml-tenant',
@@ -20,6 +21,9 @@ export class TenantCrudComponent implements OnInit {
   newTenant:Tenant;
   viewOnly: boolean;
 
+  public adminEmail:string = '';
+  public adminPwd:string = '';
+
   scriptExample: string = 'usuario.setNome(tenant.getName() + " - " + usuario.getNome());';
 
   @ViewChild('staticModal') public staticModal:ModalDirective;
@@ -31,7 +35,18 @@ export class TenantCrudComponent implements OnInit {
 
  
   ngOnInit() {
-    this.notificationService.info('Módulo tenant iniciado!!!');
+
+    this.service.tenantCreated.subscribe(
+      () => {
+        this.notificationService.error('Novo tenant criado!');
+        this.list();
+        return true;
+      },
+      (error) => {
+        this.notificationService.error('Não foi possível salvar o tenant!');
+        return false;
+      }
+    );
 
     this.list();
   }
@@ -65,24 +80,9 @@ export class TenantCrudComponent implements OnInit {
      );
   }
  
-  save(){
+  save(tenant: Tenant, usuario: Usuario){
     if(this.isNewTenant)
-        this.service.create(this.newTenant).subscribe(
-          () => {
-            this.tenant = null;
-            this.selectedTenant = null;
-            this.staticModal.hide();
-            
-            this.list();
-            this.notificationService.success('Tenant salvo!');
-          },
-          error => {
-            this.notificationService.error('Não foi possível salvar o tenant!');
-            console.log('ERROR');
-            console.log(error);
-            this.list(); // remover depois que estiver retornando sucesso
-          }
-        );
+        this.service.create(tenant, usuario);
     else {
         //this.tenants[this.findSelectedTenantIndex()] = this.tenant;
         this.service.update(this.tenant).subscribe(
@@ -102,8 +102,18 @@ export class TenantCrudComponent implements OnInit {
 
   addTenant() {
     this.isNewTenant = true;
-    this.save();
-    this.newTenant = new Tenant();
+    
+    let usuario:Usuario = new Usuario();
+    usuario.id = undefined;
+    usuario.name = this.adminEmail;
+    usuario.role = 'ADMINISTRATOR';
+    usuario.email = this.adminEmail;
+    usuario.cpf = '';
+    usuario.fone = '';
+    usuario.password = this.adminPwd;
+
+    this.service.create(this.newTenant, usuario);
+    
   }
 
   deleteTenant(tenant: Tenant) {
