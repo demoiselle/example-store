@@ -1,11 +1,25 @@
-<!-- Single button -->
-  <span dropdown>
+<ul class="nav navbar-nav navbar-right">
+  <li class="dropdown" dropdown *ngIf="hasTenants">
     <a href dropdownToggle>
-      <i class="glyphicon glyphicon-globe"></i> {{selectedTenant.name}}
+      <i class="glyphicon glyphicon-globe"></i>
+      <span>{{selectedTenant.name}}</span>
     </a>
     <ul class="dropdown-menu" dropdownMenu aria-labelledby="simple-dropdown">
       <li style="cursor:pointer;" *ngFor="let tenant of tenants">
         <a class="dropdown-item" (click)="selectTenant(tenant)">{{tenant.name}}</a>
       </li>
     </ul>
-  </span>
+  </li>
+  <li *ngIf="hasTenants">
+    <a routerLink="/cart">
+        <i class="fa fa-shopping-cart"></i>
+        <span>Carrinho</span>
+      </a>
+  </li>
+  <li *ngIf="!hasTenants">
+    <p class="navbar-text">
+      <i class="glyphicon glyphicon-globe"></i>
+      <span>Sem loja</span>
+    </p>
+  </li>
+</ul>

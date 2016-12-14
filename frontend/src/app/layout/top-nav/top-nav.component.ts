@@ -13,25 +13,25 @@ let template = require('./top-nav.template.html');
   template
 })
 export class TopNavComponent implements AfterViewInit {
-  public isShown:boolean = false;
+  public isShown: boolean = false;
 
-  private renderer:Renderer;
-  private document:any;
+  private renderer: Renderer;
+  private document: any;
 
-  public constructor(renderer:Renderer, @Inject(DOCUMENT) document:any, private router:Router, private authService: AuthService) {
+  public constructor(renderer: Renderer, @Inject(DOCUMENT) document: any, private router: Router, private authService: AuthService) {
     this.renderer = renderer;
     this.document = document;
   }
 
-  public ngAfterViewInit():any {
-    this.router.events.subscribe((event:any) => {
+  public ngAfterViewInit(): any {
+    this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
         this.toggle(false);
       }
     });
   }
 
-  public toggle(isShown?:boolean):void {
+  public toggle(isShown?: boolean): void {
     // let anchorEl = this.document.body;
     let anchorEl = document.getElementById('sidebar-menu');
 
@@ -44,11 +44,11 @@ export class TopNavComponent implements AfterViewInit {
     }
   }
 
-  loggedIn(){
+  isLoggedIn() {
     return this.authService.isAuthenticated();
   }
 
-  logout(){
+  logout() {
     this.authService.logout();
     this.router.navigateByUrl('/login');
   }

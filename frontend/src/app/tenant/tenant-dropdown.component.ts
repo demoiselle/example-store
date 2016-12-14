@@ -1,24 +1,26 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import {AgRendererComponent} from 'ag-grid-ng2/main';
-import {GridOptions,RowNode} from 'ag-grid/main';
-import {ModalDirective} from 'ng2-bootstrap/ng2-bootstrap';
+import { AgRendererComponent } from 'ag-grid-ng2/main';
+import { GridOptions, RowNode } from 'ag-grid/main';
+import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
 
-import { NotificationService} from '../shared/notification.service';
-import {TenantService} from './tenant.service';
-import {Tenant} from './tenant.model';
+import { NotificationService } from '../shared/notification.service';
+import { TenantService } from './tenant.service';
+import { Tenant } from './tenant.model';
 
-import {CartService} from "../cart/cart.service";
+import { CartService } from '../cart/cart.service';
 
 @Component({
-  selector: 'dml-tenant-dropdown',
-  templateUrl: './tenant-dropdown.component.html'
+    selector: 'dml-tenant-dropdown',
+    templateUrl: './tenant-dropdown.component.html'
 })
 export class TenantDropdownComponent implements OnInit {
     tenants: Array<Tenant>;
     selectedTenant: Tenant;
+    hasTenants: Boolean;
 
     ngOnInit() {
+        this.hasTenants = false;
         this.selectedTenant = this.service.getSelectedTenant();
         this.loadTenants();
     }
@@ -44,14 +46,16 @@ export class TenantDropdownComponent implements OnInit {
         this.service.list().subscribe(
             tenants => {
                 this.tenants = tenants;
+                this.hasTenants = true;
             },
             error => {
                 this.notificationService.error('Não foi possível carregar a lista de tenants!');
+                this.hasTenants = false;
             }
         );
     }
 
-    selectTenant(tenant:Tenant) {
+    selectTenant(tenant: Tenant) {
         if (tenant.name == this.selectedTenant.name) {
             return;
         }

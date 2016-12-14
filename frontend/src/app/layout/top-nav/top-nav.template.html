@@ -1,41 +1,43 @@
-<div id="top-nav">
-  <div class="title">
-    <h2 [routerLink]="['/shopping']">Loja</h2>
-  </div>
-
-  <div id="mobile-sidebar-menu" (click)="toggle()">
-    <img src="/img/menu-left.svg" alt="">
-  </div>
-
-  <div id="navbar" class="pull-right navbar-logo">
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-          <a>
-            <dml-tenant-dropdown></dml-tenant-dropdown>
-          </a>
-        </li>
-        <li>
-          <a routerLink="/cart">
-            <i class="fa fa-shopping-cart"></i>
-            <span>Carrinho</span>
-          </a>
-        </li>
-        <li>
-          <a routerLink="/myaccount">
-            <i class="fa fa-user"></i>
-            <span>Minha Conta</span>
-          </a>
-        </li>
-        <li>
-            <a *ngIf="loggedIn()" (click)="logout()">
-                <i class="fa fa-sign-out"></i>
-                <span>Sair</span>
-            </a>
-            <a *ngIf="!loggedIn()" href="/#/login">
-                  <i class="fa fa-sign-in"></i>
-                  <span>Entrar</span>
-            </a>
-        </li>
-      </ul>
+<nav id="top-nav" class="navbar navbar-default navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" aria-expanded="false" (click)="toggle()">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" [routerLink]="['/shopping']">Loja</a>
     </div>
-</div>
+    <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown" dropdown *ngIf="isLoggedIn()">
+        <!-- Opções de menu para usuário logado -->
+        <a href dropdownToggle>
+          <i class="fa fa-user"></i>
+          <span>Usuário</span>
+        </a>
+        <ul class="dropdown-menu" dropdownMenu aria-labelledby="simple-dropdown">
+          <li>
+            <a routerLink="/myaccount">
+              <span>Minha Conta</span>
+            </a>
+          </li>
+          <li>
+            <a (click)="logout()">
+              <i class="fa fa-sign-out"></i>
+              <span>Sair</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li *ngIf="!isLoggedIn()">
+        <!-- Opções de menu para usuário não logado -->
+        <a href="/#/login">
+          <i class="fa fa-sign-in"></i>
+          <span>Entrar</span>
+        </a>
+      </li>
+    </ul>
+    <dml-tenant-dropdown></dml-tenant-dropdown>
+  </div>
+</nav>
