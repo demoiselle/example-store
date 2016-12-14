@@ -2,8 +2,6 @@ import { AfterViewInit, Component, Inject, Renderer } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 
-import { AuthService } from '@demoiselle/security';
-
 // webpack html imports
 let template = require('./top-nav.template.html');
 
@@ -18,7 +16,7 @@ export class TopNavComponent implements AfterViewInit {
   private renderer: Renderer;
   private document: any;
 
-  public constructor(renderer: Renderer, @Inject(DOCUMENT) document: any, private router: Router, private authService: AuthService) {
+  public constructor(renderer: Renderer, @Inject(DOCUMENT) document: any, private router: Router) {
     this.renderer = renderer;
     this.document = document;
   }
@@ -42,14 +40,5 @@ export class TopNavComponent implements AfterViewInit {
         this.renderer.setElementProperty(anchorEl, 'scrollTop', 0);
       }
     }
-  }
-
-  isLoggedIn() {
-    return this.authService.isAuthenticated();
-  }
-
-  logout() {
-    this.authService.logout();
-    this.router.navigateByUrl('/login');
   }
 }
