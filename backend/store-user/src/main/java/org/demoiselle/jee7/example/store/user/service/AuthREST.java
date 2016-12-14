@@ -7,9 +7,6 @@
 package org.demoiselle.jee7.example.store.user.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -79,16 +76,15 @@ public class AuthREST {
 			ArrayList<String> roles = new ArrayList<>();
 			roles.add(usuario.getRole());
 
-			Map<String, List<String>> permissions = new HashMap<>();
-			ArrayList<String> p1 = new ArrayList<String>();
-			p1.add("Alterar");
-			ArrayList<String> p2 = new ArrayList<String>();
-			p2.add("Consultar");
+			// Resources And Premissions
+			loggedUser.addPermission("Produto", "Alterar");
+			loggedUser.addPermission("Produto", "Consultar");
 
-			permissions.put("Produto", p1);
-			permissions.put("Categoria", p2);
-			loggedUser.setRoles(roles);
-			loggedUser.setPermissions(permissions);
+			loggedUser.addPermission("Consultar", "Alterar");
+			loggedUser.addPermission("Consultar", "Consultar");
+
+			// Role
+			loggedUser.addRole(usuario.getRole());
 
 			// Tenant
 			loggedUser.addParam("Tenant", multiTenantContext.getTenant().getName());

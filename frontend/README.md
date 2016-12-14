@@ -1,11 +1,8 @@
 # exemplo-loja
 
->Atenção: Esteja certo de estar usando a última versão do Node.js e do NPM
-
 ### Início Rápido
 
-> ?? Clone/Download the repo then edit `app.ts` inside [`/src/app/app.component.ts`](/src/app/app.component.ts)
-
+Para clonar o repositório:
 ```bash
 # clone o repositório
 $ git clone https://github.com/demoiselle/example-store.git exemplo-loja
@@ -23,24 +20,23 @@ vá para [http://localhost:7070](http://localhost:7070) no seu navegador.
 
 # Índice
 
-* [Getting Started](#getting-started)
-    * [Dependencies](#dependencies)
-    * [Installing](#installing)
-    * [Configuring](#configuring)
-    * [Developing](#developing)
-    * [Testing](#testing)
-    * [Production](#production)
-    * [Documentation](#documentation)
-* [Frequently asked questions](#faq)
+* [Iniciando](#iniciando)
+    * [Dependências](#dependencias)
+    * [Instalando](#instalando)
+    * [Configurando](#configurando)
+    * [Desenvolvendo](#desenvolvendo)
+    * [Produção](#producao)
+* [Perguntas Frequentes](#faq)
 * [TypeScript](#typescript)
-* [License](#license)
+* [Licença](#licenca)
 
 # Iniciando
 
 ## Dependências
+
 O que você precisa para rodar o app:
 * `node` e `npm` (Use o [NVM](https://github.com/creationix/nvm) para gerenciar as versões do Node)
-* Certifique-se se estar usando as versões (`v6.x.x`+) do Node (`3.x.x`+) do NPM
+* Este projeto utiliza as versões (`v6.x.x`+) do Node (`3.x.x`+) do NPM
 
 ## Instalando
 
@@ -48,7 +44,7 @@ O que você precisa para rodar o app:
 
 ## Configurando
 
-Você pode configurar múltiplos endpoints nos arquivos webpack(.dev/.prod/.test) na pasta /config.
+Múltiplos endpoints podem ser configurados nos arquivos webpack(.dev/.prod/.test) na pasta /config.
 Exemplo:
 ```
 'endpoints' : {
@@ -56,72 +52,63 @@ Exemplo:
 }
 ```
 
-Então você pode usar a chave do endpoint para fazer requisições dessa forma:
+A chave do endpoint pode ser usada para fazer requisições dessa forma:
 ```
 this.http.get('~endpoint1/usuario/')
 ```
 
 ## Desenvolvendo
 
-Depois de instalar todas as dependências com `npm install` você deve iniciar o servidor com:
+Depois de instalar todas as dependências com `npm install`, iniciar o servidor com:
 
 * `npm start`
 
-Isso vai iniciar um servidor local usando `webpack-dev-server` que irá monitorar, construir (em memória) e recarregar para você. A aplicação ficará disponível em: `http://localhost:7070`.
+Isso vai iniciar um servidor local usando `webpack-dev-server` que irá monitorar, construir (em memória) e recarregar automaticamente. A aplicação ficará disponível em: `http://localhost:7070`.
 
-Tudo pronto! Agora você pode modificar componentes em tempo real sem ter que se preocupar em ficar recarregando a página.
+Tudo pronto! Agora os componentes podem ser modificados em tempo real sem ter que se preocupar em ficar recarregando a página.
 
 ## Produção
 
-To build your application, run:
+Para construir a aplicação, rodar o comando:
 
 * `npm run build`
 
-You can now go to `/dist` and deploy that to your server!
+O conteúdo gerado na pasta `/dist` é o que dever ser implantado no servidor.
 
-## Documentation
+# Perguntas Frequentes
 
-You can generate api docs (using [TypeDoc](http://typedoc.io/)) for your code with the following:
+#### É preciso adicionar cada script / tag de link no index.html ?
 
-* `npm run docs`
+Não, o Webpack adicionará todos os pacotes de Javascript necessários como tags de script e todos os arquivos CSS como tags de link. A vantagem é que você não precisa modificar o index.html toda vez que você cria sua solução para atualizar os seus arquivos.
 
-# FAQ
+#### Como incluir bibliotecas angular 2 externas ?
 
-#### Do I need to add script / link tags into index.html ?
+É simples, basta instalar a biblioteca via `npm istall` e importá-la em seu código quando você precisar dela. Utilizar o parâmetro `--save` para incluir a biblioteca no seu projeto:
 
-No, Webpack will add all the needed Javascript bundles as script tags and all the CSS files as link tags. The advantage is that you don't need to modify the index.html every time you build your solution to update the hashes.
+* `npm install bibliotecaexterna --save`
 
-#### How to include external angular 2 libraries ?
+#### Como incluir css externo como bootstrap.css ?
 
-It's simple, just install the lib via npm and import it in your code when you need it. Don't forget that you need to configure some external libs in the [bootstrap](https://github.com/preboot/angular2-webpack/blob/master/src/main.ts) of your application.
-
-#### How to include external css files such as bootstrap.css ?
-
-Just install the lib and import the css files in [vendor.ts](https://github.com/preboot/angular2-webpack/blob/master/src/vendor.ts). For example this is how to do it with bootstrap:
+Basta instalar a biblioteca e importar o arquivo css em um arquivo que agrupe a importação de bibliotecas externas, geralmente chamado de [vendor.ts] (https://github.com/preboot/angular2-webpack/blob/master/src/vendor.ts).
 
 ```sh
-npm install bootstrap@next --save
+npm install bibliotecaexterna --save
 ```
 
-And in [vendor.ts](https://github.com/preboot/angular2-webpack/blob/master/src/vendor.ts) add the following:
+Então em [vendor.ts] adicionar o seguint:
 
 ```ts
-import 'bootstrap/dist/css/bootstrap.css';
+import 'bibliotecaexterna/dist/css/bibliotecaexterna.css';
 ```
 
 # TypeScript
 
-> To take full advantage of TypeScript with autocomplete you would have to use an editor with the correct TypeScript plugins.
+> Para aproveitar ao máximo o TypeScript com autocompletar, use um editor com os plugins corretos do TypeScript.
 
-## Use a TypeScript-aware editor
-
-We have good experience using these editors:
+## Usar um editor compatível com TypeScript:
 
 * [Visual Studio Code](https://code.visualstudio.com/)
-* [Webstorm 11+](https://www.jetbrains.com/webstorm/download/)
-* [Atom](https://atom.io/) with [TypeScript plugin](https://atom.io/packages/atom-typescript)
-* [Sublime Text](http://www.sublimetext.com/3) with [Typescript-Sublime-Plugin](https://github.com/Microsoft/Typescript-Sublime-plugin#installation)
 
-# License
+# Licença
 
 [MIT](/LICENSE)
