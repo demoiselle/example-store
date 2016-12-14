@@ -59,7 +59,7 @@
                                     .controller('MyCtrl', function ($scope, $http) {
                                         // init form
                                         $scope.isLoading = false;
-                                        $scope.url = $scope.swaggerUrl = 'api/swagger.json';
+                                        $scope.url = $scope.swaggerUrl = 'api/v1/swagger.json';
                                         // error management
                                         $scope.myErrorHandler = function (data, status) {
                                             alert('failed to load swagger: ' + status + '   ' + data);
