@@ -1,3 +1,4 @@
+nb-configuration.xml
 /backend/product/target/
 /backend/sale/target/
 /backend/auth/target/

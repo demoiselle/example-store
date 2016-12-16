@@ -11,6 +11,7 @@
                 <label for="tenantName">Nome da loja</label>
                 <input type="text" id="tenantName" class="form-control"
                     required minlength="4" maxlength="250"
+                    pattern="[a-zA-Z0-9]+"
                     name="tNameVldt" [(ngModel)]="tenantName"
                     #tNameVldt="ngModel" >
 
@@ -24,6 +25,9 @@
                     </div>
                     <div [hidden]="!tNameVldt.errors.maxlength">
                     Nome de loja deve conter no máximo 250 caracteres.
+                    </div>
+                    <div [hidden]="!tNameVldt.errors.pattern">
+                    Apenas caracteres alfanuméricos sem espaços.
                     </div>
                 </div>
 

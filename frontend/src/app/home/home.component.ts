@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
     console.log('Hello Home');
     this.tenantService.tenantCreated.subscribe(
       () => {
-        this.notificationService.error('Nova loja criada!');
+        this.notificationService.success('Nova loja criada!');
         return true;
       },
       (error) => {
