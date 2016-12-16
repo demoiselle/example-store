@@ -20,3 +20,6 @@
 /frontend/src/*/__build__/
 /frontend/__build__/**
 /frontend/.webpack.json
+/frontend/config/webpack.dev.js
+/frontend/config/webpack.prod.js
+/frontend/config/webpack.test.js
