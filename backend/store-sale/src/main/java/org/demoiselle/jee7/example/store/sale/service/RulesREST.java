@@ -16,11 +16,7 @@ import io.swagger.annotations.Api;
 @Path("rules")
 public class RulesREST extends AbstractREST<Rules, Long> {
 
-	@Override
-	public Result find(String field, String order, int init, int qtde) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
   
 }
 

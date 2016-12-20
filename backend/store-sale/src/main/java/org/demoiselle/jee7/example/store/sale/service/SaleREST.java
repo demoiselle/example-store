@@ -67,11 +67,6 @@ public class SaleREST extends AbstractREST<Sale, Long> {
 		return saleBC.listSaleItens(id);
 	}
 
-	@Override
-	public Result find(String field, String order, int init, int qtde) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	/*
 	 * Cart Sample ...

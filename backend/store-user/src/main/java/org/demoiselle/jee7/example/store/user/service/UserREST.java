@@ -25,10 +25,5 @@ import io.swagger.annotations.Api;
 @RequestScoped
 public class UserREST extends AbstractREST<User, Long> {
 
-	@Override
-	public Result find(String field, String order, int init, int qtde) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

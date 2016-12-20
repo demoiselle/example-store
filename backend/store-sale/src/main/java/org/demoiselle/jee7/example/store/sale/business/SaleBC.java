@@ -1,13 +1,11 @@
 package org.demoiselle.jee7.example.store.sale.business;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.persistence.NoResultException;
 
 import javax.script.ScriptException;
 import javax.script.SimpleBindings;
@@ -292,26 +290,25 @@ public class SaleBC extends AbstractBusiness<Sale,Long>{
 	  * Process the cart with/without coupons.
 	  * 
 	  */	  
-	 public Cart processCartCupom (Cart cart) throws ScriptException {     	            
-        for(String cupom : cart.getListaCupons()){		        	
-        	dm.loadEngine("groovy");
-        	
-        	if (dm.getScript(cupom) == null) {
-        		Rules rule = validateCupom(cupom);
-        		    
-        		if( rule != null) {	        			
-        		    dm.loadScript(cupom, rule.getScript());	        		 
-            			            		
-            		for(ItemCart item : cart.getItens()){
-    		        	SimpleBindings context = new SimpleBindings();                                   
-    		        	context.put(item.getClass().getSimpleName(),item);
-    		        	context.put(cart.getClass().getSimpleName(),cart);           
-    		        	dm.eval(cupom, context); 						   //run the script of rule
-    	        	}
-    	        	//Remove from cache for tests....
-    	        	dm.removeScript(cupom);	        				 
-    		    }
-        	}	        		       			        		
+	 public Cart processCartCupom (Cart cart) throws ScriptException {   		 
+		String engineName = "groovy";
+		
+        for(String cupom : cart.getListaCupons()){		        	        	        	        	
+    		Rules rule = validateCupom(cupom);
+                		    
+    		if( rule != null) {	        			
+    		    dm.loadScript(engineName, cupom, rule.getScript());	        		 
+        			            		
+        		for(ItemCart item : cart.getItens()){
+		        	SimpleBindings context = new SimpleBindings();                                   
+		        	context.put(item.getClass().getSimpleName(), item);
+		        	context.put(cart.getClass().getSimpleName(), cart);           
+		        	dm.eval(engineName, cupom, context); 						   //run the script of rule
+	        	}
+	        	//Remove from cache for tests....
+	        	//dm.removeScript(engineName, cupom);	        				 
+		    }
+        		        		       			        		
         }	        		        	        	        	       
         return cart;
 	 }

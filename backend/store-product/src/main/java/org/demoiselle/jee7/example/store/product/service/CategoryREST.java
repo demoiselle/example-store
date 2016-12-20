@@ -51,10 +51,5 @@ public class CategoryREST extends AbstractREST<Category, Long> {
 		bc.remove(id);
 	}
 
-	@Override
-	public Result find(String field, String order, int init, int qtde) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

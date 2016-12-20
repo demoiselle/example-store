@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -33,7 +34,8 @@ public class Product implements Serializable {
 	@Basic(optional = false)
 	@Column(nullable = false)
 	private Long id;
-		
+	
+
 	@JoinColumn(name = "category_id", nullable = false, updatable = true)
 	@ManyToOne(optional = false)
 	private Category category;
@@ -44,9 +46,12 @@ public class Product implements Serializable {
 	
 	// @Max(value=?) @Min(value = ?)//if you know range of your decimal fields
 	// consider using these annotations to enforce field validation
+	
+	@NotNull
 	@Column(precision = 12)
 	private Float cost;
 
+	@NotNull
 	@Column(name = "quantity")
 	private Integer quantity;
 

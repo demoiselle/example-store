@@ -63,16 +63,9 @@ public class UserBC extends AbstractBusiness<User, Long> {
 				vars.put("tenant", tenant);
 
 				String scriptId = "createUser-" + tenant.getName();
-
-				// Verifica se existe o script no cache
-				if (scriptManager.getScript(scriptId) == null) {
-					System.out.println("Criado o script [" + scriptId + "].");
-
-					scriptManager.loadEngine("groovy");
-					scriptManager.loadScript(scriptId, script);
-				}
-
-				scriptManager.eval(scriptId, vars);
+				
+				scriptManager.loadScript("groovy", scriptId, script);				
+				scriptManager.eval("groovy", scriptId, vars);
 			}
 		} catch (ScriptException e) {
 			e.printStackTrace();
