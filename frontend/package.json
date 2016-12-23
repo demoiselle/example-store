@@ -33,7 +33,7 @@
     "@angular/platform-browser": "2.3.0",
     "@angular/platform-browser-dynamic": "2.3.0",
     "@angular/router": "3.3.0",
-    "@demoiselle/http": "~0.0.6",
+    "@demoiselle/http": "^0.0.9",
     "@demoiselle/security": "~0.0.7",
     "ag-grid": "^7.0.1",
     "ag-grid-ng2": "^7.0.1",
