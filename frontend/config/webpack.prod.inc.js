@@ -9,14 +9,14 @@ module.exports = {
      * 
      */ 
     'endpoints' : {
-         'sale' : 'localhost:8080/sales/api/v1/',
-         'product' : 'localhost:8080/products/api/v1/',
-         'user' : 'localhost:8080/users/api/v1/'
+         'sale' : 'http://localhost:8080/sales/api/v1/',
+         'product' : 'http://localhost:8080/products/api/v1/',
+         'user' : 'http://localhost:8080/users/api/v1/'
         
     },
     'multitenancy' : {
         'active': true,
-        'apiUrl': 'localhost:8080/users/api/v1/'
+        'apiUrl': 'http://localhost:8080/users/api/v1/'
     }
 
 
