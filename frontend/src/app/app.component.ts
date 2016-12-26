@@ -50,6 +50,6 @@ export class AppComponent implements AfterContentInit {
     // });
 
     // uncomment if the application need to retoken
-    //this.authService.initializeReTokenPolling(60000 * 1/6);
+    //this.authService.initializeReTokenPolling();
   }
 }
