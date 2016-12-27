@@ -38,101 +38,103 @@ import io.swagger.annotations.Api;
 
 @Path("auth")
 @Api("Auth")
-@Consumes({ MediaType.APPLICATION_JSON })
-@Produces({ MediaType.APPLICATION_JSON })
+@Consumes({MediaType.APPLICATION_JSON})
+@Produces({MediaType.APPLICATION_JSON})
 @RequestScoped
 public class AuthREST {
 
-	@Inject
-	private UserBC business;
+    @Inject
+    private UserBC business;
 
-	@Inject
-	private DemoiselleUser loggedUser;
+    @Inject
+    private DemoiselleUser loggedUser;
 
-	@Inject
-	private DemoiselleSecurityJWTConfig config;
+    @Inject
+    private DemoiselleSecurityJWTConfig config;
 
-	@Inject
-	private MultiTenantContext multiTenantContext;
+    @Inject
+    private MultiTenantContext multiTenantContext;
 
-	@Inject
-	private SecurityContext securityContext;
+    @Inject
+    private SecurityContext securityContext;
 
-	@Inject
-	private DemoiselleSecurityMessages bundle;
+    @Inject
+    private DemoiselleSecurityMessages bundle;
 
-	@Inject
-	private Token token;
+    @Inject
+    private Token token;
 
-	@POST
-	@Path("login")
-	public Response login(Credentials credentials) {
+    @POST
+    @Path("login")
+    public Response login(Credentials credentials) {
 
-		User usuario = business.loadByEmailAndSenha(credentials.getUsername(), credentials.getPassword());
+        User usuario = business.loadByEmailAndSenha(credentials.getUsername(), credentials.getPassword());
 
-		if (usuario != null) {
-			loggedUser.setName(credentials.getUsername());
-			loggedUser.setIdentity("" + System.currentTimeMillis());
-			ArrayList<String> roles = new ArrayList<>();
-			roles.add(usuario.getRole());
+        if (usuario != null) {
+            loggedUser.setName(credentials.getUsername());
+            loggedUser.setIdentity("" + System.currentTimeMillis());
+            ArrayList<String> roles = new ArrayList<>();
+            roles.add(usuario.getRole());
 
-			// Resources And Premissions
-			loggedUser.addPermission("Produto", "Alterar");
-			loggedUser.addPermission("Produto", "Consultar");
+            // Resources And Premissions
+            loggedUser.addPermission("Produto", "Alterar");
+            loggedUser.addPermission("Produto", "Consultar");
 
-			loggedUser.addPermission("Consultar", "Alterar");
-			loggedUser.addPermission("Consultar", "Consultar");
+            loggedUser.addPermission("Consultar", "Alterar");
+            loggedUser.addPermission("Consultar", "Consultar");
 
-			// Role
-			loggedUser.addRole(usuario.getRole());
+            // Role
+            loggedUser.addRole(usuario.getRole());
 
-			// Tenant
-			loggedUser.addParam("Tenant", multiTenantContext.getTenant().getName());
+            // Tenant
+            loggedUser.addParam("email", usuario.getEmail());
+            loggedUser.addParam("fone", usuario.getFone());
+            loggedUser.addParam("Tenant", multiTenantContext.getTenant().getName());
 
-			securityContext.setUser(loggedUser);
-		} else {
-			throw new DemoiselleSecurityException(bundle.invalidCredentials(),
-					Response.Status.NOT_ACCEPTABLE.getStatusCode());
-		}
+            securityContext.setUser(loggedUser);
+        } else {
+            throw new DemoiselleSecurityException(bundle.invalidCredentials(),
+                    Response.Status.NOT_ACCEPTABLE.getStatusCode());
+        }
 
-		return Response.ok().entity("{\"token\":\"" + token.getKey() + "\"}").build();
-	}
+        return Response.ok().entity("{\"token\":\"" + token.getKey() + "\"}").build();
+    }
 
-	@GET
-	@Cors
-	@LoggedIn
-	public void retoken(@Suspended final AsyncResponse asyncResponse) {
-		asyncResponse.resume(doRetoken());
-	}
+    @GET
+    @Cors
+    @LoggedIn
+    public void retoken(@Suspended final AsyncResponse asyncResponse) {
+        asyncResponse.resume(doRetoken());
+    }
 
-	private Response doRetoken() {
-		loggedUser = securityContext.getUser();
-		securityContext.setUser(loggedUser);
-		return Response.ok().entity("{\"token\":\"" + token.getKey() + "\"}").build();
-	}
+    private Response doRetoken() {
+        loggedUser = securityContext.getUser();
+        securityContext.setUser(loggedUser);
+        return Response.ok().entity("{\"token\":\"" + token.getKey() + "\"}").build();
+    }
 
-	@GET
-	@Path("publicKey")
-	public Response getPublicKey() {
-		return Response.ok().entity("{\"publicKey\":\"" + config.getPublicKey() + "\"}").build();
-	}
+    @GET
+    @Path("publicKey")
+    public Response getPublicKey() {
+        return Response.ok().entity("{\"publicKey\":\"" + config.getPublicKey() + "\"}").build();
+    }
 
-	@SuppressWarnings("unchecked")
-	public JSONObject loggedUserObject() {
-		JSONObject json = new JSONObject();
-		json.put("identity", loggedUser.getIdentity());
-		json.put("name", loggedUser.getName());
-		json.put("roles", loggedUser.getRoles());
-		json.put("permissions", loggedUser.getPermissions());
-		json.put("tenant", loggedUser.getParams("Tenant"));
-		return json;
-	}
+    @SuppressWarnings("unchecked")
+    public JSONObject loggedUserObject() {
+        JSONObject json = new JSONObject();
+        json.put("identity", loggedUser.getIdentity());
+        json.put("name", loggedUser.getName());
+        json.put("roles", loggedUser.getRoles());
+        json.put("permissions", loggedUser.getPermissions());
+        json.put("tenant", loggedUser.getParams("Tenant"));
+        return json;
+    }
 
-	@GET
-	@Path("user")
-	@LoggedIn
-	public Response user() {
-		return Response.ok(loggedUserObject()).build();
-	}
+    @GET
+    @Path("user")
+    @LoggedIn
+    public Response user() {
+        return Response.ok(loggedUserObject()).build();
+    }
 
 }
