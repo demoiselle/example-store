@@ -11,8 +11,10 @@ import { CategoriaEditComponent } from './categoria/categoria-edit.component';
 import { TenantCrudComponent } from './tenant/tenant-crud.component';
 import { CatalogComponent } from './shopping/catalog.component';
 import { DetailsComponent } from './shopping/details.component';
+import { ComprasComponent } from './shopping/compras.component';
 import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { ContaComponent } from './usuario/conta.component';
 
 import {AuthGuard} from '@demoiselle/security';
 //import {AuthGuard} from '@demoiselle/security'; // when importing from npm repository
@@ -110,7 +112,16 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     component: CheckoutComponent
   },
-
+  { 
+    path: 'conta',
+    canActivate: [AuthGuard],
+    component: ContaComponent
+  },
+  { 
+    path: 'compras',
+    canActivate: [AuthGuard],
+    component: ComprasComponent
+  }
 
 ];
 

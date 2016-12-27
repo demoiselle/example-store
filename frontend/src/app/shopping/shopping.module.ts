@@ -9,6 +9,7 @@ import { CatalogComponent } from './catalog.component';
 import { CatalogService } from './catalog.service';
 import { ItemPreviewComponent } from './item-preview.component';
 import { DetailsComponent} from './details.component';
+import { ComprasComponent} from './compras.component';
 
 @NgModule({
     imports: [
@@ -23,8 +24,8 @@ import { DetailsComponent} from './details.component';
     declarations: [
         CatalogComponent,
         ItemPreviewComponent,
-        DetailsComponent
-
+        DetailsComponent,
+        ComprasComponent
     ],
     providers: [CatalogService]
 })

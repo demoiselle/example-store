@@ -9,6 +9,9 @@ import { UsuarioComponent } from './usuario.component';
 import { UsuarioEditComponent } from './usuario-edit.component';
 import { UsuarioDropdownComponent } from './usuario-dropdown.component';
 
+import { ContaComponent } from './conta.component';
+import { ContaService } from './conta.service';
+
 @NgModule({
     imports: [
         SharedModule,
@@ -19,9 +22,14 @@ import { UsuarioDropdownComponent } from './usuario-dropdown.component';
         })
     ],
     declarations: [
-        UsuarioComponent, UsuarioEditComponent, UsuarioDropdownComponent
+        UsuarioComponent, UsuarioEditComponent, UsuarioDropdownComponent, ContaComponent
     ],
-    providers: [UsuarioService],
-    exports: [UsuarioDropdownComponent]
+    providers: [
+        UsuarioService,
+        ContaService],
+    exports: [
+        UsuarioDropdownComponent,
+        ContaComponent
+    ]
 })
 export class UsuarioModule { }

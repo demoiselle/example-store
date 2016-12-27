@@ -8,7 +8,6 @@ import { TenantService } from '../tenant/tenant.service';
 export class CatalogService {
 
     apiUrl = '~product/';
-    //apiUrl = 'http://10.32.128.43:8080/products/api/v1/xboxlive/';
 
     private catalog: Item[];
     constructor(private http: Http, protected tenantService: TenantService) {

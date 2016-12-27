@@ -95,6 +95,9 @@ export class CheckoutComponent implements OnInit {
     }
 
     processSaleComplete(res){
+        console.log('PROCESS SALE COMPLETE');
+        console.log(res);
+
         this.cartService.clearCart();
         this.cartItems = null;
 
