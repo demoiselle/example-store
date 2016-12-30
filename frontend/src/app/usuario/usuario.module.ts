@@ -1,20 +1,21 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared';
+import { UsuarioRoutingModule } from './usuario-routing.module';
 
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
-import { PaginationModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 import { UsuarioService } from './usuario.service';
 import { UsuarioComponent } from './usuario.component';
 import { UsuarioEditComponent } from './usuario-edit.component';
-import { UsuarioDropdownComponent } from './usuario-dropdown.component';
 
 import { ContaComponent } from './conta.component';
 import { ContaService } from './conta.service';
 
+
 @NgModule({
     imports: [
         SharedModule,
+        UsuarioRoutingModule,
         ConfirmationPopoverModule.forRoot({
             confirmText: 'Sim',
             cancelText: 'Não',
@@ -22,13 +23,13 @@ import { ContaService } from './conta.service';
         })
     ],
     declarations: [
-        UsuarioComponent, UsuarioEditComponent, UsuarioDropdownComponent, ContaComponent
+        UsuarioComponent, UsuarioEditComponent, ContaComponent
     ],
     providers: [
         UsuarioService,
-        ContaService],
+        ContaService
+    ],
     exports: [
-        UsuarioDropdownComponent,
         ContaComponent
     ]
 })

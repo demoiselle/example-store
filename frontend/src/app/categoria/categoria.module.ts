@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import {SharedModule} from '../shared';
-
-import {ConfirmationPopoverModule} from 'angular-confirmation-popover';
+import { SharedModule } from '../shared';
+import { CategoriaRoutingModule } from './categoria-routing.module';
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { PaginationModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 import { CategoriaService } from './categoria.service';
@@ -12,7 +12,7 @@ import { CategoriaEditComponent } from './categoria-edit.component';
 
 @NgModule({
     imports: [
-        SharedModule,
+        SharedModule, CategoriaRoutingModule,
         ConfirmationPopoverModule.forRoot({
             confirmText: 'Sim',
             cancelText: 'Não',
@@ -24,4 +24,4 @@ import { CategoriaEditComponent } from './categoria-edit.component';
     ],
     providers: [CategoriaService]
 })
-export class CategoriaModule {}
+export class CategoriaModule { }

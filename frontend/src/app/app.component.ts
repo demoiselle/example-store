@@ -4,27 +4,15 @@ import { Ng2BootstrapConfig, Ng2BootstrapTheme, ComponentsHelper } from 'ng2-boo
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { AuthService } from '@demoiselle/security';
 
-
-let w:any = window;
-
-if (w && w.__theme === 'bs4') {
-  Ng2BootstrapConfig.theme = Ng2BootstrapTheme.BS4;
-}
-
 // global style
 import '../style/global.scss';
-
-// the app.component template is the layout itself
-let template = require('./layout/layout.template.html');
-
 
 @Component({
   selector: 'my-app', // <my-app></my-app>
   styleUrls: ['./app.component.scss'],
-  template: template
+  template: require('./app.component.html')
 })
 export class AppComponent implements AfterContentInit {
-  public isBs3:boolean = Ng2BootstrapConfig.theme === Ng2BootstrapTheme.BS3;
   private viewContainerRef:ViewContainerRef;
 
   public constructor(
@@ -40,15 +28,7 @@ export class AppComponent implements AfterContentInit {
   }
 
   public ngAfterContentInit():any {
-    // this.router.events.subscribe((event:any) => {
-    //   if (event instanceof NavigationEnd) {
-    //     if (typeof PR !== 'undefined') {
-    //       // google code-prettify
-    //       setTimeout(PR.prettyPrint, 50);
-    //     }
-    //   }
-    // });
-
+    
     // uncomment if the application need to retoken
     //this.authService.initializeReTokenPolling();
   }

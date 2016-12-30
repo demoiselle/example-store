@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
-import {SharedModule} from '../shared';
-import {ConfirmationPopoverModule} from 'angular-confirmation-popover';
+import { SharedModule } from '../shared';
+import { ShoppingRoutingModule } from './shopping-routing.module';
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { PaginationModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { InfiniteScrollModule } from 'angular2-infinite-scroll';
 
@@ -13,7 +14,7 @@ import { ComprasComponent} from './compras.component';
 
 @NgModule({
     imports: [
-        SharedModule,
+        SharedModule, ShoppingRoutingModule,
         ConfirmationPopoverModule.forRoot({
             confirmText: 'Sim',
             cancelText: 'Não',
@@ -25,8 +26,9 @@ import { ComprasComponent} from './compras.component';
         CatalogComponent,
         ItemPreviewComponent,
         DetailsComponent,
-        ComprasComponent
+	    ComprasComponent
+
     ],
     providers: [CatalogService]
 })
-export class ShoppingModule {}
+export class ShoppingModule { }

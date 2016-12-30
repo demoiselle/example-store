@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
-import {SharedModule} from '../shared';
-import {ConfirmationPopoverModule} from 'angular-confirmation-popover';
+import { SharedModule } from '../shared';
+import { CartRoutingModule } from './cart-routing.module';
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { ItemCartComponent } from './item-cart.component';
-import { CartComponent} from './cart.component';
-import { AmountSpinnerComponent} from './amount-spinner.component';
+import { CartComponent } from './cart.component';
+import { AmountSpinnerComponent } from './amount-spinner.component';
 
 
 @NgModule({
     imports: [
-        SharedModule,
+        SharedModule, CartRoutingModule,
         ConfirmationPopoverModule.forRoot({
             confirmText: 'Sim',
             cancelText: 'Não',
@@ -22,4 +23,4 @@ import { AmountSpinnerComponent} from './amount-spinner.component';
     ],
     providers: []
 })
-export class CartModule {}
+export class CartModule { }

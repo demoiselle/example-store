@@ -5,16 +5,13 @@ import { FormsModule } from '@angular/forms';
 import { ComponentsHelper } from 'ng2-bootstrap/ng2-bootstrap';
 
 import { AppComponent } from './app.component';
-import { routing } from './app.routing';
+import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { SecurityModule } from '@demoiselle/security';
-
-// layout
-import { SidebarMenuComponent } from './layout/sidebar-menu/sidebar-menu.component';
-import { TopNavComponent } from './layout/top-nav/top-nav.component';
+import { SharedModule } from './shared';
 
 // feature modules
-import { LoginComponent } from './login';
+import { LoginModule } from './login/login.module';
 import { HomeModule } from './home/home.module';
 import { ProdutoModule } from './produto/produto.module';
 import { UsuarioModule } from './usuario';
@@ -24,11 +21,9 @@ import { ShoppingModule } from './shopping';
 import { CartModule } from './cart';
 import { CheckoutModule } from './checkout';
 
-import { LoginService } from './login/login.service';
-
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 
-import {ToastModule, ToastOptions} from 'ng2-toastr/ng2-toastr';
+import { ToastModule, ToastOptions } from 'ng2-toastr/ng2-toastr';
 let toastrOptions: ToastOptions = new ToastOptions({
   animate: 'flyRight',
   positionClass: 'toast-bottom-right',
@@ -43,12 +38,14 @@ let toastrOptions: ToastOptions = new ToastOptions({
     BrowserModule,
     HttpModule,
     FormsModule,
-    routing,
+    AppRoutingModule,
     CoreModule.forRoot(),
+    SharedModule,
     SecurityModule,
-
     ToastModule.forRoot(toastrOptions),
 
+    //#feature modules
+    LoginModule,
     HomeModule,
     ProdutoModule,
     UsuarioModule,
@@ -60,15 +57,12 @@ let toastrOptions: ToastOptions = new ToastOptions({
   ],
   declarations: [
     AppComponent,
-    SidebarMenuComponent,
-    TopNavComponent,
-    LoginComponent
   ],
-  providers: [LoginService, {provide: ComponentsHelper, useClass: ComponentsHelper}],
+  providers: [ { provide: ComponentsHelper, useClass: ComponentsHelper }],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(public appRef: ApplicationRef) {}
+  constructor(public appRef: ApplicationRef) { }
   hmrOnInit(store) {
     console.log('HMR store', store);
   }

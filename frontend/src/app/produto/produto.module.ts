@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
-import { CommonModule} from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared';
+import { ProdutoRoutingModule } from './produto-routing.module';
+
 import { ProdutoComponent } from './produto.component';
 import { ProdutoEditComponent } from './produto-edit.component';
-import { SecurityModule } from '@demoiselle/security';
-import { NotificationService} from '../shared/notification.service';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 
 import {ProdutoService} from './produto.service';
@@ -13,8 +11,7 @@ import {ProdutoService} from './produto.service';
 
 @NgModule({
     imports: [
-        SharedModule, SecurityModule,
-        CommonModule, FormsModule,
+        SharedModule, ProdutoRoutingModule,
         ConfirmationPopoverModule.forRoot({
             confirmText: 'Sim',
             cancelText: 'Não',
@@ -24,6 +21,6 @@ import {ProdutoService} from './produto.service';
     declarations: [
         ProdutoComponent, ProdutoEditComponent
     ],
-    providers: [ProdutoService, NotificationService]
+    providers: [ProdutoService]
 })
 export class ProdutoModule {}
