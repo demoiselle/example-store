@@ -10,6 +10,7 @@ import { AuthGuard } from '@demoiselle/security';
             {
                 path: 'categoria',
                 canActivate: [AuthGuard],
+                data: ['Categoria'],
                 component: CategoriaComponent
             },
 

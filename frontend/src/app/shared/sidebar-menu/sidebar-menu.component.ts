@@ -16,6 +16,8 @@ export class SidebarMenuComponent {
   public search: any = {};
   public hash: string = '';
 
+  public routes: any[] = [];
+
   public constructor(private router: Router, private authService: AuthService, private loginService: LoginService) {
     
     this.router.events.subscribe((event: any) => {
@@ -24,7 +26,12 @@ export class SidebarMenuComponent {
       }
     });
 
-    // console.log(this.authService.isAuthorized(['ADMINISTRATOR']));
+    for (let i = 0; i < this.router.config.length; i++) {
+        if (this.router.config[i] && this.router.config[i].data) {
+          this.routes.push(this.router.config[i]);
+        }
+    }
+
   }
 
   onRouteSelected(route) {

@@ -11,6 +11,7 @@ import { AuthGuard } from '@demoiselle/security';
             {
                 path: 'produto',
                 canActivate: [AuthGuard],
+                data: ['Produto'],
                 component: ProdutoComponent
             },
 

@@ -11,6 +11,7 @@ import { ContaComponent } from './conta.component';
             {
                 path: 'usuario',
                 canActivate: [AuthGuard],
+                data: ['Usuário'],
                 component: UsuarioComponent
             },
 
