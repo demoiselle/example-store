@@ -11,7 +11,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.demoiselle.jee.core.api.crud.Result;
 import org.demoiselle.jee.persistence.crud.AbstractREST;
 import org.demoiselle.jee.rest.annotation.ValidatePayload;
 import org.demoiselle.jee.security.annotation.RequiredRole;

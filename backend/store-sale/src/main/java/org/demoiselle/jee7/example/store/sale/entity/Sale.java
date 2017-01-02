@@ -6,7 +6,6 @@
 package org.demoiselle.jee7.example.store.sale.entity;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -49,7 +48,7 @@ public class Sale implements Serializable {
 	private Long id;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date datavenda;
-	
+
 	@Column(name = "usuario_id")
 	private String usuarioId;
 

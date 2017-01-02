@@ -12,7 +12,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.demoiselle.jee.core.api.crud.Result;
 import org.demoiselle.jee.persistence.crud.AbstractREST;
 import org.demoiselle.jee7.example.store.user.entity.User;
 
@@ -24,6 +23,5 @@ import io.swagger.annotations.Api;
 @Produces({ MediaType.APPLICATION_JSON })
 @RequestScoped
 public class UserREST extends AbstractREST<User, Long> {
-
 
 }

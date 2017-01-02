@@ -6,7 +6,6 @@
 package org.demoiselle.jee7.example.store.sale.service;
 import javax.ws.rs.Path;
 
-import org.demoiselle.jee.core.api.crud.Result;
 import org.demoiselle.jee.persistence.crud.AbstractREST;
 import org.demoiselle.jee7.example.store.sale.entity.Rules;
 
@@ -15,8 +14,5 @@ import io.swagger.annotations.Api;
 @Api("Rules")
 @Path("rules")
 public class RulesREST extends AbstractREST<Rules, Long> {
-
-	
-  
+ 
 }
-

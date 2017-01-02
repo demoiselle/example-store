@@ -15,7 +15,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
-import org.demoiselle.jee.core.api.crud.Result;
 import org.demoiselle.jee.persistence.crud.AbstractREST;
 import org.demoiselle.jee7.example.store.sale.business.SaleBC;
 import org.demoiselle.jee7.example.store.sale.entity.Cart;
@@ -66,7 +65,6 @@ public class SaleREST extends AbstractREST<Sale, Long> {
 
 		return saleBC.listSaleItens(id);
 	}
-
 
 	/*
 	 * Cart Sample ...
