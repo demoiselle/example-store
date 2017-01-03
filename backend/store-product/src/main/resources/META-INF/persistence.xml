@@ -13,9 +13,9 @@
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 			<property name="hibernate.multiTenancy" value="SCHEMA" />
 			<property name="hibernate.tenant_identifier_resolver"
-				value="org.demoiselle.jee.multitenancy.hibernate.dao.SchemaResolver" />
+				value="org.demoiselle.component.tenant.dao.SchemaResolver" />
 			<property name="hibernate.multi_tenant_connection_provider"
-				value="org.demoiselle.jee.multitenancy.hibernate.dao.MultiTenantProvider" />
+				value="org.demoiselle.component.tenant.dao.MultiTenantProvider" />
 		</properties>
 	</persistence-unit>
 
@@ -23,7 +23,7 @@
 		transaction-type="JTA">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:jboss/datasources/ProductMasterDS</jta-data-source>
-		<class>org.demoiselle.jee.multitenancy.hibernate.entity.Tenant</class>
+		<class>org.demoiselle.component.tenant.entity.Tenant</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
