@@ -17,9 +17,9 @@ import javax.script.SimpleBindings;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 
+import org.demoiselle.component.tenant.context.MultiTenantContext;
+import org.demoiselle.component.tenant.entity.Tenant;
 import org.demoiselle.jee.core.exception.DemoiselleException;
-import org.demoiselle.jee.multitenancy.hibernate.context.MultiTenantContext;
-import org.demoiselle.jee.multitenancy.hibernate.entity.Tenant;
 import org.demoiselle.jee.persistence.crud.AbstractBusiness;
 import org.demoiselle.jee.script.DynamicManager;
 import org.demoiselle.jee.security.exception.DemoiselleSecurityException;

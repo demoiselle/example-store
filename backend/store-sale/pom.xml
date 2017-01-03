@@ -1,104 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-<groupId>org.demoiselle.jee.example.store</groupId>
-<artifactId>store-sale</artifactId>
-    <version>1.0.0</version>
-    <packaging>war</packaging>
+	<groupId>org.demoiselle.jee.example.store</groupId>
+	<artifactId>store-sale</artifactId>
+	<version>1.0.0</version>
+	<packaging>war</packaging>
 
-    <name>sale</name>
+	<name>sale</name>
 
-    <properties>
-        <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <failOnMissingWebXml>false</failOnMissingWebXml>
-    </properties>
-  
-   <parent>
+	<properties>
+		<endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<failOnMissingWebXml>false</failOnMissingWebXml>
+	</properties>
+
+	<parent>
 		<groupId>org.demoiselle.jee</groupId>
 		<artifactId>demoiselle-parent-rest</artifactId>
 		<version>3.0.0-RC1-SNAPSHOT</version>
 		<relativePath>../demoiselle-parent-rest</relativePath>
-	</parent> 
-         
-    <dependencies>     
-    	<dependency>
-    		<groupId>org.demoiselle.jee</groupId>
-   			 <artifactId>demoiselle-multitenancy-hibernate</artifactId>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.demoiselle.component</groupId>
+			<artifactId>tenant</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
-  		 
-        <dependency>
+
+		<dependency>
 			<groupId>org.demoiselle.jee</groupId>
 			<artifactId>demoiselle-security-jwt</artifactId>
-		</dependency>  
-		
+		</dependency>
+
 		<dependency>
 			<groupId>org.demoiselle.jee</groupId>
 			<artifactId>demoiselle-crud</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.demoiselle.jee</groupId>
 			<artifactId>demoiselle-script</artifactId>
 		</dependency>
-			
+
 		<dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>1.7.1</version>
-        </dependency>	
-               		  
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>1.7.1</version>
+		</dependency>
+
 		<!-- Swagger -->
 		<dependency>
 			<groupId>io.swagger</groupId>
 			<artifactId>swagger-jaxrs</artifactId>
-		</dependency>  
-		
+		</dependency>
+
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-client</artifactId>
 			<version>1.8</version>
 		</dependency>
-				
-		<dependency>
-		    <groupId>org.bitbucket.b_c</groupId>
-		    <artifactId>jose4j</artifactId>
-		    <version>0.5.2</version>
-		</dependency>	
-        
-    </dependencies>
 
-    <build>
-        <finalName>${project.artifactId}</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <compilerArguments>
-                        <endorseddirs>${endorsed.dir}</endorseddirs>
-                    </compilerArguments>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build> 
-    
-    <profiles>
-        <profile>
-            <id>wildfly-swarm</id>
-            <dependencies>
-                <!-- WildFly Default Swarm Fractions -->
-                <dependency>
-                    <groupId>org.wildfly.swarm</groupId>
-                    <artifactId>mysql</artifactId>
-                    <version>2016.9</version>
-                </dependency>
-            </dependencies>
-        </profile>
-        <!--mvn clean package -Pwildfly-swarm && java -jar -Xmx128m target/produto-swarm.jar -->
-    </profiles> 
+		<dependency>
+			<groupId>org.bitbucket.b_c</groupId>
+			<artifactId>jose4j</artifactId>
+			<version>0.5.2</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<compilerArguments>
+						<endorseddirs>${endorsed.dir}</endorseddirs>
+					</compilerArguments>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>wildfly-swarm</id>
+			<dependencies>
+				<!-- WildFly Default Swarm Fractions -->
+				<dependency>
+					<groupId>org.wildfly.swarm</groupId>
+					<artifactId>mysql</artifactId>
+					<version>2016.9</version>
+				</dependency>
+			</dependencies>
+		</profile>
+		<!--mvn clean package -Pwildfly-swarm && java -jar -Xmx128m target/produto-swarm.jar -->
+	</profiles>
 </project>
