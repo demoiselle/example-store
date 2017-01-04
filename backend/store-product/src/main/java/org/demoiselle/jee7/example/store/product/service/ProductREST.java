@@ -17,7 +17,7 @@ import javax.ws.rs.core.UriInfo;
 import org.demoiselle.jee.persistence.crud.AbstractBusiness;
 import org.demoiselle.jee.persistence.crud.AbstractREST;
 import org.demoiselle.jee.rest.annotation.ValidatePayload;
-import org.demoiselle.jee.security.annotation.LoggedIn;
+import org.demoiselle.jee.security.annotation.Authenticated;
 import org.demoiselle.jee.security.annotation.RequiredRole;
 import org.demoiselle.jee7.example.store.product.entity.Product;
 
@@ -47,7 +47,7 @@ public class ProductREST extends AbstractREST<Product, Long> {
 	@PUT
 	@Transactional
 	@ValidatePayload
-	@LoggedIn
+	@Authenticated
 	public Product merge(Product entity) {
 		return bc.merge(entity);
 	}

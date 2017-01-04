@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.demoiselle.jee.core.api.security.DemoiselleUser;
-import org.demoiselle.jee.security.annotation.LoggedIn;
+import org.demoiselle.jee.security.annotation.Authenticated;
 import org.demoiselle.jee.security.annotation.RequiredPermission;
 import org.demoiselle.jee.security.annotation.RequiredRole;
 import org.jose4j.json.internal.json_simple.JSONObject;
@@ -47,7 +47,7 @@ public class TestRoleAndPermissionREST {
 
 	@GET
 	@Path("com")
-	@LoggedIn
+	@Authenticated
 	public Response testeCom() {
 		return Response.ok(loggedUserObject()).build();
 	}

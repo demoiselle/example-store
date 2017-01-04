@@ -25,7 +25,7 @@ import org.demoiselle.jee.core.api.security.DemoiselleUser;
 import org.demoiselle.jee.core.api.security.SecurityContext;
 import org.demoiselle.jee.core.api.security.Token;
 import org.demoiselle.jee.security.annotation.Cors;
-import org.demoiselle.jee.security.annotation.LoggedIn;
+import org.demoiselle.jee.security.annotation.Authenticated;
 import org.demoiselle.jee.security.exception.DemoiselleSecurityException;
 import org.demoiselle.jee.security.jwt.impl.DemoiselleSecurityJWTConfig;
 import org.demoiselle.jee.security.message.DemoiselleSecurityMessages;
@@ -102,7 +102,7 @@ public class AuthREST {
 
 	@GET
 	@Cors
-	@LoggedIn
+	@Authenticated
 	public void retoken(@Suspended final AsyncResponse asyncResponse) {
 		asyncResponse.resume(doRetoken());
 	}
@@ -132,7 +132,7 @@ public class AuthREST {
 
 	@GET
 	@Path("user")
-	@LoggedIn
+	@Authenticated
 	public Response user() {
 		return Response.ok(loggedUserObject()).build();
 	}
