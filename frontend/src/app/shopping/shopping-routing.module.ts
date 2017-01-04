@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { CatalogComponent } from './catalog.component';
 import { DetailsComponent } from './details.component';
 import { ComprasComponent } from './compras.component';
+import { CompraComponent } from './compra.component';
 import {AuthGuard} from '@demoiselle/security';
 
 
@@ -17,11 +18,15 @@ import {AuthGuard} from '@demoiselle/security';
                 path: 'detail/:id',
                 component: DetailsComponent
             },
-
             {
                 path: 'compras',
                 canActivate: [AuthGuard],
                 component: ComprasComponent
+            },
+            {
+                path: 'compra',
+                canActivate: [AuthGuard],
+                component: CompraComponent
             }
         ])
     ],

@@ -82,4 +82,8 @@ public class UserBC extends AbstractBusiness<User, Long> {
 		return u;
 	}
 
+        public User loadByEmail(String email) {
+            return dao.loadByEmail(email);
+        }
+
 }

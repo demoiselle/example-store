@@ -10,6 +10,7 @@ import { CatalogComponent } from './catalog.component';
 import { CatalogService } from './catalog.service';
 import { ItemPreviewComponent } from './item-preview.component';
 import { DetailsComponent} from './details.component';
+import { CompraComponent} from './compra.component';
 import { ComprasComponent} from './compras.component';
 
 @NgModule({
@@ -26,6 +27,7 @@ import { ComprasComponent} from './compras.component';
         CatalogComponent,
         ItemPreviewComponent,
         DetailsComponent,
+	    CompraComponent,
 	    ComprasComponent
 
     ],

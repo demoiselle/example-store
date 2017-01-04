@@ -1,11 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import { Router} from '@angular/router';
-import {CartItem} from "../cart/cartitem.model";
-import {CartService} from "../cart/cart.service";
-import {CheckoutService} from './checkout.service';
-import {NotificationService} from '../shared/notification.service';
-
-
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CartItem } from "../cart/cartitem.model";
+import { CartService } from "../cart/cart.service";
+import { CheckoutService } from './checkout.service';
+import { NotificationService } from '../shared/notification.service';
 
 @Component({
     selector:'checkout',
@@ -71,7 +69,9 @@ export class CheckoutComponent implements OnInit {
                 this.processSaleComplete(res);
             },
             (error) => {
-                this.notificationService.warning('Ocorreu um erro ao finalizar a compra!');
+                this.notificationService.error('Ocorreu um erro ao finalizar a compra!');
+                console.log('Error Sale Complete');
+                console.log(error);
             }
         );
     }
@@ -98,10 +98,14 @@ export class CheckoutComponent implements OnInit {
         console.log('PROCESS SALE COMPLETE');
         console.log(res);
 
+        localStorage.setItem('sale_complete', JSON.stringify(res));
+
         this.cartService.clearCart();
         this.cartItems = null;
 
         this.notificationService.success('Compra realizada com sucesso! Valor total da compra: ' + res.valorTotal);
+
+        this.router.navigate(['/compra']);
     }
     
     

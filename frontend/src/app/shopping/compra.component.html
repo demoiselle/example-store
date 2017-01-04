@@ -1,0 +1,39 @@
+<h2>Compra {{saleResult.idSale}}</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-2"><b>Descrição</b></div>
+        <div class="col-md-2"><b>Valor Unitário</b></div>
+        <div class="col-md-1"><b>Quantidade</b></div>
+        <div class="col-md-2"><b>Valor Total Sem Desconto</b></div>
+        <div class="col-md-2"><b>Valor Total Com Desconto</b></div>
+    </div>
+    <div class="row" *ngFor="let item of itens">
+        <div class="row">
+            <div class="item-viewdetails">
+                <div class="col-md-2"></div>
+                <div class="col-md-2">
+                    <br/>
+                    <b >{{item.nomeProduto}}</b><br/>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <br/>
+                {{item.quantidade | currency:'BRL':true:'1.2-2'}} <br/>
+            </div>
+            <div class="col-md-1">
+                <br/>
+                {{item.quantidade}}
+            </div>
+            <div class="col-md-2">
+                <br/>
+                {{item.valor * item.quantidade | currency:'BRL':true:'1.2-2'}} <br/>
+            </div>
+            <div class="col-md-2">
+                <br/>
+                {{item.valorComDesconto * item.quantidade | currency:'BRL':true:'1.2-2'}} <br/>
+            </div>
+        </div>
+    </div>
+</div>
+<h2>Valor Total: {{saleResult.valorTotal | currency:'BRL':true:'1.2-2'}}</h2>

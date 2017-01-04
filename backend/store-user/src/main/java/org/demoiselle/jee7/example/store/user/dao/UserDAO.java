@@ -28,4 +28,14 @@ public class UserDAO extends EntityManagerDAO<User> {
 		return u;
 	}
 
+	public User loadByEmail(String email) {
+		User u = null;
+		try {
+			u = getEntityManager()
+					.createQuery("select u from User u where u.email = :email", User.class)
+					.setParameter("email", email).getSingleResult();
+		} catch (Exception e) {
+		}
+		return u;
+	}
 }
