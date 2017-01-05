@@ -21,6 +21,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import io.swagger.annotations.ApiModelProperty;
 
 @Entity
@@ -43,7 +45,7 @@ public class User implements Serializable {
 	@Basic(optional = false)
 	@Column(nullable = false)
 	@ApiModelProperty(required = false)
-	private Long id;
+	private Long id;	
 
 	@Size(max = 100)
 	@Column(length = 100)
@@ -60,9 +62,10 @@ public class User implements Serializable {
 	@NotNull
 	private String email;
 
-	@Size(max = 100)
+	// @Size(max = 100) // Somente funciona para STRING
 	@Column(length = 100)
-	private String cpf;
+	// @Digits(fraction = 0, integer = 0)
+	private int cpf;
 
 	@Size(max = 100)
 	@Column(length = 100)
@@ -70,6 +73,8 @@ public class User implements Serializable {
 
 	@Size(max = 100)
 	@Column(length = 100)
+	@NotNull
+	@NotEmpty
 	private String password;
 
 	public User() {
@@ -107,11 +112,11 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	public String getCpf() {
+	public int getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(String cpf) {
+	public void setCpf(int cpf) {
 		this.cpf = cpf;
 	}
 
