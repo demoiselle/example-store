@@ -14,9 +14,11 @@ import org.demoiselle.component.tenant.business.TenantManager;
 import org.demoiselle.jee.core.api.security.SecurityContext;
 import org.demoiselle.jee.core.api.security.Token;
 import org.demoiselle.jee.persistence.crud.AbstractBusiness;
+
 import org.demoiselle.jee.script.DynamicManager;
 import org.demoiselle.jee7.example.store.sale.dao.ItensDAO;
 import org.demoiselle.jee7.example.store.sale.dao.RulesDAO;
+import org.demoiselle.jee7.example.store.sale.dao.SaleDAO;
 import org.demoiselle.jee7.example.store.sale.entity.Cart;
 import org.demoiselle.jee7.example.store.sale.entity.ItemCart;
 import org.demoiselle.jee7.example.store.sale.entity.Itens;
@@ -45,6 +47,9 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 
 	@Inject
 	private RulesDAO rulesDAO;
+	
+	@Inject
+	private SaleDAO saleDAO;
 
 	@Inject
 	private Logger logger;
@@ -304,14 +309,18 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 					context.put(item.getClass().getSimpleName(), item);
 					context.put(cart.getClass().getSimpleName(), cart);
 					dm.eval(engineName, cupom, context); // run the script of
-															// rule
+														 // rule
 				}
 				// Remove from cache for tests....
-				// dm.removeScript(engineName, cupom);
+				dm.removeScript(engineName, cupom);
 			}
 
 		}
 		return cart;
+	}
+
+	public List<Sale> listUserSales(String id) {		
+		return  (List<Sale>) saleDAO.listUserSales( id );
 	}
 
 }
