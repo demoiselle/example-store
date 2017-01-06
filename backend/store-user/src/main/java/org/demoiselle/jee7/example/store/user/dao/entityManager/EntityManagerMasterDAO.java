@@ -9,7 +9,7 @@ package org.demoiselle.jee7.example.store.user.dao.entityManager;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.demoiselle.component.tenant.dao.context.EntityManagerMaster;
+import org.demoiselle.tenant.hibernate.dao.context.EntityManagerMaster;
 
 public class EntityManagerMasterDAO implements EntityManagerMaster {
 
