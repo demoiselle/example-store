@@ -60,9 +60,9 @@ public class User implements Serializable {
 	@NotNull
 	private String email;
 
-	@Size(max = 100)
 	@Column(length = 100)
-	private String cpf;
+	@NotNull
+	private int cpf;
 
 	@Size(max = 100)
 	@Column(length = 100)
@@ -70,6 +70,7 @@ public class User implements Serializable {
 
 	@Size(max = 100)
 	@Column(length = 100)
+	@NotNull
 	private String password;
 
 	public User() {
@@ -107,11 +108,11 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	public String getCpf() {
+	public int getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(String cpf) {
+	public void setCpf(int cpf) {
 		this.cpf = cpf;
 	}
 
