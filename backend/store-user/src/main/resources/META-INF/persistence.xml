@@ -28,7 +28,7 @@
 		transaction-type="JTA">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:jboss/datasources/UserMasterDS</jta-data-source>
-		<class>org.demoiselle.component.tenant.entity.Tenant</class>
+		<class>org.demoiselle.tenant.hibernate.entity.Tenant</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
