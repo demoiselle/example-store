@@ -38,7 +38,7 @@ public class SaleREST extends AbstractREST<Sale, Long> {
 
 	@Inject
 	private SaleBC saleBC;
-	
+
 	@Inject
 	private SecurityContext securityContext;
 
@@ -67,7 +67,7 @@ public class SaleREST extends AbstractREST<Sale, Long> {
 	@Path("listSaleItens/{id}")
 	@Transactional
 	@ApiOperation(value = "Busca por ID")
-	public List<Itens> listSaleItens(@PathParam("id") final Long id){
+	public List<Itens> listSaleItens(@PathParam("id") final Long id) {
 		return saleBC.listSaleItens(id);
 	}
 
@@ -75,10 +75,10 @@ public class SaleREST extends AbstractREST<Sale, Long> {
 	@GET
 	@Path("listUserSales")
 	@Transactional
-	public List<Sale> listUserSales() {				
+	public List<Sale> listUserSales() {
 		return saleBC.listUserSales(securityContext.getUser().getName());
 	}
-	
+
 	/*
 	 * Cart Sample ...
 	 * 

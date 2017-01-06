@@ -9,17 +9,18 @@ import org.demoiselle.jee7.example.store.sale.dao.EntityManager.EntityManagerDAO
 import org.demoiselle.jee7.example.store.sale.entity.Sale;
 
 public class SaleDAO extends EntityManagerDAO<Sale> {
-	
-	public List<Sale> listUserSales(String usuarioId){
+
+	@SuppressWarnings("unchecked")
+	public List<Sale> listUserSales(String usuarioId) {
 		try {
-			
+
 			Query query = em.createQuery("SELECT s FROM Sale s where s.usuarioId=:usuarioId", Sale.class);
-			query.setParameter("usuarioId",usuarioId );
+			query.setParameter("usuarioId", usuarioId);
 
 			List<Sale> resultList = query.getResultList();
 			return resultList;
 
-		} catch ( NoResultException e ) {
+		} catch (NoResultException e) {
 			return null;
 		}
 	}

@@ -10,13 +10,13 @@ import javax.inject.Inject;
 import javax.script.ScriptException;
 import javax.script.SimpleBindings;
 
-import org.demoiselle.component.tenant.business.TenantManager;
 import org.demoiselle.jee.core.api.security.SecurityContext;
 import org.demoiselle.jee.core.api.security.Token;
 import org.demoiselle.jee.persistence.crud.AbstractBusiness;
 import org.demoiselle.jee.script.DynamicManager;
 import org.demoiselle.jee7.example.store.sale.dao.ItensDAO;
 import org.demoiselle.jee7.example.store.sale.dao.RulesDAO;
+import org.demoiselle.jee7.example.store.sale.dao.SaleDAO;
 import org.demoiselle.jee7.example.store.sale.entity.Cart;
 import org.demoiselle.jee7.example.store.sale.entity.ItemCart;
 import org.demoiselle.jee7.example.store.sale.entity.Itens;
@@ -24,6 +24,7 @@ import org.demoiselle.jee7.example.store.sale.entity.Product;
 import org.demoiselle.jee7.example.store.sale.entity.Rules;
 import org.demoiselle.jee7.example.store.sale.entity.Sale;
 import org.demoiselle.jee7.example.store.sale.security.Credentials;
+import org.demoiselle.tenant.hibernate.business.TenantManager;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -54,6 +55,9 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 
 	@Inject
 	private TenantManager tenantManager;
+
+	@Inject
+	private SaleDAO saleDAO;
 
 	/**
 	 * Sale preview.
@@ -312,6 +316,10 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 
 		}
 		return cart;
+	}
+
+	public List<Sale> listUserSales(String id) {
+		return (List<Sale>) saleDAO.listUserSales(id);
 	}
 
 }
