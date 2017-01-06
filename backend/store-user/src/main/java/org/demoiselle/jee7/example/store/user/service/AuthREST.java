@@ -20,18 +20,18 @@ import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.demoiselle.component.tenant.context.MultiTenantContext;
 import org.demoiselle.jee.core.api.security.DemoiselleUser;
 import org.demoiselle.jee.core.api.security.SecurityContext;
 import org.demoiselle.jee.core.api.security.Token;
-import org.demoiselle.jee.security.annotation.Authenticated;
 import org.demoiselle.jee.security.annotation.Cors;
+import org.demoiselle.jee.security.annotation.Authenticated;
 import org.demoiselle.jee.security.exception.DemoiselleSecurityException;
 import org.demoiselle.jee.security.jwt.impl.DemoiselleSecurityJWTConfig;
 import org.demoiselle.jee.security.message.DemoiselleSecurityMessages;
 import org.demoiselle.jee7.example.store.user.business.UserBC;
 import org.demoiselle.jee7.example.store.user.entity.User;
 import org.demoiselle.jee7.example.store.user.security.Credentials;
-import org.demoiselle.tenant.hibernate.context.MultiTenantContext;
 import org.jose4j.json.internal.json_simple.JSONObject;
 
 import io.swagger.annotations.Api;

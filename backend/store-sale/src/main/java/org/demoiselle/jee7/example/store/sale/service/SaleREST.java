@@ -15,7 +15,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
+import org.demoiselle.jee.core.api.security.SecurityContext;
 import org.demoiselle.jee.persistence.crud.AbstractREST;
+import org.demoiselle.jee.security.annotation.Authenticated;
 import org.demoiselle.jee7.example.store.sale.business.SaleBC;
 import org.demoiselle.jee7.example.store.sale.entity.Cart;
 import org.demoiselle.jee7.example.store.sale.entity.Itens;
@@ -36,6 +38,9 @@ public class SaleREST extends AbstractREST<Sale, Long> {
 
 	@Inject
 	private SaleBC saleBC;
+	
+	@Inject
+	private SecurityContext securityContext;
 
 	@POST
 	@Path("salePreview")
@@ -57,15 +62,23 @@ public class SaleREST extends AbstractREST<Sale, Long> {
 		return saleBC.saleComplete(cart);
 	}
 
+	@Authenticated
 	@GET
 	@Path("listSaleItens/{id}")
 	@Transactional
 	@ApiOperation(value = "Busca por ID")
-	public List<Itens> listSaleItens(@PathParam("id") final Long id) {
-
+	public List<Itens> listSaleItens(@PathParam("id") final Long id){
 		return saleBC.listSaleItens(id);
 	}
 
+	@Authenticated
+	@GET
+	@Path("listUserSales")
+	@Transactional
+	public List<Sale> listUserSales() {				
+		return saleBC.listUserSales(securityContext.getUser().getName());
+	}
+	
 	/*
 	 * Cart Sample ...
 	 * 

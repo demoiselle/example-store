@@ -17,14 +17,14 @@ import javax.script.SimpleBindings;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 
+import org.demoiselle.component.tenant.context.MultiTenantContext;
+import org.demoiselle.component.tenant.entity.Tenant;
 import org.demoiselle.jee.core.exception.DemoiselleException;
 import org.demoiselle.jee.persistence.crud.AbstractBusiness;
 import org.demoiselle.jee.script.DynamicManager;
 import org.demoiselle.jee.security.exception.DemoiselleSecurityException;
 import org.demoiselle.jee7.example.store.user.dao.UserDAO;
 import org.demoiselle.jee7.example.store.user.entity.User;
-import org.demoiselle.tenant.hibernate.context.MultiTenantContext;
-import org.demoiselle.tenant.hibernate.entity.Tenant;
 
 @Stateless
 @TransactionManagement(value = TransactionManagementType.CONTAINER)
@@ -63,8 +63,8 @@ public class UserBC extends AbstractBusiness<User, Long> {
 				vars.put("tenant", tenant);
 
 				String scriptId = "createUser-" + tenant.getName();
-
-				scriptManager.loadScript("groovy", scriptId, script);
+				
+				scriptManager.loadScript("groovy", scriptId, script);				
 				scriptManager.eval("groovy", scriptId, vars);
 			}
 		} catch (ScriptException e) {
@@ -82,8 +82,8 @@ public class UserBC extends AbstractBusiness<User, Long> {
 		return u;
 	}
 
-	public User loadByEmail(String email) {
-		return dao.loadByEmail(email);
-	}
+        public User loadByEmail(String email) {
+            return dao.loadByEmail(email);
+        }
 
 }
