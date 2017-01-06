@@ -47,8 +47,7 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 	@Inject
 	private RulesDAO rulesDAO;
 
-	@Inject
-	private Logger logger;
+	private static final Logger logger = Logger.getLogger(SaleBC.class.getName());
 
 	@Inject
 	private ItensDAO itensDAO;
