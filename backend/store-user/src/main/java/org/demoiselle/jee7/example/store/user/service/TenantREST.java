@@ -21,11 +21,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.demoiselle.component.tenant.business.TenantManager;
+import org.demoiselle.component.tenant.entity.Tenant;
 import org.demoiselle.jee.core.api.crud.Result;
 import org.demoiselle.jee.rest.annotation.ValidatePayload;
 import org.demoiselle.jee.security.annotation.Cors;
-import org.demoiselle.tenant.hibernate.business.TenantManager;
-import org.demoiselle.tenant.hibernate.entity.Tenant;
 
 @Path("tenants")
 @Consumes({ MediaType.APPLICATION_JSON })

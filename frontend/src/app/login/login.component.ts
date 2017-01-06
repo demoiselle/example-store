@@ -35,9 +35,6 @@ export class LoginComponent implements OnInit {
  * login
  */
   login(){
-      if (localStorage && localStorage.getItem('id_token')) {
-          localStorage.removeItem('id_token');
-      }
       this.authService.login(this.user)
       .subscribe(
         res => {
