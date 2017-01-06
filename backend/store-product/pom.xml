@@ -23,11 +23,10 @@
 		<failOnMissingWebXml>false</failOnMissingWebXml>
 	</properties>
 
-
 	<dependencies>
 		<dependency>
-			<groupId>org.demoiselle.component</groupId>
-			<artifactId>tenant</artifactId>
+			<groupId>org.demoiselle.tenant</groupId>
+			<artifactId>tenant-hibernate</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

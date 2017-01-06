@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -28,38 +29,42 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Basic(optional = false)
 	@Column(nullable = false)
 	private Long id;
-	
 
 	@JoinColumn(name = "category_id", nullable = false, updatable = true)
 	@ManyToOne(optional = false)
 	private Category category;
-	
+
 	@Size(max = 45)
 	@Column(length = 45)
 	private String description;
-	
+
 	// @Max(value=?) @Min(value = ?)//if you know range of your decimal fields
 	// consider using these annotations to enforce field validation
-	
 	@NotNull
 	@Column(precision = 12)
+	// @Pattern(regexp="\\(\\d{3}\\)\\d{3}-\\d{4}", message = "Erro de validação
+	// do campo COST")
+	// @Pattern(regexp =
+	// "(?=.)^\\$?(([1-9][0-9]{0,2}(\\.[0-9]{3})*)|[0-9]+)?(,[0-9]{1,2})?$",
+	// message = "Erro de validação do campo COST")
 	private Float cost;
 
 	@NotNull
 	@Column(name = "quantity")
-	private Integer quantity;
+	@Digits(fraction = 1, integer = 3)
+	private int quantity;
 
-	public Integer getQuantity() {
+	public int getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(Integer quantity) {
+	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 

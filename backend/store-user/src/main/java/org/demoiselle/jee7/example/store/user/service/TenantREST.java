@@ -35,7 +35,7 @@ public class TenantREST {
 	@Inject
 	private TenantManager tenantManager;
 
-	private Logger logger;
+	private static final Logger logger = Logger.getLogger(TenantREST.class.getName());
 
 	@GET
 	@Cors

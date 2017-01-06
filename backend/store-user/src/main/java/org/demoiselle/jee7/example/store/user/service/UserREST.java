@@ -18,7 +18,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.demoiselle.jee.persistence.crud.AbstractREST;
-import org.demoiselle.jee.rest.exception.DemoiselleRestException;
 import org.demoiselle.jee7.example.store.user.business.UserBC;
 import org.demoiselle.jee7.example.store.user.entity.User;
 import org.jose4j.json.internal.json_simple.JSONObject;
@@ -52,14 +51,6 @@ public class UserREST extends AbstractREST<User, Long> {
 		json.put("password", user.getPassword());
 		json.put("role", user.getRole());
 		return Response.ok(json).build();
-	}
-
-	@GET
-	public void test() {
-		DemoiselleRestException e = new DemoiselleRestException(505);
-		e.addMessage("User.name", "ERRO 1!");
-		e.addMessage("User.email", "ERRO 2!");
-		throw e;
 	}
 
 }
