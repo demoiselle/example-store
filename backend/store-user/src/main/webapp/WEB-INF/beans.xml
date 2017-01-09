@@ -3,10 +3,4 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
 	version="1.2" bean-discovery-mode="all">
 
-
-	<alternatives>
-		<class>org.demoiselle.jee7.example.store.user.exception.ExceptionTreatmentApp</class>
-	</alternatives>
-
-
 </beans>
