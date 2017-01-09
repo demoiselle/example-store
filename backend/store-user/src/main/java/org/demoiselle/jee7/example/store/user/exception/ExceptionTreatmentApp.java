@@ -15,6 +15,9 @@ public class ExceptionTreatmentApp extends ExceptionTreatmentImpl {
 
 	@Override
 	public Response getFormatedError(Throwable exception, HttpServletRequest request) {
+		
+		// Put here your implementation of exception treatment
+		
 		logger.info("Using ExceptionTreatmentApp");
 		return super.getFormatedError(exception, request);
 	}
