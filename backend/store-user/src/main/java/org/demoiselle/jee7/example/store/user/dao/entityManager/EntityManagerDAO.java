@@ -9,7 +9,7 @@ package org.demoiselle.jee7.example.store.user.dao.entityManager;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.demoiselle.jee.persistence.crud.AbstractDAO;
+import org.demoiselle.jee.crud.AbstractDAO;
 
 public abstract class EntityManagerDAO<T> extends AbstractDAO<T, Long> {
 

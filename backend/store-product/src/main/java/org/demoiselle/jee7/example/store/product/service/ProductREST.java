@@ -14,8 +14,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
-import org.demoiselle.jee.persistence.crud.AbstractBusiness;
-import org.demoiselle.jee.persistence.crud.AbstractREST;
+import org.demoiselle.jee.crud.AbstractBusiness;
+import org.demoiselle.jee.crud.AbstractREST;
 import org.demoiselle.jee.rest.annotation.ValidatePayload;
 import org.demoiselle.jee.security.annotation.Authenticated;
 import org.demoiselle.jee.security.annotation.RequiredRole;

@@ -18,7 +18,8 @@ import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 
 import org.demoiselle.jee.core.exception.DemoiselleException;
-import org.demoiselle.jee.persistence.crud.AbstractBusiness;
+import org.demoiselle.jee.core.lifecycle.annotation.Startup;
+import org.demoiselle.jee.crud.AbstractBusiness;
 import org.demoiselle.jee.script.DynamicManager;
 import org.demoiselle.jee.security.exception.DemoiselleSecurityException;
 import org.demoiselle.jee7.example.store.user.dao.UserDAO;

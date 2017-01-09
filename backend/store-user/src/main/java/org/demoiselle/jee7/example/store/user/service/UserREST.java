@@ -17,7 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.demoiselle.jee.persistence.crud.AbstractREST;
+import org.demoiselle.jee.crud.AbstractREST;
 import org.demoiselle.jee7.example.store.user.business.UserBC;
 import org.demoiselle.jee7.example.store.user.entity.User;
 import org.jose4j.json.internal.json_simple.JSONObject;

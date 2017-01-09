@@ -16,7 +16,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
 import org.demoiselle.jee.core.api.security.SecurityContext;
-import org.demoiselle.jee.persistence.crud.AbstractREST;
+import org.demoiselle.jee.crud.AbstractREST;
 import org.demoiselle.jee.security.annotation.Authenticated;
 import org.demoiselle.jee7.example.store.sale.business.SaleBC;
 import org.demoiselle.jee7.example.store.sale.entity.Cart;
