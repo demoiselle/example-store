@@ -1,8 +1,9 @@
 package org.demoiselle.jee7.example.store.product.service;
 
-import io.swagger.jaxrs.config.BeanConfig;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
+
+import io.swagger.jaxrs.config.BeanConfig;
 
 @ApplicationPath("api/v1")
 public class ApplicationConfig extends Application {
