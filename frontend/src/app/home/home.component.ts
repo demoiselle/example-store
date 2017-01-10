@@ -11,9 +11,9 @@ import { Usuario } from '../usuario/usuario.model';
 })
 export class HomeComponent implements OnInit {
 
-  public tenantName:string = '';
-  public adminEmail:string = '';
-  public adminPwd:string = '';
+  public tenantName:string = 'demoiselle';
+  public adminEmail:string = 'admin@demoiselle.org';
+  public adminPwd:string = '123456';
 
   constructor(protected tenantService: TenantService, protected notificationService: NotificationService) {
   }
