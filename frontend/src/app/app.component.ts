@@ -30,6 +30,6 @@ export class AppComponent implements AfterContentInit {
   public ngAfterContentInit():any {
     
     // uncomment if the application need to retoken
-    //this.authService.initializeReTokenPolling();
+    this.authService.initializeReTokenPolling();
   }
 }

@@ -18,6 +18,7 @@ export class CompraComponent implements OnInit {
         if (localStorage && localStorage.getItem('sale_complete')) {
             this.saleResult = JSON.parse(localStorage.getItem('sale_complete'));
             this.itens = this.saleResult['itens'];
+            localStorage.removeItem('sale_complete');
         }
         console.log(this.saleResult);
     }
