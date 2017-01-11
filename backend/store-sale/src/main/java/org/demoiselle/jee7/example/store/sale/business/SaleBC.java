@@ -1,7 +1,7 @@
 package org.demoiselle.jee7.example.store.sale.business;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -14,6 +14,7 @@ import org.demoiselle.jee.core.api.security.SecurityContext;
 import org.demoiselle.jee.core.api.security.Token;
 import org.demoiselle.jee.crud.AbstractBusiness;
 import org.demoiselle.jee.script.DynamicManager;
+import org.demoiselle.jee7.example.store.sale.configuration.AppConfiguration;
 import org.demoiselle.jee7.example.store.sale.dao.ItensDAO;
 import org.demoiselle.jee7.example.store.sale.dao.RulesDAO;
 import org.demoiselle.jee7.example.store.sale.dao.SaleDAO;
@@ -41,6 +42,9 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 	@Inject
 	private SecurityContext securityContext;
 
+	@Inject 
+	private AppConfiguration config;
+	
 	@Inject
 	private Token token;
 
@@ -76,9 +80,9 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 	 */
 	public Cart saleComplete(Cart cart) throws ScriptException {
 		Cart temp_cart = processCartCupom(preProcessingCart(cart));
-
-		if (temp_cart != null) {
-			Sale newSale = posProcessingCarrinho(temp_cart);
+		
+		if (temp_cart != null) {			
+			Sale newSale = new Sale();
 			newSale.setDatavenda(new Date());
 
 			if (securityContext.isLoggedIn()) {
@@ -93,11 +97,10 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 				newitem.setProduto_id(item.getCodigoProduto());
 				newitem.setQuantidade(item.getQuantidade());
 
-				itensDAO.persist(newitem);
+				itensDAO.persist(newitem);				
 			}
-
 			temp_cart.setIdSale(newSale.getId());
-			posProcessingSale(newSale);
+			posProcessingSale(newSale.getId());
 		}
 
 		return temp_cart;
@@ -144,61 +147,23 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 	 * Cart after-sale-confirm processing.
 	 * 
 	 */
-	public void posProcessingSale(Sale sale) {
-
-		for (Itens item : sale.getListaItens()) {
-
+	public void posProcessingSale(Long  idSale) {				
+		String key = doLogin(config.getAdminUser(),config.getAdminPasswd());
+		
+		for (Itens item : listSaleItens(idSale)) {
 			Product p = getProduct(item.getProduto_id());
-
 			Integer total = p.getQuantity();
 			if (total >= item.getQuantidade()) {
-				p.setQuantity(total - item.getQuantidade());
-
-				String key = null;
-				if (!securityContext.isLoggedIn()) {
-					key = doLogin("string", "string");
-				} else
-					key = token.getKey();
-
+				p.setQuantity(total - item.getQuantidade());				
 				putProduct(p, key);
 			}
 		}
 	}
-
-	/**
-	 * Cart after-sale-confirm processing.
-	 * 
-	 */
-	public Sale posProcessingCarrinho(Cart cart) throws ScriptException {
-		Sale sale = new Sale();
-		List<Itens> listaItens = new ArrayList<Itens>();
-
-		for (ItemCart item : cart.getItens()) {
-
-			Product p = getProduct(item.getCodigoProduto());
-
-			Integer total = p.getQuantity();
-			if (total >= item.getQuantidade()) {
-				p.setQuantity(total - item.getQuantidade());
-
-				String key = null;
-				if (!securityContext.isLoggedIn()) {
-					key = doLogin("admin-sale@sepro.gov.br", "serpro");
-				} else
-					key = token.getKey();
-
-				putProduct(p, key);
-			}
-
-		}
-
-		sale.setListaItens(listaItens);
-
-		return sale;
-	}
-
+	
+	
 	/**
 	 * Return the token to perform a service access in other server.
+	 * @throws UnsupportedEncodingException 
 	 * 
 	 */
 	public String doLogin(String username, String password) {
@@ -208,12 +173,14 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 		login.setUsername(username);
 		login.setPassword(password);
 
-		String baseuri = "http://localhost:8080/users/api/v1";
+		String baseuri = config.getUserApiUrl();
 		String tennantName = "/" + tenantManager.getTenantName();
 		String service = "/auth/login";
 
 		Client client = Client.create();
 		WebResource webResource = client.resource(baseuri + tennantName + service);
+		webResource.setProperty("Content-Type", "application/json");
+		
 		ClientResponse response = (ClientResponse) webResource.accept("application/json").type("application/json")
 				.post(ClientResponse.class, gson.toJson(login));
 
@@ -238,7 +205,7 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 	public Product getProduct(Long id) {
 		Client client = Client.create();
 
-		String baseuri = "http://localhost:8080/products/api/v1";
+		String baseuri = config.getProductApiUrl();
 		String tennantName = "/" + tenantManager.getTenantName();
 		String service = "/products/" + id;
 
@@ -250,7 +217,8 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 					+ ". HTTP error code : " + response.getStatus());
 		}
 
-		Product produto = response.getEntity(Product.class);
+		response.bufferEntity();		
+		Product produto = new Gson().fromJson(response.getEntity(String.class), Product.class);
 
 		return produto;
 	}
@@ -265,7 +233,7 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 			Gson gson = new Gson();
 			String Authorization = "token " + token;
 
-			String baseuri = "http://localhost:8080/products/api/v1";
+			String baseuri = config.getProductApiUrl();
 			String tennantName = "/" + tenantManager.getTenantName();
 			String service = "/products/";
 
