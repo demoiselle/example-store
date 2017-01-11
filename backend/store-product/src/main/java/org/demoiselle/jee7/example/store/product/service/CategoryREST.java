@@ -2,6 +2,7 @@ package org.demoiselle.jee7.example.store.product.service;
 
 import javax.enterprise.context.RequestScoped;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
@@ -12,7 +13,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.demoiselle.jee.crud.AbstractREST;
-import org.demoiselle.jee.rest.annotation.ValidatePayload;
 import org.demoiselle.jee.security.annotation.RequiredRole;
 import org.demoiselle.jee7.example.store.product.entity.Category;
 
@@ -25,9 +25,8 @@ public class CategoryREST extends AbstractREST<Category, Long> {
 	@Override
 	@POST
 	@Transactional
-	@ValidatePayload
 	@RequiredRole("ADMINISTRATOR")
-	public Category persist(Category entity) {
+	public Category persist(@Valid Category entity) {
 		entity.setId(null);
 		return bc.persist(entity);
 	}
@@ -35,9 +34,8 @@ public class CategoryREST extends AbstractREST<Category, Long> {
 	@Override
 	@PUT
 	@Transactional
-	@ValidatePayload
 	@RequiredRole("ADMINISTRATOR")
-	public Category merge(Category entity) {
+	public Category merge(@Valid Category entity) {
 		return bc.merge(entity);
 	}
 

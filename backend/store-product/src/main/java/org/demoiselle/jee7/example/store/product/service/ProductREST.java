@@ -3,6 +3,7 @@ package org.demoiselle.jee7.example.store.product.service;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
@@ -16,7 +17,6 @@ import javax.ws.rs.core.UriInfo;
 
 import org.demoiselle.jee.crud.AbstractBusiness;
 import org.demoiselle.jee.crud.AbstractREST;
-import org.demoiselle.jee.rest.annotation.ValidatePayload;
 import org.demoiselle.jee.security.annotation.Authenticated;
 import org.demoiselle.jee.security.annotation.RequiredRole;
 import org.demoiselle.jee7.example.store.product.entity.Product;
@@ -36,9 +36,8 @@ public class ProductREST extends AbstractREST<Product, Long> {
 	@Override
 	@POST
 	@Transactional
-	@ValidatePayload
 	@RequiredRole("ADMINISTRATOR")
-	public Product persist(Product entity) {
+	public Product persist(@Valid Product entity) {
 		entity.setId(null);
 		return bc.persist(entity);
 	}
@@ -46,9 +45,8 @@ public class ProductREST extends AbstractREST<Product, Long> {
 	@Override
 	@PUT
 	@Transactional
-	@ValidatePayload
 	@Authenticated
-	public Product merge(Product entity) {
+	public Product merge(@Valid Product entity) {
 		return bc.merge(entity);
 	}
 
