@@ -88,7 +88,6 @@ public class AuthREST {
 
 			// Tenant
 			loggedUser.addParam("email", usuario.getEmail());
-			loggedUser.addParam("fone", usuario.getFone());
 			loggedUser.addParam("Tenant", multiTenantContext.getTenant().getName());
 
 			securityContext.setUser(loggedUser);
