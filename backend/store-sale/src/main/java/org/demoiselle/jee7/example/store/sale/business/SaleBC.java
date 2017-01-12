@@ -11,7 +11,6 @@ import javax.script.ScriptException;
 import javax.script.SimpleBindings;
 
 import org.demoiselle.jee.core.api.security.SecurityContext;
-import org.demoiselle.jee.core.api.security.Token;
 import org.demoiselle.jee.crud.AbstractBusiness;
 import org.demoiselle.jee.script.DynamicManager;
 import org.demoiselle.jee7.example.store.sale.configuration.AppConfiguration;
@@ -44,9 +43,6 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 
 	@Inject 
 	private AppConfiguration config;
-	
-	@Inject
-	private Token token;
 
 	@Inject
 	private RulesDAO rulesDAO;
