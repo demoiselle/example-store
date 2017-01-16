@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -41,15 +42,19 @@ public class Rules implements Serializable {
 	@Column(name = "sistema_id")
 	private Long sistemaId;
 
+	@NotNull
 	@Column(name = "script")
 	private String script;
 
+	@NotNull
 	@Column(name = "name")
 	private String name;
 
+	@NotNull
 	@Column(name = "start_date")
 	private Date startDate;
 
+	@NotNull
 	@Column(name = "stop_date")
 	private Date stopDate;
 

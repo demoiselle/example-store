@@ -54,7 +54,7 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 
 	@Inject
 	private TenantManager tenantManager;
-
+	
 	@Inject
 	private SaleDAO saleDAO;
 
@@ -113,13 +113,13 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 			Date data = new Date();
 
 			if (data.before(rule.getStartDate()) || data.after(rule.getStopDate())) {
-				logger.warning("Cupom \"" + cupom + "\" expired.");
+				logger.finest("Cupom \"" + cupom + "\" expired.");
 			} else {
-				logger.info("Cupom \"" + cupom + "\" validated.");
+				logger.finest("Cupom \"" + cupom + "\" validated.");
 				return rule;
 			}
 		} else {
-			logger.warning("Cupom \"" + cupom + "\" not valid!");
+			logger.finest("Cupom \"" + cupom + "\" not valid!");
 		}
 
 		return null;
@@ -264,17 +264,22 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 			Rules rule = validateCupom(cupom);
 
 			if (rule != null) {
-				dm.loadScript(engineName, cupom, rule.getScript());
+				String tenantName = tenantManager.getTenantName();
+				
+				//to cache the script have to pass a tennantName to avoid conflicts in the script name
+				String scriptName =  tenantName + "_" + cupom ;
+			
+				dm.loadScript(engineName, scriptName, rule.getScript());
 
 				for (ItemCart item : cart.getItens()) {
 					SimpleBindings context = new SimpleBindings();
 					context.put(item.getClass().getSimpleName(), item);
 					context.put(cart.getClass().getSimpleName(), cart);
-					dm.eval(engineName, cupom, context); // run the script of
+					dm.eval(engineName, scriptName, context); // run the script of
 															// rule
 				}
 				// Remove from cache for tests....
-				// dm.removeScript(engineName, cupom);
+				dm.removeScript(engineName, cupom);
 			}
 
 		}
