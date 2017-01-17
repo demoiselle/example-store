@@ -72,8 +72,14 @@ public class ItemCart implements Serializable {
 		Discount desc = new Discount ( identificador,percentual,acumulativo);
 		if(this.descontos== null)
 			this.descontos= new  ArrayList<Discount>();
-		this.descontos.add(desc);
 		
+		for(Discount d : this.descontos){
+			if(d.identificador.equals(identificador)){
+				return;			
+			}
+		}
+		
+		this.descontos.add(desc);
 	}
 	
 	public void registrarDesconto(Discount desconto) {		
@@ -83,6 +89,4 @@ public class ItemCart implements Serializable {
 	public List<Discount> getDescontos() {
 		return this.descontos;
 	}
-
 }
-
