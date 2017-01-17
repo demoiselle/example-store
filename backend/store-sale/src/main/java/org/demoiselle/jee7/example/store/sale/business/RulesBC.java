@@ -57,7 +57,7 @@ public class RulesBC extends AbstractBusiness<Rules, Long> {
 		this.dao.merge(upRule);
 		
 		dm.loadEngine(engine);
-		if(dm.getScript(engine, rule.getName()) != null ){
+		if(dm.getScript(engine, ruleName) != null ){
 			dm.updateScript(engine, ruleName, upRule.getScript());
 		}else {
 			dm.loadScript(engine, ruleName, upRule.getScript());
