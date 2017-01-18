@@ -5,7 +5,7 @@ import {ModalDirective} from 'ng2-bootstrap/ng2-bootstrap';
 
 import { NotificationService} from '../shared/notification.service';
 import {TenantService} from './tenant.service';
-import {Tenant} from './tenant.model';
+import {Tenant, Cupom} from './tenant.model';
 import { Usuario } from '../usuario/usuario.model';
 
 @Component({
@@ -21,18 +21,23 @@ export class TenantCrudComponent implements OnInit {
   newTenant:Tenant;
   viewOnly: boolean;
 
+  cupom: Cupom = new Cupom();
+
   public adminEmail:string = '';
   public adminPwd:string = '';
 
-  scriptExample: string = 'usuario.setNome(tenant.getName() + " - " + usuario.getNome());';
+  scriptExample: string = 'ItemCart.addDesconto(\'desconto10\',10,false)';
 
   @ViewChild('staticModal') public staticModal:ModalDirective;
 
-  
   constructor(private service: TenantService, private notificationService: NotificationService) {
     this.newTenant = new Tenant();
+    this.cupom.name = '10AMENOS';
+    this.cupom.script = 'ItemCart.addDesconto(\'desconto10\',10,false)';
+    this.cupom.startDate = '2017-01-01';
+    this.cupom.stopDate = '2017-12-31';
+    this.cupom.sistemaId = '1';
   }
-
  
   ngOnInit() {
 
@@ -138,6 +143,26 @@ export class TenantCrudComponent implements OnInit {
             car[prop] = c[prop];
         }
         return car;
-    }
+  }
+
+  saveCupom() {
+      this.cupom.startDate += 'T10:00:00';
+      this.cupom.stopDate += 'T00:00:00';
+      console.log('CUPOM');
+      console.log(this.cupom);
+      this.service.createCupom(this.cupom).subscribe(
+          () => {
+              this.cupom.startDate = this.cupom.startDate.substr(0, 10);
+              this.cupom.stopDate = this.cupom.stopDate.substr(0, 10);
+              this.notificationService.success('Cupom salvo com sucesso!');
+          },
+          error => {
+              this.cupom.startDate = this.cupom.startDate.substr(0, 10);
+              this.cupom.stopDate = this.cupom.stopDate.substr(0, 10);
+              this.notificationService.error('Não foi possível salvar o cupom!');
+              console.log(error);
+          }
+      );
+  }
 
 }

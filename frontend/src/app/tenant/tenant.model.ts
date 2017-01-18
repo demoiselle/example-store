@@ -1,18 +1,30 @@
-// export interface ITenant {
-//   id: number;
-//   name: string;
-//   scriptCreateUser: string;
-// }
+export class Tenant {
 
-export class Tenant{
   id: number;
   name: string;
-  scriptCreateUser: string;
+  constructor(
+    id?: number,
+    name?: string
+  ) {  }
+
+}
+
+export class Cupom {
+
+  id: number;
+  name: string;
+  script: string;
+  startDate: string;
+  stopDate: string;
+  sistemaId: string;
+
   constructor(
     id?: number,
     name?: string,
-    scriptCreateUser?: string
-    
+    script?: string,
+    startDate?: string,
+    stopDate?: string,
+    sistemaId?: string
   ) {  }
-
+  
 }

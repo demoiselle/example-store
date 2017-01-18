@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter, Output } from '@angular/core';
 import { Http} from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { Tenant } from './tenant.model';
+import { Tenant, Cupom } from './tenant.model';
 import { Usuario } from '../usuario/usuario.model';
 
 @Injectable()
@@ -100,4 +100,9 @@ export class TenantService {
       }
       
     }
+
+    createCupom(cupom: Cupom) {
+      return this.http.post(this.saleUrl + this.getSelectedTenant().name + '/rules', cupom);
+    }
+    
 }

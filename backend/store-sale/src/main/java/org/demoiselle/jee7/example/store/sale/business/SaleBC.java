@@ -58,10 +58,6 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 	@Inject
 	private SaleDAO saleDAO;
 
-	/**
-	 * Sale preview.
-	 * 
-	 */
 	public Cart salePreview(Cart cart) throws ScriptException {
 		return processCartCupom(preProcessingCart(cart));
 	}
@@ -70,10 +66,6 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 		return itensDAO.getAllItens(id);
 	}
 
-	/**
-	 * Complete the sale.
-	 * 
-	 */
 	public Cart saleComplete(Cart cart) throws ScriptException {
 		Cart temp_cart = processCartCupom(preProcessingCart(cart));
 		
@@ -102,10 +94,6 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 		return temp_cart;
 	}
 
-	/**
-	 * Validate the cupom
-	 * 
-	 */
 	public Rules validateCupom(String cupom) {
 
 		Rules rule = rulesDAO.findByName(cupom);
@@ -125,10 +113,6 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 		return null;
 	}
 
-	/**
-	 * Cart pre-sale-confirm processing.
-	 * 
-	 */
 	public Cart preProcessingCart(Cart cart) throws ScriptException {
 		for (ItemCart item : cart.getItens()) {
 
@@ -139,10 +123,6 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 		return cart;
 	}
 
-	/**
-	 * Cart after-sale-confirm processing.
-	 * 
-	 */
 	public void posProcessingSale(Long  idSale) {				
 		String key = doLogin(config.getAdminUser(),config.getAdminPasswd());
 		
@@ -157,11 +137,6 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 	}
 	
 	
-	/**
-	 * Return the token to perform a service access in other server.
-	 * @throws UnsupportedEncodingException 
-	 * 
-	 */
 	public String doLogin(String username, String password) {
 		Gson gson = new Gson();
 
@@ -194,10 +169,6 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 
 	}
 
-	/**
-	 * Get the Product List.
-	 * 
-	 */
 	public Product getProduct(Long id) {
 		Client client = Client.create();
 
@@ -219,10 +190,6 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 		return produto;
 	}
 
-	/**
-	 * Update the product in product service.
-	 * 
-	 */
 	public void putProduct(Product p, String token) {
 		try {
 			Client client = Client.create();
@@ -253,10 +220,6 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 		}
 	}
 
-	/**
-	 * Process the cart with/without coupons.
-	 * 
-	 */
 	public Cart processCartCupom(Cart cart) throws ScriptException {
 		String engineName = "groovy";
 
