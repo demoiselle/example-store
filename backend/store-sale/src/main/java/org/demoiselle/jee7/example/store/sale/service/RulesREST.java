@@ -21,7 +21,6 @@ import org.demoiselle.jee.rest.exception.DemoiselleRestException;
 import org.demoiselle.jee.security.annotation.RequiredRole;
 import org.demoiselle.jee7.example.store.sale.business.RulesBC;
 import org.demoiselle.jee7.example.store.sale.entity.Rules;
-
 import io.swagger.annotations.Api;
 
 @Api("Rules")
@@ -33,7 +32,7 @@ public class RulesREST extends AbstractREST<Rules, Long> {
 		
 	@Override
 	@POST
-	//@RequiredRole("ADMINISTRATOR")
+	@RequiredRole("ADMINISTRATOR")
 	@Transactional
 	public Rules persist(@Valid Rules rule) {		
 	    Rules regra =null;			
@@ -49,7 +48,7 @@ public class RulesREST extends AbstractREST<Rules, Long> {
 	@DELETE
 	@Path("{id}")
 	@Transactional
-	//@RequiredRole("ADMINISTRATOR")
+	@RequiredRole("ADMINISTRATOR")
 	public void remove(@PathParam("id") Long id) {
 		bc.remove(id);
 	}
@@ -58,23 +57,15 @@ public class RulesREST extends AbstractREST<Rules, Long> {
 	@GET
 	@Path("{id}")
 	@Transactional
-	//@RequiredRole("ADMINISTRATOR")
+	@RequiredRole("ADMINISTRATOR")
 	public Rules find(@PathParam("id") Long id) {
 		return bc.find(id);
 	}
-	
-	@Override
-	@GET
-	@Transactional
-	//@RequiredRole("ADMINISTRATOR")
-	public Result find() {
-		return bc.find();
-	}	
-	
+		
 	@Override
 	@PUT
 	@Transactional
-	//@RequiredRole("ADMINISTRATOR")
+	@RequiredRole("ADMINISTRATOR")
 	public Rules merge (@Valid Rules rule) {						
 		try {
 			return rulesBC.updateRule(rule);
@@ -84,5 +75,4 @@ public class RulesREST extends AbstractREST<Rules, Long> {
 		}		
 		
 	}
-	
 }
