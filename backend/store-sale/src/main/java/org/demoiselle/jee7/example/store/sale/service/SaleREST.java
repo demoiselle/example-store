@@ -15,9 +15,11 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
+import org.demoiselle.jee.core.api.crud.Result;
 import org.demoiselle.jee.core.api.security.SecurityContext;
 import org.demoiselle.jee.crud.AbstractREST;
 import org.demoiselle.jee.security.annotation.Authenticated;
+import org.demoiselle.jee.security.annotation.RequiredRole;
 import org.demoiselle.jee7.example.store.sale.business.SaleBC;
 import org.demoiselle.jee7.example.store.sale.entity.Cart;
 import org.demoiselle.jee7.example.store.sale.entity.Itens;
@@ -78,7 +80,15 @@ public class SaleREST extends AbstractREST<Sale, Long> {
 	public List<Sale> listUserSales() {
 		return saleBC.listUserSales(securityContext.getUser().getName());
 	}
-
+	
+	@Override
+	@GET	
+	@Transactional
+	@RequiredRole("ADMINISTRATOR")
+	public Result find() {
+		return bc.find();
+	}
+	
 	/*
 	 * Cart Sample ...
 	 * 

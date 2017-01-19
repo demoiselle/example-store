@@ -61,6 +61,14 @@ public class RulesREST extends AbstractREST<Rules, Long> {
 	public Rules find(@PathParam("id") Long id) {
 		return bc.find(id);
 	}
+	
+	@Override
+	@GET	
+	@Transactional
+	@RequiredRole("ADMINISTRATOR")
+	public Result find() {
+		return bc.find();
+	}
 		
 	@Override
 	@PUT
