@@ -1,6 +1,5 @@
 package org.demoiselle.jee7.example.store.sale.business;
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;

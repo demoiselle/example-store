@@ -51,7 +51,7 @@ public class RulesBC extends AbstractBusiness<Rules, Long> {
 	}
 
 	public Rules updateRule(Rules upRule) throws ScriptException {				
-		Rules rule = dao.find(upRule.getId());
+		// Rules rule = dao.find(upRule.getId());
 		String ruleName = tenantManager.getTenantName() + "_" + upRule.getName();
 	
 		this.dao.merge(upRule);

@@ -19,7 +19,6 @@ import javax.ws.rs.core.Response;
 
 import org.demoiselle.jee.core.api.crud.Result;
 import org.demoiselle.jee.crud.AbstractREST;
-import org.demoiselle.jee.security.annotation.RequiredRole;
 import org.demoiselle.jee7.example.store.user.business.UserBC;
 import org.demoiselle.jee7.example.store.user.entity.User;
 import org.jose4j.json.internal.json_simple.JSONObject;

@@ -21,6 +21,7 @@ import org.demoiselle.jee.rest.exception.DemoiselleRestException;
 import org.demoiselle.jee.security.annotation.RequiredRole;
 import org.demoiselle.jee7.example.store.sale.business.RulesBC;
 import org.demoiselle.jee7.example.store.sale.entity.Rules;
+
 import io.swagger.annotations.Api;
 
 @Api("Rules")

@@ -19,7 +19,6 @@ import javax.ws.rs.core.UriInfo;
 import org.demoiselle.jee.core.api.crud.Result;
 import org.demoiselle.jee.crud.AbstractBusiness;
 import org.demoiselle.jee.crud.AbstractREST;
-import org.demoiselle.jee.security.annotation.Authenticated;
 import org.demoiselle.jee.security.annotation.RequiredRole;
 import org.demoiselle.jee7.example.store.product.entity.Product;
 
