@@ -1,12 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {AgRendererComponent} from 'ag-grid-ng2/main';
-import {GridOptions,RowNode} from 'ag-grid/main';
-import {ModalDirective} from 'ng2-bootstrap/ng2-bootstrap';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AgRendererComponent } from 'ag-grid-ng2/main';
+import { GridOptions,RowNode } from 'ag-grid/main';
+import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
 
 import { NotificationService} from '../shared/notification.service';
-import {TenantService} from './tenant.service';
-import {Tenant, Cupom} from './tenant.model';
+import { TenantService} from './tenant.service';
+import { Tenant, Cupom } from './tenant.model';
 import { Usuario } from '../usuario/usuario.model';
+
+import { DatePickerComponent } from 'ng2-bootstrap/ng2-bootstrap';
+import { CustomDatepickerComponent } from '../shared/custom-datepicker.component';
 
 @Component({
   selector: 'dml-tenant',
@@ -14,24 +18,19 @@ import { Usuario } from '../usuario/usuario.model';
   styleUrls: ['./tenant-crud.component.scss']
 })
 export class TenantCrudComponent implements OnInit {
-  tenant: Tenant;
   tenants: Tenant[];
-  selectedTenant: Tenant;
-  isNewTenant: boolean;
-  newTenant:Tenant;
-  viewOnly: boolean;
-
   cupom: Cupom = new Cupom();
-
-  public adminEmail:string = '';
-  public adminPwd:string = '';
-
   scriptExample: string = 'ItemCart.addDesconto(\'desconto10\',10,false)';
+  cupomForm: FormGroup;
 
-  @ViewChild('staticModal') public staticModal:ModalDirective;
+  @ViewChild('staticModal') public staticModal: ModalDirective;
+  @ViewChild('startDate') public startDate: CustomDatepickerComponent;
+  @ViewChild('endDate') public endDate: CustomDatepickerComponent;
 
-  constructor(private service: TenantService, private notificationService: NotificationService) {
-    this.newTenant = new Tenant();
+  constructor(private service: TenantService,
+    private notificationService: NotificationService,
+    private formBuilder: FormBuilder)
+  {
     this.cupom.name = '10AMENOS';
     this.cupom.script = 'ItemCart.addDesconto(\'desconto10\',10,false)';
     this.cupom.startDate = '2017-01-01';
@@ -40,10 +39,16 @@ export class TenantCrudComponent implements OnInit {
   }
  
   ngOnInit() {
+    this.cupomForm = this.formBuilder.group({
+        rfCupomName: ['', Validators.required],
+        rfStartDate: new FormControl(),
+        rfStopDate: new FormControl(),
+        rfScript: ['', Validators.required]
+    });
 
     this.service.tenantCreated.subscribe(
       () => {
-        this.notificationService.error('Novo tenant criado!');
+        this.notificationService.success('Novo tenant criado!');
         this.list();
         return true;
       },
@@ -56,21 +61,7 @@ export class TenantCrudComponent implements OnInit {
     this.list();
   }
 
-  // showModalAdd() {
-  //   this.viewOnly = false;
-  //   this.isNewTenant = true;
-  //   this.tenant = new Tenant();
-  //   this.staticModal.show();
-  // }
-  // showModalEdit() {
-  //   this.viewOnly = false;
-  //   this.isNewTenant = false;
-  //   this.staticModal.show();
-  // }
   showModalDetail(tenant: Tenant) {
-    this.viewOnly = true;
-    this.tenant = tenant;    
-    this.isNewTenant = false;
     this.staticModal.show();
   }
 
@@ -85,48 +76,9 @@ export class TenantCrudComponent implements OnInit {
      );
   }
  
-  save(tenant: Tenant, usuario: Usuario){
-    if(this.isNewTenant)
-        this.service.create(tenant, usuario);
-    else {
-        //this.tenants[this.findSelectedTenantIndex()] = this.tenant;
-        this.service.update(this.tenant).subscribe(
-          tenants => {
-            this.tenant = null;
-            this.selectedTenant = null;
-            this.staticModal.hide();
-            
-            this.list();
-          },
-          error => {
-            this.notificationService.error('Não foi possível salvar o tenant!');
-          }
-        );
-    }
-  }
-
-  addTenant() {
-    this.isNewTenant = true;
-    
-    let usuario:Usuario = new Usuario();
-    usuario.id = undefined;
-    usuario.name = this.adminEmail;
-    usuario.role = 'ADMINISTRATOR';
-    usuario.email = this.adminEmail;
-    usuario.cpf = '';
-    usuario.fone = '';
-    usuario.password = this.adminPwd;
-
-    this.service.create(this.newTenant, usuario);
-    
-  }
-
   deleteTenant(tenant: Tenant) {
-      
       this.service.delete(tenant).subscribe(
           () => {
-            this.tenant = null;
-            this.selectedTenant = null;
             this.staticModal.hide();
             this.list();
           },
@@ -137,28 +89,33 @@ export class TenantCrudComponent implements OnInit {
   }
 
 
-  cloneTenant(c: Tenant): Tenant {
-        let car = new Tenant();
-        for(let prop in c) {
-            car[prop] = c[prop];
-        }
-        return car;
-  }
-
   saveCupom() {
+      // TODO
+      // Fazer a validação usando o angular, trocando dados com o
+      // datepicker customizado
+      if (!this.startDate.datePickerValue || !this.endDate.datePickerValue) {
+        this.notificationService.error('Preencha as datas de início e fim!');
+        return;
+      }
+      if (this.startDate.datePickerValue > this.endDate.datePickerValue) {
+        this.notificationService.error('A data de encerramento é anterior a data de início!');
+        return;
+      }
+
+      this.cupom.startDate = this.startDate.datePickerValue.toISOString().slice(0,10);
+      this.cupom.stopDate = this.endDate.datePickerValue.toISOString().slice(0,10);
+
       this.cupom.startDate += 'T10:00:00';
       this.cupom.stopDate += 'T00:00:00';
+
       console.log('CUPOM');
       console.log(this.cupom);
+
       this.service.createCupom(this.cupom).subscribe(
           () => {
-              this.cupom.startDate = this.cupom.startDate.substr(0, 10);
-              this.cupom.stopDate = this.cupom.stopDate.substr(0, 10);
               this.notificationService.success('Cupom salvo com sucesso!');
           },
           error => {
-              this.cupom.startDate = this.cupom.startDate.substr(0, 10);
-              this.cupom.stopDate = this.cupom.stopDate.substr(0, 10);
               this.notificationService.error('Não foi possível salvar o cupom!');
               console.log(error);
           }

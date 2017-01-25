@@ -1,166 +1,78 @@
 <div class="content-header">
-  <h2>Tenants
-  </h2>
-
-  <p class="description" [innerHTML]="titleDoc"></p>
+   <h2>Tenants
+   </h2>
+   <p class="description" [innerHTML]="titleDoc"></p>
 </div>
-
 <div id="content" class="content-box">
-  <div id="example" class="section">
-
-    <!--
-    <button (click)="showModalAdd()" class="btn btn-sm btn-success">Adicionar</button>
-    <button (click)="showModalEdit()" [disabled]="!selectedTenant" class="btn btn-sm btn-primary">Editar</button>
-    <button (click)="delete()" [disabled]="!selectedTenant" class="btn btn-sm btn-danger">Remover</button>
-    -->
-
-    <br/><br/>
-
-<table class="table table-hover">
-        <thead>
+   <div id="example" class="section">
+      <br/><br/>
+      <table class="table table-hover">
+         <thead>
             <tr>
-                <th class="col-md-1"><i class="fa" aria-hidden="true"></i>Id</th>
-                <th class="col-md-8"><i class="fa" aria-hidden="true"></i>Nome</th>
-                
-                <th class="col-md-1"></th>
-                <th class="col-md-1"></th>
+               <th class="col-md-1"><i class="fa" aria-hidden="true"></i>Id</th>
+               <th class="col-md-8"><i class="fa" aria-hidden="true"></i>Nome</th>
+               <th class="col-md-1"></th>
+               <th class="col-md-1"></th>
             </tr>
-        </thead>
-        <tbody>
+         </thead>
+         <tbody>
             <tr *ngFor="let tenant of tenants">
-                <td>{{tenant.id}}</td>
-                <td>{{tenant.name}}</td>
-                
-                <td><button class="btn btn-primary btn-xs" (click)="showModalDetail(tenant)">
-            <i class="fa fa-info-circle" aria-hidden="true"></i>Details</button>
-                </td>
-                
-                <td>
-                    <button class="btn btn-danger btn-xs" (click)="deleteTenant(tenant)"><i class="fa fa-trash" aria-hidden="true"></i>Delete</button>
-                </td>
+               <td>{{tenant.id}}</td>
+               <td>{{tenant.name}}</td>
+               <td><button class="btn btn-primary btn-xs" (click)="showModalDetail(tenant)">
+                  <i class="fa fa-info-circle" aria-hidden="true"></i>Adicionar Cupom</button>
+               </td>
+               <td>
+                  <button class="btn btn-danger btn-xs" (click)="deleteTenant(tenant)"><i class="fa fa-trash" aria-hidden="true"></i>Remover</button>
+               </td>
             </tr>
-        </tbody>
-    </table>
+         </tbody>
+      </table>
+      <!-- modal definitions -->
+      <div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
+      tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lm">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" aria-label="Close" (click)="staticModal.hide()">
+               <span aria-hidden="true">&times;</span>
+               </button>
+               <h4 class="modal-title">Adicionar Regra de Cupom</h4>
+            </div>
+            <div class="modal-body">
+               <form [formGroup]="cupomForm" (ngSubmit)="saveCupom()">
+                  <div class="form-group">
+                     <label for="cpName">Nome do Cupom</label>
+                     <input type="text" class="form-control" id="cpName" formControlName="rfCupomName" [(ngModel)]="cupom.name"/>
+                     <p *ngIf="cupomForm.controls.rfCupomName.errors">Campo obrigatório!</p>
+                  </div>
+                  
+                  <custom-datepicker #startDate formControlName="rfStartDate" label="Inicia em:"></custom-datepicker>
+                  
+                  <custom-datepicker #endDate formControlName="rfStopDate" label="Encerra em:"></custom-datepicker>
 
+                  <div class="form-group">
+                    <label for="cpScript">Script</label>
+                    <textarea id="cpScript" 
+                        name="description" class="form-control" rows="10" formControlName="rfScript"
+                        autocomplete="off" autocorrect="off" autocapitalize="off"
+                        spellcheck="false"
+                        [(ngModel)]="cupom.script"
+                    >
+                    </textarea>
+                    <p *ngIf="cupomForm.controls.rfScript.errors">Campo obrigatório!</p>
+                  </div>
 
-   
-<!-- modal definitions -->
-<div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
-     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lm">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" aria-label="Close" (click)="staticModal.hide()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">Tenant</h4>
+                  <input class="btn btn-sm btn-success" size="40" type="submit" value="Salvar" style="width:68px;height:36px" />
+                  <button type="button" (click)="tenant.cupomScript=scriptExample" class="btn btn-default">Script Exemplo</button>
+                  <input class="btn btn-sm btn-default pull-right" size="40" (click)="staticModal.hide()" value="Cancelar" style="width:68px;height:36px" />
+               </form>
+            </div>
+         </div>
       </div>
-      <div class="modal-body">
-        
-
-        <section *ngIf="tenant">
-                <form (ngSubmit)="saveCupom()">
-                    
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label" for="formName">Loja</label>
-                        <div class="col-sm-10">
-                            <input id="formName" type="text" class="form-control" size="100" 
-                              [(ngModel)]="tenant.name" name="name" [disabled]="viewOnly" />
-                        </div>
-                    </div>
-
-                    <div>
-                        <div>
-                            <h2><label for="formDescription">Adicionar Regra de Cupom</label></h2>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-3 col-form-label" for="formDescription">Nome do Cupom</label>
-                            <div class="col-sm-10">
-                                <input id="formCupomName" type="text" class="form-control" size="100" 
-                                    [(ngModel)]="cupom.name" name="cupomName" />
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-3 col-form-label" for="formDescription">Abertura da Cupom</label>
-                            <div class="col-sm-10">
-                                <input id="formCupomStartDate" type="date" class="form-control" 
-                                    [(ngModel)]="cupom.startDate" name="cupomStartDate" />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-3 col-form-label" for="formDescription">Encerramento do Cupom</label>
-                            <div class="col-sm-10">
-                                <input id="formCupomEndDate" type="date" class="form-control" 
-                                    [(ngModel)]="cupom.stopDate" name="cupomEndDate" />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-3 col-form-label" for="formDescription">Script</label>
-                            <div class="col-sm-10">
-                                <textarea id="formDescription" 
-                                name="description" class="form-control" rows="10" [(ngModel)]="cupom.script"
-                                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Script"
-                                >
-                                </textarea>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <input class="btn btn-sm btn-success" size="40" type="submit" value="Salvar" style="width:68px;height:36px" />
-                    <button type="button" (click)="tenant.cupomScript=scriptExample" class="btn btn-default">Script Exemplo</button>
-                    <input class="btn btn-sm btn-default pull-right" size="40" (click)="staticModal.hide()" value="Cancelar" style="width:68px;height:36px" />
-                </form>
-            </section>
-
+      </div>
+      <div class="item">
+          <ng-content></ng-content>
       </div>
     </div>
-  </div>
-</div>
-
-
-
-
-    <div class="item">
-      <ng-content></ng-content>
-    </div>
-  </div>
-</div>
-
-<div>
-    <h2>Novo Tenant</h2>
-    <form (ngSubmit)="addTenant()">
-        <div class="form-group row">
-        <label class="col-sm-3 col-form-label" for="formName">Nome:</label>
-        <div class="col-sm-10">
-            <input required id="formNewName" type="text" class="form-control" size="100" 
-            [(ngModel)]="newTenant.name" name="name" />
-        </div>
-        </div>
-
-        <div class="form-group row">
-        <label class="col-sm-3 col-form-label" for="adminEmail">email do administrador</label>
-        <div class="col-sm-10">
-                <input type="email" id="adminEmail" class="form-control"
-                    required name="aEmailVldt" [(ngModel)]="adminEmail"
-                    #aEmailVldt="ngModel" >
-        </div>
-        </div>
-
-        <div class="form-group row">
-        <label class="col-sm-3 col-form-label" for="adminPw">senha do administrador</label>
-        <div class="col-sm-10">
-                <input type="password" id="adminPw" class="form-control"
-                    required name="aPwdVldt" [(ngModel)]="adminPwd"
-                    #aPwdVldt="ngModel" >
-        </div>
-        </div>
-
-        
-
-
-        <input class="btn btn-sm btn-success" size="40" type="submit" value="Salvar" [disabled]="!newTenant.name" style="width:68px;height:36px" />
-    </form>
 </div>
