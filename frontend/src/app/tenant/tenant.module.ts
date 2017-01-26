@@ -5,7 +5,9 @@ import { TenantCrudComponent } from './tenant-crud.component';
 import { TenantListComponent } from './tenant-list.component';
 import { TenantRoutingModule } from './tenant-routing.module';
 
-import {TenantService} from './tenant.service';
+import { TenantService } from './tenant.service';
+
+import { CustomDatepickerComponent } from './custom-datepicker.component';
 
 
 @NgModule({
@@ -14,7 +16,7 @@ import {TenantService} from './tenant.service';
         DropdownModule
     ],
     declarations: [
-        TenantCrudComponent, TenantListComponent
+        TenantCrudComponent, TenantListComponent, CustomDatepickerComponent
     ],
     providers: [TenantService],
     exports: [TenantListComponent]

@@ -57,6 +57,14 @@ $sidebar-hover-bg: #00abff;
     overflow-y: auto;
     height: calc(100% - 57px);
   }
+
+  .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: #282828 !important;
+  }
+
+  .btn-primary .btnWidth {
+    width: 300;
+  }
 }
 
 

@@ -13,17 +13,13 @@ import { TenantDropdownComponent } from '../tenant/tenant-dropdown.component';
 import { SidebarMenuComponent } from './sidebar-menu/sidebar-menu.component';
 import { TopNavComponent } from './top-nav/top-nav.component';
 
-import { CustomDatepickerComponent } from './custom-datepicker.component';
-
-
 @NgModule({
-  imports: [CommonModule, RouterModule, DropdownModule, DatepickerModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, DropdownModule, DatepickerModule, ReactiveFormsModule, SecurityModule],
   declarations: [
     SidebarMenuComponent,
     TopNavComponent,
     UsuarioDropdownComponent,
-    TenantDropdownComponent,
-    CustomDatepickerComponent
+    TenantDropdownComponent
   ],
   providers:    [
     NotificationService,
@@ -40,7 +36,6 @@ import { CustomDatepickerComponent } from './custom-datepicker.component';
     TopNavComponent,
     UsuarioDropdownComponent,
     TenantDropdownComponent,
-    CustomDatepickerComponent,
     
     DatepickerModule,
     ReactiveFormsModule

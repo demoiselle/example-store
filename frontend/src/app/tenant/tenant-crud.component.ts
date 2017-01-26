@@ -10,7 +10,7 @@ import { Tenant, Cupom } from './tenant.model';
 import { Usuario } from '../usuario/usuario.model';
 
 import { DatePickerComponent } from 'ng2-bootstrap/ng2-bootstrap';
-import { CustomDatepickerComponent } from '../shared/custom-datepicker.component';
+import { CustomDatepickerComponent } from './custom-datepicker.component';
 
 @Component({
   selector: 'dml-tenant',
