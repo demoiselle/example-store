@@ -47,8 +47,8 @@ public class ProductREST extends AbstractREST<Product, Long> {
 	@PUT
 	@Transactional
 	@RequiredRole("ADMINISTRATOR")
-	public Product merge(@Valid Product entity) {
-		return bc.merge(entity);
+	public Product mergeFull(@Valid Product entity) {
+		return bc.mergeFull(entity);
 	}
 
 	@Override

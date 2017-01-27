@@ -54,7 +54,7 @@ public class RulesBC extends AbstractBusiness<Rules, Long> {
 		// Rules rule = dao.find(upRule.getId());
 		String ruleName = tenantManager.getTenantName() + "_" + upRule.getName();
 	
-		this.dao.merge(upRule);
+		this.dao.mergeFull(upRule);
 		
 		dm.loadEngine(engine);
 		if(dm.getScript(engine, ruleName) != null ){

@@ -75,7 +75,7 @@ public class RulesREST extends AbstractREST<Rules, Long> {
 	@PUT
 	@Transactional
 	@RequiredRole("ADMINISTRATOR")
-	public Rules merge (@Valid Rules rule) {						
+	public Rules mergeFull (@Valid Rules rule) {						
 		try {
 			return rulesBC.updateRule(rule);
 			

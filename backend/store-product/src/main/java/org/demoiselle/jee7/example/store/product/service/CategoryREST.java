@@ -5,14 +5,18 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import org.demoiselle.jee.core.api.crud.Result;
 
 import org.demoiselle.jee.crud.AbstractREST;
+import org.demoiselle.jee.rest.exception.DemoiselleRestException;
 import org.demoiselle.jee.security.annotation.RequiredRole;
 import org.demoiselle.jee7.example.store.product.entity.Category;
 
@@ -35,8 +39,8 @@ public class CategoryREST extends AbstractREST<Category, Long> {
 	@PUT
 	@Transactional
 	@RequiredRole("ADMINISTRATOR")
-	public Category merge(@Valid Category entity) {
-		return bc.merge(entity);
+	public Category mergeFull(@Valid Category entity) {
+		return bc.mergeFull(entity);
 	}
 
 	@Override
@@ -48,4 +52,10 @@ public class CategoryREST extends AbstractREST<Category, Long> {
 		bc.remove(id);
 	}
 
+        @GET
+        @Transactional
+        @Override
+        public Result find() {
+            return bc.find();
+        }
 }
