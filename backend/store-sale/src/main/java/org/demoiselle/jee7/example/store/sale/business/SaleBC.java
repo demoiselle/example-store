@@ -54,9 +54,6 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 	@Inject
 	private TenantManager tenantManager;
 	
-	@Inject
-	private SaleDAO saleDAO;
-
 	public Cart salePreview(Cart cart) throws ScriptException {
 		return processCartCupom(preProcessingCart(cart));
 	}
@@ -249,7 +246,7 @@ public class SaleBC extends AbstractBusiness<Sale, Long> {
 	}
 
 	public List<Sale> listUserSales(String id) {
-		return (List<Sale>) saleDAO.listUserSales(id);
+		return (List<Sale>) ((SaleDAO) dao).listUserSales(id);
 	}
 
 }

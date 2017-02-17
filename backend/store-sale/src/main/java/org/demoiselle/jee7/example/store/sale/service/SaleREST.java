@@ -37,10 +37,7 @@ import io.swagger.annotations.ApiOperation;
 @Api("Sales")
 @Path("sales")
 public class SaleREST extends AbstractREST<Sale, Long> {
-
-	@Inject
-	private SaleBC saleBC;
-
+	
 	@Inject
 	private SecurityContext securityContext;
 
@@ -51,7 +48,7 @@ public class SaleREST extends AbstractREST<Sale, Long> {
 		Gson gson = new Gson();
 		Cart cart = gson.fromJson(objeto, Cart.class);
 
-		return saleBC.salePreview(cart);
+		return ((SaleBC) bc).salePreview(cart);
 	}
 
 	@POST
@@ -61,7 +58,7 @@ public class SaleREST extends AbstractREST<Sale, Long> {
 		Gson gson = new Gson();
 		Cart cart = gson.fromJson(objeto, Cart.class);
 
-		return saleBC.saleComplete(cart);
+		return ((SaleBC) bc).saleComplete(cart);
 	}
 
 	@Authenticated
@@ -70,7 +67,7 @@ public class SaleREST extends AbstractREST<Sale, Long> {
 	@Transactional
 	@ApiOperation(value = "Busca por ID")
 	public List<Itens> listSaleItens(@PathParam("id") final Long id) {
-		return saleBC.listSaleItens(id);
+		return ((SaleBC) bc).listSaleItens(id);
 	}
 
 	@Authenticated
@@ -78,7 +75,7 @@ public class SaleREST extends AbstractREST<Sale, Long> {
 	@Path("listUserSales")
 	@Transactional
 	public List<Sale> listUserSales() {
-		return saleBC.listUserSales(securityContext.getUser().getName());
+		return ((SaleBC) bc).listUserSales(securityContext.getUser().getName());
 	}
 	
 	@Override
